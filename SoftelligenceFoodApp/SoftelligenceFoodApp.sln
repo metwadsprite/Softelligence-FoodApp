@@ -3,19 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserInterface", "UserInterface\UserInterface.csproj", "{F22B7261-650C-422F-BA3B-BF516B78DAB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserInterface", "UserInterface\UserInterface.csproj", "{F22B7261-650C-422F-BA3B-BF516B78DAB6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataAccess", "DataAccess", "{24657969-B089-4AA4-8E15-1B3C9AB559F0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AppLogic", "AppLogic", "{682B7C9A-13FE-476F-9720-4275035D5D92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abstractions", "DataAccess\Abstractions\Abstractions.csproj", "{BFFE99B7-A68C-4FDE-A211-0784E35A3F45}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abstractions", "DataAccess\Abstractions\Abstractions.csproj", "{BFFE99B7-A68C-4FDE-A211-0784E35A3F45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "AppLogic\BusinessLogic\BusinessLogic.csproj", "{E64B6164-AF26-462E-905B-49C115498169}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "AppLogic\BusinessLogic\BusinessLogic.csproj", "{E64B6164-AF26-462E-905B-49C115498169}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Abstractions", "AppLogic\Logic.Abstractions\Logic.Abstractions.csproj", "{A9F12A89-DD61-422F-AFD6-FF648A6CECFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic.Abstractions", "AppLogic\Logic.Abstractions\Logic.Abstractions.csproj", "{A9F12A89-DD61-422F-AFD6-FF648A6CECFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic.Implementations", "AppLogic\Logic.Implementations\Logic.Implementations.csproj", "{FAE3DEE7-BCB6-4ADF-9D56-B1120940610E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Logic.Implementations", "AppLogic\Logic.Implementations\Logic.Implementations.csproj", "{FAE3DEE7-BCB6-4ADF-9D56-B1120940610E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EF.DataAccess", "DataAccess\EF.DataAccess\EF.DataAccess.csproj", "{DF2888FC-71CC-4987-926F-6F817E2A85D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{FAE3DEE7-BCB6-4ADF-9D56-B1120940610E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FAE3DEE7-BCB6-4ADF-9D56-B1120940610E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FAE3DEE7-BCB6-4ADF-9D56-B1120940610E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF2888FC-71CC-4987-926F-6F817E2A85D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF2888FC-71CC-4987-926F-6F817E2A85D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF2888FC-71CC-4987-926F-6F817E2A85D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF2888FC-71CC-4987-926F-6F817E2A85D9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,6 +58,7 @@ Global
 		{E64B6164-AF26-462E-905B-49C115498169} = {682B7C9A-13FE-476F-9720-4275035D5D92}
 		{A9F12A89-DD61-422F-AFD6-FF648A6CECFD} = {682B7C9A-13FE-476F-9720-4275035D5D92}
 		{FAE3DEE7-BCB6-4ADF-9D56-B1120940610E} = {682B7C9A-13FE-476F-9720-4275035D5D92}
+		{DF2888FC-71CC-4987-926F-6F817E2A85D9} = {24657969-B089-4AA4-8E15-1B3C9AB559F0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BA1C044-583D-471E-AC7D-9E78F3711DC4}
