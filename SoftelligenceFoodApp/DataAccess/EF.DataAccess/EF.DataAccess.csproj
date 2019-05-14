@@ -24,7 +24,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\AppLogic\BusinessLogic\BusinessLogic.csproj" />
     <ProjectReference Include="..\Abstractions\Abstractions.csproj" />
+   
   </ItemGroup>
 
   <ItemGroup>
