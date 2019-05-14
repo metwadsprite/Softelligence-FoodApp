@@ -10,14 +10,20 @@ namespace EF.DataAccess
     {
         public DbSet<StoreDO> Stores { get; set; }
         public DbSet<OrderDO> Orders { get; set; }
+        public DbSet<UserDO> Users { get; set; }
+        public DbSet<SessionDO> Sessions { get; set; }
+        public DbSet<MenuDO> Menus { get; set; }
 
+        public ApplicationDbContext()
+        {
+        }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
-        protected override void OnModelCreating(ModelBuilder builder)
+        /*protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-        }
+        }*/
     }
 }
