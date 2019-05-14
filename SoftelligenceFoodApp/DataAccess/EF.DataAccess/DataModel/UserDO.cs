@@ -5,10 +5,9 @@ using System.Text;
 
 namespace EF.DataAccess.DataModel
 {
-    [Table("Orders")]
-    public class OrderDO
+    [Table("Users")]
+    public class UserDO
     {
         public int Id { get; set; }
-
     }
 }
