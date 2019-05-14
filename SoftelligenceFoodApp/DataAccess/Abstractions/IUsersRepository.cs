@@ -7,7 +7,7 @@ namespace Abstractions
 {
     public interface IUsersRepository
     {
-        User GetById();
+        User GetById(int id);
         String GetEmail();
         String GetName();
         ICollection<Order> GetHistory();
