@@ -11,9 +11,11 @@ namespace Abstractions
         String GetEmail();
         String GetName();
         ICollection<Order> GetHistory();
+        void ViewActiveSession();
         void PlaceOrder();
         void ChangeOrder();
         void CancelOrder();
         void ViewOrder();
+
     }
 }
