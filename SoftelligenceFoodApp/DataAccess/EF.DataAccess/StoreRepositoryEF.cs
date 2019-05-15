@@ -1,8 +1,11 @@
 ﻿using Abstractions;
 using BusinessLogic;
+using EF.DataAccess.DataModel;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
+using AutoMapper;
 
 namespace EF.DataAccess
 {
@@ -16,6 +19,9 @@ namespace EF.DataAccess
 
         public Store GetById(int id)
         {
+            StoreDO store = dbContext.Stores.FirstOrDefault(a => a.Id == id);
+            //Mapper.Initialize(cfg => cfg.CreateMap<Order, OrderDto>());
+
             throw new System.NotImplementedException();
         }
         public IEnumerable<Store> GetAll()

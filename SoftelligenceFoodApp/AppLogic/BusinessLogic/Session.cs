@@ -6,5 +6,6 @@ namespace BusinessLogic
 {
     public class Session
     {
+
     }
 }
