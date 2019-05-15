@@ -8,7 +8,8 @@ namespace Logic.Implementations
 {
     public class AdminService
     {
-        private IPersistenceContext dataContext;
+        private readonly IPersistenceContext dataContext;
+        private Administrator administrator;
 
         public AdminService(IPersistenceContext dataContext)
         {
