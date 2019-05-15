@@ -41,9 +41,9 @@ namespace MappingTest
             User destUser = new User();
             destUser = mapper.MapData<User, UserDO>(baseUser);
 
-            Assert.AreEqual(destUser.Email, baseUser.Email);
-            Assert.AreEqual(destUser.Name, baseUser.Name);
-            Assert.AreEqual(destUser.Id, baseUser.Id);
+            Assert.AreEqual(destUser.Email, "ceva@yahoo.com");
+            Assert.AreEqual(destUser.Name, "Nume");
+            Assert.AreEqual(destUser.Id, 5);
         }
 
         [TestMethod]

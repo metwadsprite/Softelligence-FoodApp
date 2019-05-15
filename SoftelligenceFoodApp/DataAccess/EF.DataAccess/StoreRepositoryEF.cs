@@ -6,35 +6,42 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using AutoMapper;
+using DataMapper;
 
 namespace EF.DataAccess
 {
-    class StoreRepositoryEF: IStoresRepository
+    public class StoreRepositoryEF: IStoresRepository
     {
         private readonly ApplicationDbContext dbContext;
-        public StoreRepositoryEF(ApplicationDbContext dbContext)
+        private readonly EntitiesMapper mapper;
+        public StoreRepositoryEF(ApplicationDbContext dbContext, EntitiesMapper mapper)
         {
             this.dbContext = dbContext;
+            this.mapper = mapper;
         }
 
         public Store GetById(int id)
         {
             StoreDO store = dbContext.Stores.FirstOrDefault(a => a.Id == id);
-            //Mapper.Initialize(cfg => cfg.CreateMap<Order, OrderDto>());
+            return mapper.MapData<Store, StoreDO>(store);
 
-            throw new System.NotImplementedException();
         }
         public IEnumerable<Store> GetAll()
         {
-            throw new System.NotImplementedException();
+            List<Store> StoresList = new List<Store>();
+            foreach(StoreDO var in dbContext.Stores)
+            {
+                StoresList.Add(mapper.MapData<Store, StoreDO>(var));
+            }
+            return StoresList;
         }
         public void Add(Store storeToAdd)
         {
-            throw new System.NotImplementedException();
+            dbContext.Stores.Add(mapper.MapData<StoreDO,Store>(storeToAdd));
         }
         public void Remove(Store storeToRemove)
         {
-            throw new System.NotImplementedException();
+            dbContext.Stores.Remove(mapper.MapData<StoreDO, Store>(storeToRemove));
         }
         public void Update(Store storeToUpdate)
         {
