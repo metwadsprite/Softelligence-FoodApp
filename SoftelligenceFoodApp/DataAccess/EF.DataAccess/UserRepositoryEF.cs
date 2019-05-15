@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using EF.DataAccess.DataModel;
 using AutoMapper;
+using DataMapper;
 
 namespace EF.DataAccess
 {
@@ -14,28 +15,15 @@ namespace EF.DataAccess
     {
 
         private readonly ApplicationDbContext dbContext;
+        private readonly EntitiesMapper mapper;
+        //inject / parametru data mapper
 
-        private User MapData(UserDO userDO)
-        {
-            var config = new MapperConfiguration(cfg =>
-            {
-                cfg.CreateMap<User, UserDO>();
-            });
-
-            IMapper iMapper = config.CreateMapper();
-
-            var destination = new User();
-
-            destination = iMapper.Map<UserDO, User>(userDO);
-
-            return destination;
-        }
-
+         
         public async Task<User> GetByIdAsync(int id)
         {
             var userWithId = await dbContext.Users.SingleOrDefaultAsync( user => user.Id == id);
 
-            return MapData(userWithId);
+            return mapper.MapData<User, UserDO>(userWithId);
         }
 
         public string GetEmail(int id)
@@ -48,9 +36,11 @@ namespace EF.DataAccess
             throw new System.NotImplementedException();
         }
 
-        public UserRepositoryEF(ApplicationDbContext dbContext)
+        //add parameter
+        public UserRepositoryEF(ApplicationDbContext dbContext, EntitiesMapper mapper)
         {
             this.dbContext = dbContext;
+            this.mapper = mapper;
         }
 
 

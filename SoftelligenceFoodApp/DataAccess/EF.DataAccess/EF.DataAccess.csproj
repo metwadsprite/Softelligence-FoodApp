@@ -27,6 +27,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\AppLogic\BusinessLogic\BusinessLogic.csproj" />
     <ProjectReference Include="..\Abstractions\Abstractions.csproj" />
+    <ProjectReference Include="..\DataMapper\DataMapper.csproj" />
    
   </ItemGroup>
 
