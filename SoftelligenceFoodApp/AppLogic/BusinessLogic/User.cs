@@ -9,5 +9,11 @@ namespace BusinessLogic
         public string Email { get; set; }
         public string Name { get; set; }
         public ICollection<Order> Orders { get; set; }
+
+        public void ViewActiveSession() { }
+        public void PlaceOrder() { }
+        public void ChangeOrder() { }
+        public void CancelOrder() { }
+        public void ViewOrder() { }
     }
 }
