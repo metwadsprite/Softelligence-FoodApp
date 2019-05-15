@@ -20,7 +20,7 @@ namespace EF.DataAccess
         public Store GetById(int id)
         {
             StoreDO store = dbContext.Stores.FirstOrDefault(a => a.Id == id);
-            Mapper.Initialize(cfg => cfg.CreateMap<Order, OrderDto>());
+            //Mapper.Initialize(cfg => cfg.CreateMap<Order, OrderDto>());
 
             throw new System.NotImplementedException();
         }
