@@ -6,5 +6,6 @@ namespace Logic.Implementations
 {
     public class UserService
     {
+        
     }
 }
