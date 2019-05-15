@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BusinessLogic
 {
-    public class Administrator:User
+    public class Administrator : User
     {
         public void AddStore()
         {
