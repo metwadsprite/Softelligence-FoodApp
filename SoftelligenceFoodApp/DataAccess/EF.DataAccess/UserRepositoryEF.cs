@@ -5,6 +5,7 @@ using Abstractions;
 using BusinessLogic;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EF.DataAccess.DataModel;
 
 namespace EF.DataAccess
 {
@@ -24,7 +25,8 @@ namespace EF.DataAccess
         }
 
         public string GetEmail()
-        {
+        {   
+
             throw new System.NotImplementedException();
         }
 
