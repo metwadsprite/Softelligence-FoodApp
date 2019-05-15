@@ -17,20 +17,21 @@ namespace Logic.Implementations
 
         public IEnumerable<Store> GetAllStores()
         {
-            return null;
+            var storeRepo = dataContext.GetStoresRepository();
+            return storeRepo.GetAll();
         }
 
-        public void AddStore()
+        public void AddStore(Store storeToAdd)
         {
 
         }
 
-        public void UpdateStore()
+        public void UpdateStore(Store storeToUpdate)
         {
 
         }
 
-        public void RemoveStore()
+        public void RemoveStore(Store storeToRemove)
         {
 
         }
