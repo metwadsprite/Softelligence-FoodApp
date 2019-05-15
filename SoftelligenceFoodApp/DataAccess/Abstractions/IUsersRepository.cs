@@ -8,7 +8,7 @@ namespace Abstractions
 {
     public interface IUsersRepository
     {
-        Task<User> GetByIdAsync(int id);
+        User GetById(int id);
         String GetEmail(int id);
         String GetName(int id);
     }

@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MappingTest", "DataAccess\M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataMapper", "DataAccess\DataMapper\DataMapper.csproj", "{C17BBDCD-A8E7-48FF-9513-81E11C60F434}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RepositoryTests", "DataAccess\RepositoryTests\RepositoryTests.csproj", "{EE864E54-36B4-4D45-AD9B-1C438EE53618}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{C17BBDCD-A8E7-48FF-9513-81E11C60F434}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C17BBDCD-A8E7-48FF-9513-81E11C60F434}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C17BBDCD-A8E7-48FF-9513-81E11C60F434}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE864E54-36B4-4D45-AD9B-1C438EE53618}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE864E54-36B4-4D45-AD9B-1C438EE53618}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE864E54-36B4-4D45-AD9B-1C438EE53618}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE864E54-36B4-4D45-AD9B-1C438EE53618}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,6 +72,7 @@ Global
 		{DF2888FC-71CC-4987-926F-6F817E2A85D9} = {24657969-B089-4AA4-8E15-1B3C9AB559F0}
 		{E3D598C9-3104-4F64-9508-177D72C3548D} = {24657969-B089-4AA4-8E15-1B3C9AB559F0}
 		{C17BBDCD-A8E7-48FF-9513-81E11C60F434} = {24657969-B089-4AA4-8E15-1B3C9AB559F0}
+		{EE864E54-36B4-4D45-AD9B-1C438EE53618} = {24657969-B089-4AA4-8E15-1B3C9AB559F0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BA1C044-583D-471E-AC7D-9E78F3711DC4}
