@@ -49,7 +49,7 @@ namespace Logic.Implementations
 
         public void SyncDataContext()
         {
-            
+         
 
         }
     }
