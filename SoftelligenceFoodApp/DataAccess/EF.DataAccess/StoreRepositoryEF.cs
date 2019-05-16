@@ -22,7 +22,7 @@ namespace EF.DataAccess
 
         public Store GetById(int id)
         {
-            StoreDO store = dbContext.Stores.FirstOrDefault(a => a.Id == id);
+            var store = dbContext.Stores.FirstOrDefault(a => a.Id == id);
             return mapper.MapData<Store, StoreDO>(store);
 
         }
@@ -37,15 +37,37 @@ namespace EF.DataAccess
         }
         public void Add(Store storeToAdd)
         {
-            dbContext.Stores.Add(mapper.MapData<StoreDO,Store>(storeToAdd));
+            if (storeToAdd != null)
+            {
+                dbContext.Stores.Add(mapper.MapData<StoreDO, Store>(storeToAdd));
+            }
+            else
+            {
+                throw new EntryPointNotFoundException();
+            }
         }
         public void Remove(Store storeToRemove)
         {
-            dbContext.Stores.Remove(mapper.MapData<StoreDO, Store>(storeToRemove));
+            if (storeToRemove != null)
+            {
+                dbContext.Stores.Remove(mapper.MapData<StoreDO, Store>(storeToRemove));
+            }
+            else
+            {
+                throw new EntryPointNotFoundException();
+            }
         }
         public void Update(Store storeToUpdate)
         {
-            throw new System.NotImplementedException();
+            if (storeToUpdate != null)
+            {
+                dbContext.Stores.Update(mapper.MapData<StoreDO, Store>(storeToUpdate));
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                throw new EntryPointNotFoundException();
+            }
         }
     }
 }
