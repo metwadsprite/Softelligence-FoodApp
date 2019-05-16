@@ -61,6 +61,11 @@ namespace BusinessLogic
            
         }
 
+        public List<Store> GetStoresList()
+        {
+            return Stores;
+        }
+
         public void CreateSession()
         {
 

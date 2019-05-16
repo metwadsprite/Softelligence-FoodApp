@@ -12,7 +12,8 @@ namespace EF.DataAccess
         }
 
         public IStoresRepository GetStoresRepository()
-        {
+        {   
+
             throw new System.NotImplementedException();
         }
 
