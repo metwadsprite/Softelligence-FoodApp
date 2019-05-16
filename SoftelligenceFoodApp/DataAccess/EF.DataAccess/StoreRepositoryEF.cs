@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using AutoMapper;
-using DataMapper;
 
 namespace EF.DataAccess
 {

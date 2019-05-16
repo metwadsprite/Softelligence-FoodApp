@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using EF.DataAccess.DataModel;
 using AutoMapper;
-using DataMapper;
 using System.Linq;
 
 namespace EF.DataAccess

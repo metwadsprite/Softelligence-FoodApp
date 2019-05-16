@@ -2,14 +2,22 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using EF.DataAccess.DataModel;
 using BusinessLogic;
 using AutoMapper;
-using DataMapper;
+using EF.DataAccess;
 
 namespace MappingTest
 {
     [TestClass]
     public class MappingTest
     {
+
         private readonly EntitiesMapper mapper = new EntitiesMapper();
+
+        [TestInitialize]
+        public void Initialize()
+        {
+            mapper.InitializeMapper();
+        }
+
         [TestMethod]
         public void TestMapUserToUserDO()
         {
@@ -33,7 +41,7 @@ namespace MappingTest
         {
 
             UserDO baseUser = new UserDO();
-            baseUser.Email = "titlu@yahoo.com";
+            baseUser.Email = "ceva@yahoo.com";
             baseUser.Name = "Prenume";
             baseUser.Id = 2;
 
@@ -41,9 +49,9 @@ namespace MappingTest
             User destUser = new User();
             destUser = mapper.MapData<User, UserDO>(baseUser);
 
-            Assert.AreEqual(destUser.Email, "ceva@yahoo.com");
-            Assert.AreEqual(destUser.Name, "Nume");
-            Assert.AreEqual(destUser.Id, 5);
+            Assert.AreEqual(destUser.Email, baseUser.Email);
+            Assert.AreEqual(destUser.Name, baseUser.Name);
+            Assert.AreEqual(destUser.Id, baseUser.Id);
         }
 
         [TestMethod]
