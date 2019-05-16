@@ -8,8 +8,4 @@
     <PackageReference Include="AutoMapper" Version="8.1.0" />
   </ItemGroup>
   
-  <ItemGroup>
-    <ProjectReference Include="..\\..\\DataAccess\\Abstractions\\Abstractions.csproj" />
-  </ItemGroup>
-  
 </Project>

@@ -8,6 +8,7 @@ namespace EF.DataAccess
     {
         public ISessionsRepository GetSessionsRepository()
         {   
+
             throw new System.NotImplementedException();
         }
 
