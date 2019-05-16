@@ -40,7 +40,5 @@ namespace EF.DataAccess
             this.dbContext = dbContext;
             this.mapper = mapper;
         }
-
-
     }
 }
