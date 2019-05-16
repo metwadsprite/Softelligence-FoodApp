@@ -83,5 +83,9 @@ namespace BusinessLogic
             return null;
         }
 
+        public void UpdateSession(Session activeSession)
+        {
+
+        }
     }
 }
