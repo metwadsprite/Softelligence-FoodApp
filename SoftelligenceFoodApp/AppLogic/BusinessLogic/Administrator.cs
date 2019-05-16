@@ -1,4 +1,5 @@
-﻿using BusinessLogic.BusinessExceptions;
+﻿using Abstractions;
+using BusinessLogic.BusinessExceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,16 @@ namespace BusinessLogic
         public string FullName { get; set; }
         public string Email { get; set; }
 
+        private IPersistenceContext context;
+
         private List<Store> Stores = new List<Store>();
 
         private List<Store> AvailableStores = new List<Store>();
 
+        public Administrator(IPersistenceContext context )
+        {
+            this.context = context;
+        }
 
         public void AddStore(Store storeToAdd)
         {

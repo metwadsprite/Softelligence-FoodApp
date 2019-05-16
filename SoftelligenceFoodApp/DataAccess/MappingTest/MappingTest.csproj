@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\AppLogic\BusinessLogic\BusinessLogic.csproj" />
-    <ProjectReference Include="..\DataMapper\DataMapper.csproj" />
     <ProjectReference Include="..\EF.DataAccess\EF.DataAccess.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,4 @@
-﻿using Abstractions;
+﻿using BusinessLogic.Abstractions;
 using BusinessLogic;
 using EF.DataAccess.DataModel;
 using System;
@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using AutoMapper;
-using DataMapper;
 
 namespace EF.DataAccess
 {
