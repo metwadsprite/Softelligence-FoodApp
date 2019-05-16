@@ -6,5 +6,6 @@ namespace EF.DataAccess
 {
     class SessionsRepository
     {
+
     }
 }
