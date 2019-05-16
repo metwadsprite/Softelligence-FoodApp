@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Abstractions
+namespace BusinessLogic.Abstractions
 {
     public interface IUsersRepository
     {

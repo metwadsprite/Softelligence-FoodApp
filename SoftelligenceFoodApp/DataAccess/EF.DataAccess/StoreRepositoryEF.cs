@@ -1,4 +1,4 @@
-﻿using Abstractions;
+﻿using BusinessLogic.Abstractions;
 using BusinessLogic;
 using EF.DataAccess.DataModel;
 using System;

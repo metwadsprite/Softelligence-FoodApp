@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Abstractions
+namespace BusinessLogic.Abstractions
 {
     public interface IPersistenceContext
     {

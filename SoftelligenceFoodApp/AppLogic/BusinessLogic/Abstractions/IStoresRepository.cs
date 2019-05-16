@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Abstractions
+namespace BusinessLogic.Abstractions
 {
     public interface IStoresRepository
     {

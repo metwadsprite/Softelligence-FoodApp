@@ -1,7 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Abstractions;
+using BusinessLogic.Abstractions;
 using BusinessLogic;
 using System.Collections.Generic;
 using System.Threading.Tasks;
