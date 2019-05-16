@@ -12,5 +12,6 @@ namespace Abstractions
         void Add(Store storeToAdd);
         void Remove(Store storeToRemove);
         void Update(Store storeToUpdate);
+   
     }
 }

@@ -7,12 +7,14 @@ namespace EF.DataAccess
     public class EFPersistenceContext : IPersistenceContext
     {
         public ISessionsRepository GetSessionsRepository()
-        {
+        {   
+
             throw new System.NotImplementedException();
         }
 
         public IStoresRepository GetStoresRepository()
-        {
+        {   
+
             throw new System.NotImplementedException();
         }
 
