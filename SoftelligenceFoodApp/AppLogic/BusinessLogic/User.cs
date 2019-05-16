@@ -7,17 +7,12 @@ namespace BusinessLogic
 {
     public class User
     {
-        private Session currentSession;
         private Order currentOrder;
 
         public int Id { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
 
-        public User(Session session)
-        {
-            currentSession = session;
-        }
         public void PlaceOrder(Order newOrder)
         {
             if (currentOrder != null)
