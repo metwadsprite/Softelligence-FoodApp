@@ -7,5 +7,9 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="8.1.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj" />
+  </ItemGroup>
   
 </Project>
