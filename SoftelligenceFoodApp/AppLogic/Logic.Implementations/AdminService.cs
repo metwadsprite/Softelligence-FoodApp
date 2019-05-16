@@ -8,7 +8,8 @@ namespace Logic.Implementations
 {
     public class AdminService
     {
-        private IPersistenceContext dataContext;
+        private readonly IPersistenceContext dataContext;
+        private Administrator administrator;
 
         public AdminService(IPersistenceContext dataContext)
         {
@@ -23,21 +24,20 @@ namespace Logic.Implementations
 
         public void AddStore(Store storeToAdd)
         {
-
+            administrator.AddStore(storeToAdd);
         }
 
-        public void UpdateStore(Store storeToUpdate)
+        public void UpdateStore(Store storeToUpdate, Store newStore)
         {
-
+            administrator.Update(storeToUpdate, newStore);
         }
 
-        public void RemoveStore(Store storeToRemove)
+        public void RemoveStore(int storeId)
         {
-
+            administrator.Remove(storeId);
         }
 
-
-        public void CreateSession()
+        public void StartSession()
         {
 
         }
@@ -45,6 +45,12 @@ namespace Logic.Implementations
         public Session GetCurrentSession()
         {
             return null;
+        }
+
+        public void SyncDataContext()
+        {
+            
+
         }
     }
 }
