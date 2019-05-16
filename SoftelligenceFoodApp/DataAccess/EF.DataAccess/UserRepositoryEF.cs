@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using EF.DataAccess.DataModel;
 using AutoMapper;
 using System.Linq;
+using System;
+using BusinessLogic.Business.Exceptions;
 
 namespace EF.DataAccess
 {
@@ -19,7 +21,13 @@ namespace EF.DataAccess
 
         public User GetById(int id)
         {
+
             var userWithId = dbContext.Users.SingleOrDefault( user => user.Id == id);
+
+            if(userWithId == null)
+            {
+                throw new UserNotFoundException("User not found");
+            }
 
             return mapper.MapData<User, UserDO>(userWithId); 
         }

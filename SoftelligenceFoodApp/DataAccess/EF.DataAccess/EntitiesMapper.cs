@@ -11,9 +11,6 @@ namespace EF.DataAccess
     {
         private MapperConfiguration mapperConfig;
         private IMapper currentMapper;
-        //initialize/configure
-        //getmapperobject -> imapper , instantiez si apelat in unittest
-        //
 
         public void InitializeMapper()
         {
