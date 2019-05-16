@@ -2,18 +2,48 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace BusinessLogic
 {
     public class Session
     {
-        private IStoresRepository storesRepository;
-        private IUsersRepository usersRepository;
+        private bool isActive;
 
-        public Session(IPersistenceContext persistenceContext)
+        public int Id { get; set; }
+        public List<Store> Stores { get; set; }
+        public List<Order> Orders { get; set; }
+        public DateTime StartTime { get; set; }
+
+        public Session()
         {
-            storesRepository = persistenceContext.GetStoresRepository();
-            usersRepository = persistenceContext.GetUsersRepository();
+            isActive = true;
+        }
+
+        public void AddStore(Store newStore)
+        {
+            Stores.Add(newStore);
+        }
+        public void RemoveStore(int storeId)
+        {
+            Stores.Remove(Stores.Where(store => store.Id == storeId).SingleOrDefault());
+        }
+        public void AddOrder()
+        {
+
+        }
+        public void UpdateOrder()
+        {
+
+        }
+        public void CancelOrder()
+        {
+
+        }
+        public void Finalize()
+        {
+            isActive = false;
+            Stores.RemoveRange(0, Stores.Count);
         }
     }
 }
