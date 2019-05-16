@@ -24,7 +24,7 @@ namespace Logic.Implementations
 
         public void AddStore(Store storeToAdd)
         {
-
+           
         }
 
         public void UpdateStore(Store storeToUpdate)
@@ -37,8 +37,7 @@ namespace Logic.Implementations
 
         }
 
-
-        public void CreateSession()
+        public void StartSession()
         {
 
         }

@@ -17,36 +17,32 @@ namespace BusinessLogic
         private List<Store> AvailableStores = new List<Store>();
 
 
-        public Store FindByStoreId(int storeId)
+        public void AddStore(Store storeToAdd)
         {
-            var store = Stores.Where(storeIt => storeIt.Id == storeId).SingleOrDefault();
-            if(store == null)
+            if(storeToAdd != null)
+            {
+                Stores.Add(storeToAdd);
+            }
+            else
             {
                 throw new StoreNotFoundException();
             }
-            return store;
         }
 
-        public IEnumerable<Store> GetAllStores()
+        public void Update(Store storeToUpdate, Store newStore)
         {
-            return Stores;
-        }
-
-        public void AddStore(Store storeToAdd)
-        {
-            var existingStore = FindByStoreId(storeToAdd.Id);
-            if(existingStore == storeToAdd)
+            if( storeToUpdate != null && newStore != null)
             {
-                throw new DuplicateStoreException();
+                foreach(Store var in Stores)
+                {
+                    if (var.Equals(storeToUpdate))
+                    {
+                        Stores.RemoveAt(storeToUpdate.Id - 1);
+                        Stores.Insert(storeToUpdate.Id-1,newStore);
+                    }
+                }
             }
-
-            Stores.Add(storeToAdd);
-        }
-
-        public void Update(int storeId)
-        {
-            var storeToUpdate = FindByStoreId(storeId);
-            if(storeToUpdate == null)
+            else
             {
                 throw new StoreNotFoundException();
             }
@@ -54,13 +50,15 @@ namespace BusinessLogic
 
         public void Remove(int storeId)
         {
-            var storeToRemove = FindByStoreId(storeId);
-            if(storeToRemove == null)
+            foreach(Store var in Stores)
             {
-                throw new StoreNotFoundException();
+                if(var.Id == storeId)
+                {
+                    Stores.RemoveAt(var.Id);
+                    break;
+                }
             }
-
-            Stores.Remove(storeToRemove);
+           
         }
 
         public void CreateSession()
@@ -73,9 +71,5 @@ namespace BusinessLogic
             return null;
         }
 
-        public IEnumerable<Store> GetAvailableStores()
-        {
-            return null;
-        }
     }
 }
