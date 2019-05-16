@@ -1,9 +1,7 @@
-﻿using Abstractions;
+﻿using BusinessLogic.Abstractions;
 using BusinessLogic.BusinessExceptions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BusinessLogic
 {
@@ -15,10 +13,6 @@ namespace BusinessLogic
 
         private IPersistenceContext context;
 
-        private List<Store> Stores = new List<Store>();
-
-        private List<Store> AvailableStores = new List<Store>();
-
         public Administrator(IPersistenceContext context )
         {
             this.context = context;
@@ -26,9 +20,10 @@ namespace BusinessLogic
 
         public void AddStore(Store storeToAdd)
         {
+            var storeRepo = context.GetStoresRepository();
             if(storeToAdd != null)
             {
-                Stores.Add(storeToAdd);
+                storeRepo.Add(storeToAdd);
             }
             else
             {
@@ -38,14 +33,16 @@ namespace BusinessLogic
 
         public void Update(Store storeToUpdate, Store newStore)
         {
+            var storeRepo = context.GetStoresRepository();
+            List<Store> stores = storeRepo.GetAll().ToList();
             if( storeToUpdate != null && newStore != null)
             {
-                foreach(Store var in Stores)
+                foreach(Store var in storeRepo.GetAll())
                 {
                     if (var.Equals(storeToUpdate))
                     {
-                        Stores.RemoveAt(storeToUpdate.Id - 1);
-                        Stores.Insert(storeToUpdate.Id-1,newStore);
+                        stores.RemoveAt(storeToUpdate.Id - 1);
+                        stores.Insert(storeToUpdate.Id - 1,newStore);
                     }
                 }
             }
@@ -57,11 +54,14 @@ namespace BusinessLogic
 
         public void Remove(int storeId)
         {
-            foreach(Store var in Stores)
+            var storeRepo = context.GetStoresRepository();
+            List<Store> stores = storeRepo.GetAll().ToList();
+
+            foreach (Store var in stores)
             {
                 if(var.Id == storeId)
                 {
-                    Stores.RemoveAt(var.Id);
+                    stores.RemoveAt(var.Id);
                     break;
                 }
             }
@@ -70,7 +70,7 @@ namespace BusinessLogic
 
         public List<Store> GetStoresList()
         {
-            return Stores;
+            return context.GetStoresRepository().GetAll().ToList();
         }
 
         public void CreateSession()
@@ -78,7 +78,7 @@ namespace BusinessLogic
 
         }
 
-        public Session GetCurrentSession()
+        public Session GetActiveSession()
         {
             return null;
         }
