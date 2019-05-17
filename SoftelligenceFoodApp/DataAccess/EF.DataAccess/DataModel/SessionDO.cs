@@ -8,8 +8,8 @@ namespace EF.DataAccess.DataModel
     public class SessionDO
     {
         public int Id { get; set; }
-        public List<OrderDO> Orders { get; set; }
-        public List<SessionStoreDO> SessionStore { get; set; }
+        public ICollection<OrderDO> Orders { get; set; }
+        public ICollection<SessionStoreDO> SessionStore { get; set; }
         public DateTime StartTime { get; set; }
         public bool IsActive { get; set; }
     }
