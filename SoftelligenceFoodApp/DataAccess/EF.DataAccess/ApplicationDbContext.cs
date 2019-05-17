@@ -13,6 +13,7 @@ namespace EF.DataAccess
         public DbSet<UserDO> Users { get; set; }
         public DbSet<SessionDO> Sessions { get; set; }
         public DbSet<MenuDO> Menus { get; set; }
+        public DbSet<SessionStoreDO> SessionsStores { get; set; }
 
         public ApplicationDbContext()
         {

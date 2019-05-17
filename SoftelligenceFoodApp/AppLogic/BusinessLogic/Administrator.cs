@@ -1,10 +1,7 @@
-﻿
+﻿using BusinessLogic.Abstractions;
 using BusinessLogic.BusinessExceptions;
-using BusinessLogic.Abstractions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BusinessLogic
 {
@@ -16,10 +13,6 @@ namespace BusinessLogic
 
         private IPersistenceContext context;
 
-        private List<Store> Stores = new List<Store>();
-
-        private List<Store> AvailableStores = new List<Store>();
-
         public Administrator(IPersistenceContext context )
         {
             this.context = context;
@@ -27,9 +20,10 @@ namespace BusinessLogic
 
         public void AddStore(Store storeToAdd)
         {
+            var storeRepo = context.GetStoresRepository();
             if(storeToAdd != null)
             {
-                Stores.Add(storeToAdd);
+                storeRepo.Add(storeToAdd);
             }
             else
             {
@@ -39,16 +33,10 @@ namespace BusinessLogic
 
         public void Update(Store storeToUpdate, Store newStore)
         {
-            if( storeToUpdate != null && newStore != null)
+            var storeRepo = context.GetStoresRepository();
+            if (storeToUpdate != null)
             {
-                foreach(Store var in Stores)
-                {
-                    if (var.Equals(storeToUpdate))
-                    {
-                        Stores.RemoveAt(storeToUpdate.Id - 1);
-                        Stores.Insert(storeToUpdate.Id-1,newStore);
-                    }
-                }
+                storeRepo.Update(storeToUpdate);
             }
             else
             {
@@ -56,22 +44,16 @@ namespace BusinessLogic
             }
         }
 
-        public void Remove(int storeId)
+        public void Remove(Store storeToRemove)
         {
-            foreach(Store var in Stores)
-            {
-                if(var.Id == storeId)
-                {
-                    Stores.RemoveAt(var.Id);
-                    break;
-                }
-            }
-           
+            var storeRepo = context.GetStoresRepository();
+            storeRepo.Remove(storeToRemove);
+        
         }
 
         public List<Store> GetStoresList()
         {
-            return Stores;
+            return context.GetStoresRepository().GetAll().ToList();
         }
 
         public void CreateSession()
@@ -79,10 +61,15 @@ namespace BusinessLogic
 
         }
 
-        public Session GetCurrentSession()
+        public Session GetActiveSession()
         {
-            return null;
+            var sessionsRep = context.GetSessionsRepository();
+            return sessionsRep.GetActiveSession();
         }
 
+        public void UpdateSession(Session activeSession)
+        {
+
+        }
     }
 }
