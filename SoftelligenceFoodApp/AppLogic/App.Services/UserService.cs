@@ -34,7 +34,7 @@ namespace Logic.Implementations
             newOrder.Details = menuItem.Details;
 
             currentSession.AddOrder(newOrder);
-            //dataContext.GetSessionsRepository.Update(currentSession);
+            dataContext.GetSessionsRepository().Update(currentSession);
             //1.get current session
             //2.session.addOrder
             //3.save session, sessionRepo.Update(currentSession);

@@ -11,8 +11,8 @@ namespace BusinessLogic
         private bool isActive;
 
         public int Id { get; set; }
-        public List<Store> Stores { get; set; }
-        public List<Order> Orders { get; set; }
+        public ICollection<Store> Stores { get; set; }
+        public ICollection<Order> Orders { get; set; }
         public DateTime StartTime { get; set; }
 
         public Session()
@@ -43,7 +43,7 @@ namespace BusinessLogic
         public void Finalize()
         {
             isActive = false;
-            Stores.RemoveRange(0, Stores.Count);
+            //Stores.RemoveRange(0, Stores.Count);
         }
     }
 }
