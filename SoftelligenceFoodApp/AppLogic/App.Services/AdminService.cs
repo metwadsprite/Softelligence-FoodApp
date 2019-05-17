@@ -42,7 +42,7 @@ namespace Logic.Implementations
 
         }
 
-        public Session GetCurrentSession()
+        public Session GetActiveSession()
         {
             return null;
         }

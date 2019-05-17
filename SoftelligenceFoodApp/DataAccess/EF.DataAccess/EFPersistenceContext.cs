@@ -6,27 +6,41 @@ namespace EF.DataAccess
 {
     public class EFPersistenceContext : IPersistenceContext
     {
-        public ISessionsRepository GetSessionsRepository()
-        {   
+        private EntitiesMapper mapper = null;
+        private IStoresRepository storesRepository;
+        private ISessionsRepository sessionsRepository;
+        private IUsersRepository usersRepository;
 
-            throw new System.NotImplementedException();
+        public EFPersistenceContext(EntitiesMapper mapper)
+        {
+            this.mapper = mapper;
+        }
+
+        public ISessionsRepository GetSessionsRepository()
+        {
+
+            return sessionsRepository;
         }
 
         public IStoresRepository GetStoresRepository()
-        {   
+        {
 
-            throw new System.NotImplementedException();
+            return storesRepository;
         }
 
         public IUsersRepository GetUsersRepository()
         {
-            throw new System.NotImplementedException();
+            return usersRepository;
         }
 
         public void Initialize(IServiceCollection services, string connectionString)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(connectionString));
+            var dbContext = services.BuildServiceProvider().GetService<ApplicationDbContext>();
+            storesRepository = new StoreRepositoryEF(dbContext, mapper);
+            sessionsRepository = new SessionsRepositoryEF(dbContext, mapper);
+            usersRepository = new UserRepositoryEF(dbContext, mapper);
         }
     }
 }

@@ -11,6 +11,12 @@
     <Compile Remove="Migrations\20190514130326_InitialCreate.Designer.cs" />
     <Compile Remove="Migrations\20190514130926_InitialCreate.cs" />
     <Compile Remove="Migrations\20190514130926_InitialCreate.Designer.cs" />
+    <Compile Remove="Migrations\20190516124255_UpdateStoreEntity.cs" />
+    <Compile Remove="Migrations\20190516124255_UpdateStoreEntity.Designer.cs" />
+    <Compile Remove="Migrations\20190516124837_UpdateStoreEntity.cs" />
+    <Compile Remove="Migrations\20190516124837_UpdateStoreEntity.Designer.cs" />
+    <Compile Remove="Migrations\20190516124951_UpdateStoreEntity.cs" />
+    <Compile Remove="Migrations\20190516124951_UpdateStoreEntity.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
