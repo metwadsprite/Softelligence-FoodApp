@@ -28,7 +28,7 @@ namespace BusinessLogic
         {
             Stores.Remove(Stores.Where(store => store.Id == storeId).SingleOrDefault());
         }
-        public void AddOrder()
+        public void AddOrder(Order orderToAdd)
         {
 
         }

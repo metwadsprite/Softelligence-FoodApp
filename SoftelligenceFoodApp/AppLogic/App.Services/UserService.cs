@@ -23,10 +23,12 @@ namespace Logic.Implementations
             return dataContext.GetSessionsRepository().GetActiveSession();
         }
         //+inf order , store and menuitem
-        public void PlaceOrder(Store store, int menuItemId)
+        public void PlaceOrder(Store store, MenuItem menuItem)
         {
             Session currentSession = GetActiveSession();
-            Session.addORder
+            user.CreateOrder(store, menuItem);
+            currentSession.AddOrder(user.GetCurrentOrder());
+            dataContext.GetSessionsRepository.Update(currentSession);
             //1.get current session
             //2.session.addOrder
             //3.save session, sessionRepo.Update(currentSession);
