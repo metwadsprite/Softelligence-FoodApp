@@ -12,10 +12,5 @@ namespace BusinessLogic
         public decimal Price { get; set; }
         public Store Store { get; set; }
 
-        public void Create(Store store, string details)
-        {
-            this.Store = store;
-            this.Details = details;
-        }
     }
 }
