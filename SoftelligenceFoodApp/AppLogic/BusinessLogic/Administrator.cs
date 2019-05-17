@@ -34,17 +34,9 @@ namespace BusinessLogic
         public void Update(Store storeToUpdate, Store newStore)
         {
             var storeRepo = context.GetStoresRepository();
-            List<Store> stores = storeRepo.GetAll().ToList();
-            if( storeToUpdate != null && newStore != null)
+            if (storeToUpdate != null)
             {
-                foreach(Store var in storeRepo.GetAll())
-                {
-                    if (var.Equals(storeToUpdate))
-                    {
-                        stores.RemoveAt(storeToUpdate.Id - 1);
-                        stores.Insert(storeToUpdate.Id - 1,newStore);
-                    }
-                }
+                storeRepo.Update(storeToUpdate);
             }
             else
             {
@@ -52,20 +44,11 @@ namespace BusinessLogic
             }
         }
 
-        public void Remove(int storeId)
+        public void Remove(Store storeToRemove)
         {
             var storeRepo = context.GetStoresRepository();
-            List<Store> stores = storeRepo.GetAll().ToList();
-
-            foreach (Store var in stores)
-            {
-                if(var.Id == storeId)
-                {
-                    stores.RemoveAt(var.Id);
-                    break;
-                }
-            }
-           
+            storeRepo.Remove(storeToRemove);
+        
         }
 
         public List<Store> GetStoresList()
@@ -80,7 +63,8 @@ namespace BusinessLogic
 
         public Session GetActiveSession()
         {
-            return null;
+            var sessionsRep = context.GetSessionsRepository();
+            return sessionsRep.GetActiveSession();
         }
 
         public void UpdateSession(Session activeSession)
