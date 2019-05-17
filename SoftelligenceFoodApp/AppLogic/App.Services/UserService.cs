@@ -26,16 +26,28 @@ namespace Logic.Implementations
         public void PlaceOrder(Store store, MenuItem menuItem)
         {
             Session currentSession = GetActiveSession();
-            user.CreateOrder(store, menuItem);
-            currentSession.AddOrder(user.GetCurrentOrder());
+
+            Order newOrder = new Order();
+            newOrder.Store = store;
+            newOrder.RecipientName = user.Name;
+            newOrder.Price = menuItem.Price;
+            newOrder.Details = menuItem.Details;
+
+            currentSession.AddOrder(newOrder);
             dataContext.GetSessionsRepository.Update(currentSession);
             //1.get current session
             //2.session.addOrder
             //3.save session, sessionRepo.Update(currentSession);
         }
         //order info to change
-        public void ChangeOrder(Order newOrder)
+        public void ChangeOrder(Store store, MenuItem menuItem)
         {
+            Order newOrder = new Order();
+            newOrder.Store = store;
+            newOrder.RecipientName = user.Name;
+            newOrder.Price = menuItem.Price;
+            newOrder.Details = menuItem.Details;
+
             user.ChangeOrder(newOrder);
         }
         public void CancelOrder()
