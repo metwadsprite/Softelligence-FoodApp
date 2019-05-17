@@ -21,34 +21,19 @@ namespace BusinessLogic
         public void AddStore(Store storeToAdd)
         {
             var storeRepo = context.GetStoresRepository();
-            if(storeToAdd != null)
-            {
-                storeRepo.Add(storeToAdd);
-            }
-            else
-            {
-                throw new StoreNotFoundException();
-            }
+            storeRepo.Add(storeToAdd);
         }
 
-        public void Update(Store storeToUpdate, Store newStore)
+        public void Update(Store storeToUpdate)
         {
             var storeRepo = context.GetStoresRepository();
-            if (storeToUpdate != null)
-            {
-                storeRepo.Update(storeToUpdate);
-            }
-            else
-            {
-                throw new StoreNotFoundException();
-            }
+            storeRepo.Update(storeToUpdate);
         }
 
         public void Remove(Store storeToRemove)
         {
             var storeRepo = context.GetStoresRepository();
             storeRepo.Remove(storeToRemove);
-        
         }
 
         public List<Store> GetStoresList()
@@ -56,9 +41,10 @@ namespace BusinessLogic
             return context.GetStoresRepository().GetAll().ToList();
         }
 
-        public void CreateSession()
+        public void CreateSession(Session sessionToCreate)
         {
-
+            var sessionsRepo = context.GetSessionsRepository();
+            sessionsRepo.Create(sessionToCreate);
         }
 
         public Session GetActiveSession()
