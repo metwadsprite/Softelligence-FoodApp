@@ -10,6 +10,11 @@ namespace BusinessLogic
         private IStoresRepository storesRepository;
         private IUsersRepository usersRepository;
 
+        public int Id { get; set; }
+        public ICollection<Store> ActiveStores { get; set; }
+        public DateTime StartTime { get; set; }
+        public bool IsActive { get; set; }
+
         public Session(IPersistenceContext persistenceContext)
         {
             storesRepository = persistenceContext.GetStoresRepository();
