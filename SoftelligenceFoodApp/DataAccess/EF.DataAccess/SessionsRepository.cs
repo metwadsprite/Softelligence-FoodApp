@@ -17,5 +17,10 @@ namespace EF.DataAccess
         {
             throw new NotImplementedException();
         }
+
+        public void Update(Session sessionToUpdate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

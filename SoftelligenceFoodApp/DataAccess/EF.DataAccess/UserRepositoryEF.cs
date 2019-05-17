@@ -22,22 +22,23 @@ namespace EF.DataAccess
         public User GetById(int id)
         {
 
-            var userWithId = dbContext.Users.SingleOrDefault( user => user.Id == id);
+            var userWithId = dbContext.Users.SingleOrDefault(user => user.Id == id);
 
-            if(userWithId == null)
+            if (userWithId == null)
             {
                 throw new UserNotFoundException("User not found");
             }
 
-            return mapper.MapData<User, UserDO>(userWithId); 
-            mapper.MapData<User, UserDO>()
+            return mapper.MapData<User, UserDO>(userWithId);
+            //mapper.MapData<User, UserDO>();
+        }
 
-        public string GetEmail(int id)
+        public String GetEmail(int id)
         {
             return GetById(id).Email;
         }
 
-        public string GetName(int id)
+        public String GetName(int id)
         {
             return GetById(id).Name;
         }
