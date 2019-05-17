@@ -58,8 +58,9 @@ namespace EF.DataAccess
         }
         public void Update(Store storeToUpdate)
         {
-           
-           
+            StoreDO storeDO = dbContext.Stores.SingleOrDefault(store => storeToUpdate.Id == store.Id);
+            //mapper.MapStoresDO(storeToUpdate, storeDO);
+            dbContext.Stores.Update(storeDO);
 
         }
     }
