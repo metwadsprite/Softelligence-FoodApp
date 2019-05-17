@@ -9,5 +9,6 @@ namespace BusinessLogic.Abstractions
     {
         void Create(Session sessionToCreate);
         Session GetActiveSession();
+        void Update(Session sessionToUpdate);
     }
 }

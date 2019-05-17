@@ -32,7 +32,9 @@ namespace UserInterface
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            var entitiesMapper = new EntitiesMapper();
+            entitiesMapper.InitializeMapper();
+            services.AddSingleton<EntitiesMapper>(entitiesMapper);
             services.AddSingleton<IPersistenceContext, EFPersistenceContext>();
             var persistContext = services.BuildServiceProvider().GetService<IPersistenceContext>();
             persistContext.Initialize(services, Configuration.GetConnectionString("ApplicationDbContextConnection"));

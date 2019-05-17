@@ -30,7 +30,7 @@ namespace EF.DataAccess
             var destination = new DestinationClass();
 
             destination = currentMapper.Map<SourceClass, DestinationClass>(item);
-
+            
             return destination;
         }
 
