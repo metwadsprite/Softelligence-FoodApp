@@ -42,5 +42,13 @@ namespace BusinessLogic
             }
             return orderToReturn;
         }
+        public void CreateOrder(Store store, MenuItem menuItem)
+        {
+            currentOrder = new Order();
+            currentOrder.Store = store;
+            currentOrder.Price = menuItem.Price;
+            currentOrder.Details = menuItem.Details;
+            currentOrder.RecipientName = this.Name;
+        }
     }
 }
