@@ -11,8 +11,7 @@ namespace EF.DataAccess.DataModel
         public int Id { get; set; }
         public string Name { get; set; }
         public MenuDO Menu { get; set; }
-        public SessionDO Session { get; set; }
-        public ICollection<OrderDO> Orders { get; set; }
+        public ICollection<SessionDO> Sessions { get; set; }
         public DateTime OpeningTime { get; set; }
         public DateTime ClosingTime { get; set; }
     }

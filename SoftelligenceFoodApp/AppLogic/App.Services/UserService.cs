@@ -18,14 +18,18 @@ namespace Logic.Implementations
             this.user = dataContext.GetUsersRepository().GetById(userId);
         }
 
-        public Session GetActiveSession()
+        private Session GetActiveSession()
         {
             return dataContext.GetSessionsRepository().GetActiveSession();
         }
-        //+inf order
-        public void PlaceOrder(Order newOrder)
+        //+inf order , store and menuitem
+        public void PlaceOrder(Store store, int menuItemId)
         {
-            user.PlaceOrder(newOrder);
+            Session currentSession = GetActiveSession();
+            Session.addORder
+            //1.get current session
+            //2.session.addOrder
+            //3.save session, sessionRepo.Update(currentSession);
         }
         //order info to change
         public void ChangeOrder(Order newOrder)
