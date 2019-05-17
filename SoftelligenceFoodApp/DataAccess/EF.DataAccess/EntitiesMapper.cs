@@ -16,13 +16,14 @@ namespace EF.DataAccess
         {
             mapperConfig = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<User, UserDO>();
-                cfg.CreateMap<Store, StoreDO>();
-                cfg.CreateMap<Session, SessionDO>();
+                cfg.CreateMap<User, UserDO>().PreserveReferences();
+                cfg.CreateMap<Store, StoreDO>().PreserveReferences();
+                cfg.CreateMap<Session, SessionDO>().PreserveReferences()
             });
 
             currentMapper = mapperConfig.CreateMapper();
         }
+
         public DestinationClass MapData<DestinationClass, SourceClass>(SourceClass item) where DestinationClass : new()
         {
 
@@ -33,6 +34,10 @@ namespace EF.DataAccess
             return destination;
         }
 
+        public void MapSessions(Session session, SessionDO sessionDO)
+        {
+            currentMapper.Map(session, sessionDO);
+        }
 
     }
 }

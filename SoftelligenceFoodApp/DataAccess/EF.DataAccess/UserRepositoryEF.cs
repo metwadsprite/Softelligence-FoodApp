@@ -30,7 +30,7 @@ namespace EF.DataAccess
             }
 
             return mapper.MapData<User, UserDO>(userWithId); 
-        }
+            mapper.MapData<User, UserDO>()
 
         public string GetEmail(int id)
         {
