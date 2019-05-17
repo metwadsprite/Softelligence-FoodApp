@@ -6,11 +6,15 @@ namespace BusinessLogic
 {
     public class Session
     {
-        private int Id;
-        private bool IsActive = false;
+        public int Id { get; set; }
+        //private bool IsActive = false;
         private List<Store> Stores;
         private List<Order> Orders;
 
+        public bool IsActive
+        {
+            get; private set;
+        }
         public void AddStore()
         {
 
