@@ -55,7 +55,8 @@ namespace BusinessLogic
 
         public void UpdateSession(Session activeSession)
         {
-
+            var sessionsRepo = context.GetSessionsRepository();
+            sessionsRepo.Update(activeSession);
         }
     }
 }
