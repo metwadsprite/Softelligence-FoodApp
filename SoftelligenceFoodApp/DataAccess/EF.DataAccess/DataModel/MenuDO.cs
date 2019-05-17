@@ -9,5 +9,6 @@ namespace EF.DataAccess.DataModel
         public int Id { get; set; }
         public string Hyperlink { get; set; }
         public string Image { get; set; }
+        public ICollection<MenuItemDO> MenuItems { get; set; }
     }
 }

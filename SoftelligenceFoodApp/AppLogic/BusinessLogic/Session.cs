@@ -1,48 +1,49 @@
-﻿using System;
+﻿using BusinessLogic.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace BusinessLogic
 {
     public class Session
     {
+        private bool isActive;
+
         public int Id { get; set; }
-        //private bool IsActive = false;
-        private List<Store> Stores;
-        private List<Order> Orders;
+        public List<Store> Stores { get; set; }
+        public List<Order> Orders { get; set; }
+        public DateTime StartTime { get; set; }
 
-        public bool IsActive
+        public Session()
         {
-            get; private set;
-        }
-        public void AddStore()
-        {
-
+            isActive = true;
         }
 
-        public void AddOrder()
+        public void AddStore(Store newStore)
+        {
+            Stores.Add(newStore);
+        }
+        public void RemoveStore(int storeId)
+        {
+            Stores.Remove(Stores.Where(store => store.Id == storeId).SingleOrDefault());
+        }
+        public void AddOrder(Order orderToAdd)
         {
 
         }
-
         public void UpdateOrder()
         {
 
         }
-
         public void CancelOrder()
         {
 
         }
-
-        public void FinalizeSession()
+        public void Finalize()
         {
-
-        }
-
-        public void DeactivateStore()
-        {
-
+            isActive = false;
+            Stores.RemoveRange(0, Stores.Count);
         }
     }
 }
