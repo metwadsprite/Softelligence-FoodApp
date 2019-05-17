@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using BusinessLogic;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EF.DataAccess.DataModel
 {
@@ -9,6 +11,6 @@ namespace EF.DataAccess.DataModel
         public int Id { get; set; }
         public string Hyperlink { get; set; }
         public string Image { get; set; }
-        public ICollection<MenuItemDO> MenuItems { get; set; }
+        public ICollection<MenuItem> MenuItems { get; set; }
     }
 }

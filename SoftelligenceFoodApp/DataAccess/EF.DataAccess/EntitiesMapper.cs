@@ -3,6 +3,7 @@ using BusinessLogic;
 using EF.DataAccess.DataModel;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace EF.DataAccess
@@ -19,6 +20,11 @@ namespace EF.DataAccess
                 cfg.CreateMap<User, UserDO>().PreserveReferences();
                 cfg.CreateMap<Store, StoreDO>().PreserveReferences();
                 cfg.CreateMap<Session, SessionDO>().PreserveReferences()
+                    .ForMember(dest => dest.Orders,
+                               source => source.Ignore())
+                    .ForMember(dest => dest.SessionStore,
+                                source => source.Ignore()
+                    );
             });
 
             currentMapper = mapperConfig.CreateMapper();
@@ -34,9 +40,13 @@ namespace EF.DataAccess
             return destination;
         }
 
-        public void MapSessions(Session session, SessionDO sessionDO)
+        public void MapSessionsDO(Session session, SessionDO sessionDO)
         {
             currentMapper.Map(session, sessionDO);
+            for(int i = 0; i < sessionDO.Orders.Count(); i++)
+            {
+                currentMapper.Map(session.Orders[0], sessionDO.Orders[0]);
+            }
         }
 
     }

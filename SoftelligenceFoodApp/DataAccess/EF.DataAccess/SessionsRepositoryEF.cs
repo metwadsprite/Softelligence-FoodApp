@@ -46,7 +46,7 @@ namespace EF.DataAccess
         {
            
             SessionDO sessionDO = dbContext.Sessions.SingleOrDefault(session => sessionToUpdate.Id == session.Id);
-            sessionDO.IsActive = sessionToUpdate.IsActive;
+            //sessionDO.IsActive = sessionToUpdate.IsActive;
             //sessionDO.Orders = sessionToUpdate;
             //new = mapper.MapData<SessionDO, Session>(newSession, sessionDo);
             
