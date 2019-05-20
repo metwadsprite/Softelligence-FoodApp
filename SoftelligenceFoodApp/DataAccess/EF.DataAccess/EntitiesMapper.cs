@@ -22,18 +22,18 @@ namespace EF.DataAccess
 
 
                 cfg.CreateMap<StoreDO, Store>().PreserveReferences()
-                    .ForMember(dest => dest.menuItems,
+                    .ForPath(dest => dest.MenuItems,
                                opt => opt.MapFrom(source => source.Menu.MenuItems));
                 cfg.CreateMap<Store, StoreDO>().PreserveReferences()
-                    .ForMember(dest => dest.Menu.MenuItems,
-                               opt => opt.MapFrom(source => source.menuItems));
+                    .ForPath(dest => dest.Menu.MenuItems,
+                               opt => opt.MapFrom(source => source.MenuItems));
 
 
                 cfg.CreateMap<Session, SessionDO>().PreserveReferences()
-                    .ForMember(dest => dest.SessionStore,
+                    .ForPath(dest => dest.SessionStore,
                                 source => source.Ignore());
                 cfg.CreateMap<SessionDO, Session>().PreserveReferences()
-                    .ForMember(dest => dest.Stores,
+                    .ForPath(dest => dest.Stores,
                                 source => source.Ignore());
             });
 

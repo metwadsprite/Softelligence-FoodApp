@@ -34,7 +34,7 @@ namespace Logic.Implementations
 
         public void RemoveStore(int storeId)
         {
-            administrator.Remove(storeId);
+            //administrator.Remove();
         }
 
         public void StartSession()
