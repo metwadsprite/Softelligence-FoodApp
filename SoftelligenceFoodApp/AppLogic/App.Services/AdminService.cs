@@ -27,30 +27,25 @@ namespace Logic.Implementations
             administrator.AddStore(storeToAdd);
         }
 
-        public void UpdateStore(Store storeToUpdate, Store newStore)
+        public void UpdateStore(Store storeToUpdate)
         {
-            administrator.Update(storeToUpdate, newStore);
+            administrator.Update(storeToUpdate);
         }
 
-        public void RemoveStore(int storeId)
+        public void RemoveStore(Store storeToRemove)
         {
-            //administrator.Remove();
+            administrator.Remove(storeToRemove);
         }
 
-        public void StartSession()
+        public void StartSession(Session sessionToStart)
         {
-
+            administrator.CreateSession(sessionToStart);
         }
 
         public Session GetActiveSession()
         {
-            return null;
+            return administrator.GetActiveSession();
         }
 
-        public void SyncDataContext()
-        {
-         
-
-        }
     }
 }
