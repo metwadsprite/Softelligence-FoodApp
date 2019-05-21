@@ -18,15 +18,23 @@ namespace EF.DataAccess
             mapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<User, UserDO>().PreserveReferences();
+                cfg.CreateMap<UserDO, User>().PreserveReferences();
 
-                cfg.CreateMap<Store, StoreDO>().PreserveReferences();
+
+                cfg.CreateMap<StoreDO, Store>().PreserveReferences()
+                    .ForPath(dest => dest.MenuItems,
+                               opt => opt.MapFrom(source => source.Menu.MenuItems));
+                cfg.CreateMap<Store, StoreDO>().PreserveReferences()
+                    .ForPath(dest => dest.Menu.MenuItems,
+                               opt => opt.MapFrom(source => source.MenuItems));
+
 
                 cfg.CreateMap<Session, SessionDO>().PreserveReferences()
-                    .ForMember(dest => dest.Orders,
-                               source => source.Ignore())
-                    .ForMember(dest => dest.SessionStore,
-                                source => source.Ignore()
-                    );
+                    .ForPath(dest => dest.SessionStore,
+                                source => source.Ignore());
+                cfg.CreateMap<SessionDO, Session>().PreserveReferences()
+                    .ForPath(dest => dest.Stores,
+                                source => source.Ignore());
             });
 
             currentMapper = mapperConfig.CreateMapper();
@@ -42,7 +50,7 @@ namespace EF.DataAccess
             return destination;
         }
 
-        public void MapSessionsDO(Session sessionSource, SessionDO sessionDODestination)
+        public void MapToSessionsDO(Session sessionSource, SessionDO sessionDODestination)
         {
             currentMapper.Map(sessionSource, sessionDODestination);
 
@@ -50,21 +58,20 @@ namespace EF.DataAccess
 
             for (int i = 0; i < sessionDODestination.Orders.Count(); i++)
             {
-                currentMapper.Map(sessionSource.Stores.ElementAt(0), sessionDODestination.SessionStore.ElementAt(0).Store);
+                currentMapper.Map(sessionSource.Stores.ElementAt(i), sessionDODestination.SessionStore.ElementAt(i).Store);
             }
         }
 
-        public void MapSession(SessionDO sessionDOSource, Session sessionDestination)
+        public void MapToSession(SessionDO sessionDOSource, Session sessionDestination)
         {
             currentMapper.Map(sessionDOSource, sessionDestination);
             currentMapper.Map(sessionDOSource.Orders, sessionDestination.Orders);
 
             for (int i = 0; i < sessionDestination.Orders.Count(); i++)
             {
-                currentMapper.Map(sessionDOSource.SessionStore.ElementAt(0).Store, sessionDestination.Stores.ElementAt(0));
+                currentMapper.Map(sessionDOSource.SessionStore.ElementAt(i).Store, sessionDestination.Stores.ElementAt(i));
             }
         }
-
 
     }
 }

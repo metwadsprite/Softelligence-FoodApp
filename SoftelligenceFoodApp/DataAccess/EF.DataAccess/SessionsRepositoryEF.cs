@@ -46,7 +46,7 @@ namespace EF.DataAccess
         {
 
             SessionDO sessionDO = dbContext.Sessions.SingleOrDefault(session => sessionToUpdate.Id == session.Id);
-            mapper.MapSessionsDO(sessionToUpdate, sessionDO);
+            mapper.MapToSessionsDO(sessionToUpdate, sessionDO);
             dbContext.Sessions.Update(sessionDO);
 
         }

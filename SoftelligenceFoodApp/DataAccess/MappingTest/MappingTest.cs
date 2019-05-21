@@ -114,35 +114,5 @@ namespace MappingTest
 
         }
 
-
-        [TestMethod]
-        public void TestSessionMapper()
-        {
-            Session session = new Session();
-            //Element 0 of list
-            Order order1 = new Order();
-            order1.Price = 5;
-            order1.Details = "Ceva";
-
-            //Element 1 of list
-            Order order2 = new Order();
-            order1.Price = 2;
-            order1.Details = "Yes";
-
-            session.Orders.Add(order1);
-            session.Orders.Add(order2);
-
-            SessionDO sessionDO = new SessionDO();
-            OrderDO orderDO1 = new OrderDO();
-            orderDO1.Price = 7;
-            orderDO1.Details = "3";
-            sessionDO.Orders.Add(orderDO1);
-
-            mapper.MapSessionsDO(session, sessionDO);
-
-            Assert.AreEqual(session.Orders[0], sessionDO.Orders[0]);
-
-
-        }
     }
 }
