@@ -44,14 +44,11 @@ namespace EF.DataAccess
 
         public void Update(Session sessionToUpdate)
         {
-           
-            SessionDO sessionDO = dbContext.Sessions.SingleOrDefault(session => sessionToUpdate.Id == session.Id);
-            sessionDO.IsActive = sessionToUpdate.IsActive;
-            //sessionDO.Orders = sessionToUpdate;
-            //new = mapper.MapData<SessionDO, Session>(newSession, sessionDo);
-            
 
-            throw new NotImplementedException();
+            SessionDO sessionDO = dbContext.Sessions.SingleOrDefault(session => sessionToUpdate.Id == session.Id);
+            mapper.MapToSessionsDO(sessionToUpdate, sessionDO);
+            dbContext.Sessions.Update(sessionDO);
+
         }
 
     }
