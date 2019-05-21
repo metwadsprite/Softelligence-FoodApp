@@ -58,15 +58,10 @@ namespace EF.DataAccess
         }
         public void Update(Store storeToUpdate)
         {
-            if (storeToUpdate != null)
-            {
-                dbContext.Stores.Update(mapper.MapData<StoreDO, Store>(storeToUpdate));
-                dbContext.SaveChanges();
-            }
-            else
-            {
-                throw new EntryPointNotFoundException();
-            }
+            StoreDO storeDO = dbContext.Stores.SingleOrDefault(store => storeToUpdate.Id == store.Id);
+            //mapper.MapStoresDO(storeToUpdate, storeDO);
+            dbContext.Stores.Update(storeDO);
+
         }
     }
 }

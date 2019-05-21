@@ -11,8 +11,8 @@ namespace BusinessLogic
         private bool isActive;
 
         public int Id { get; set; }
-        public List<Store> Stores { get; set; }
-        public List<Order> Orders { get; set; }
+        public ICollection<Store> Stores { get; set; }
+        public ICollection<Order> Orders { get; set; }
         public DateTime StartTime { get; set; }
 
         public Session()
@@ -30,20 +30,20 @@ namespace BusinessLogic
         }
         public void AddOrder(Order orderToAdd)
         {
-
+            Orders.Add(orderToAdd);
         }
-        public void UpdateOrder()
+        public void UpdateOrder(int orderId, Order updatedOrder)
         {
-
+            var orderToUpdate = Orders.Where(order => order.Id == orderId).SingleOrDefault();
+            orderToUpdate = updatedOrder;
         }
-        public void CancelOrder()
+        public void CancelOrder(int orderId)
         {
-
+            Orders.Remove(Orders.Where(order => order.Id == orderId).SingleOrDefault());
         }
         public void Finalize()
         {
             isActive = false;
-            Stores.RemoveRange(0, Stores.Count);
         }
     }
 }

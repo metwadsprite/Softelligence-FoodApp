@@ -9,7 +9,7 @@ namespace EF.DataAccess.DataModel
     {
         public int Id { get; set; }
         public ICollection<OrderDO> Orders { get; set; }
-        public ICollection<SessionStoreDO> SesionStore { get; set; }
+        public ICollection<SessionStoreDO> SessionStore { get; set; }
         public DateTime StartTime { get; set; }
         public bool IsActive { get; set; }
     }
