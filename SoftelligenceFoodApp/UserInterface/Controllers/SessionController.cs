@@ -8,7 +8,7 @@ namespace UserInterface.Controllers
 {
     public class SessionController : Controller
     {
-        public IActionResult Session()
+        public IActionResult Index()
         {
             return View();
         }
