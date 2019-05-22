@@ -1,14 +1,13 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewData["Title"] = "Session";
 }
+    <form asp-controller="Session" asp-action="NewSession" method="get">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">New Session</button>
+    </form>
+    <form asp-controller="Session" asp-action="History" method="get">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Sessions History</button>
+    </form>
 
-<h1>Index</h1>
 
-<form asp-controller="Session" asp-action="" method ="get">
-    <button type="submit" class="btn btn-primary">Bluish - btn-primary</button>
-</form>
-<form asp-controller="Session" asp-action="NewSession" method="get">
-    <button type="submit" class="btn btn-outline-primary">New Session</button>
-</form>

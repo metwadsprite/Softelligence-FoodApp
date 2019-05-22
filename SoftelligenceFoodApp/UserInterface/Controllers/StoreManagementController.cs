@@ -10,6 +10,7 @@ namespace UserInterface.Controllers
 {
     public class StoreManagementController : Controller
     {
+
         private AdminService adminService;
         public StoreManagementController(AdminService adminService)
         {
@@ -25,6 +26,10 @@ namespace UserInterface.Controllers
 
         [HttpGet]
         public IActionResult Add()
+        {
+            return View();
+        }
+        public IActionResult Update()
         {
             return View();
         }

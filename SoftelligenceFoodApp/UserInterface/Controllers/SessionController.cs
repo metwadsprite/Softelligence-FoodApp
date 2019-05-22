@@ -12,5 +12,15 @@ namespace UserInterface.Controllers
         {
             return View();
         }
+
+        public IActionResult History()
+        {
+            return View();
+        }
+        public IActionResult NewSession()
+        {
+            return View();
+        }
+
     }
 }

@@ -18,6 +18,7 @@ using EF.DataAccess;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Logic.Implementations;
 
+
 namespace UserInterface
 {
     public class Startup
@@ -38,6 +39,7 @@ namespace UserInterface
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
             
              services.AddDbContext<CustomIdentityDbContext>(options =>
                 options.UseSqlServer(
@@ -53,9 +55,7 @@ namespace UserInterface
 
             services.AddSingleton<EntitiesMapper>(entitiesMapper);            
             services.AddSingleton<IPersistenceContext>(persistContext);
-            services.AddSingleton<AdminService>();
-            
-
+            services.AddSingleton<AdminService>();     
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
