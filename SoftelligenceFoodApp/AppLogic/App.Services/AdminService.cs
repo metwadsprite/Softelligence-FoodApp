@@ -46,6 +46,5 @@ namespace Logic.Implementations
         {
             return administrator.GetActiveSession();
         }
-
     }
 }
