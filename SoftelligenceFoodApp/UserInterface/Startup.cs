@@ -13,6 +13,9 @@ using Microsoft.EntityFrameworkCore;
 using UserInterface.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using BusinessLogic.Abstractions;
+using EF.DataAccess;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace UserInterface
 {
@@ -34,14 +37,17 @@ namespace UserInterface
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            
+             services.AddDbContext<IdentityDbContext>();
+                   
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-
+                .AddEntityFrameworkStores<IdentityDbContext>();
+               
+            services.AddSingleton<EntitiesMapper>();
+            services.AddSingleton<IPersistenceContext, EFPersistenceContext>();
+            var persistContext = services.BuildServiceProvider().GetService<IPersistenceContext>();
+            persistContext.Initialize(services, Configuration.GetConnectionString("DefaultConnection"));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -70,7 +76,7 @@ namespace UserInterface
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Menu}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
