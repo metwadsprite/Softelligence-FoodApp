@@ -13,6 +13,9 @@ using Microsoft.EntityFrameworkCore;
 using UserInterface.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using BusinessLogic.Abstractions;
+using EF.DataAccess;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace UserInterface
 {
@@ -35,12 +38,21 @@ namespace UserInterface
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration.GetConnectionString("DefaultConnection"))); 
+           /* services.AddDefaultIdentity<IdentityUser>()
+                .AddDefaultUI(UIFramework.Bootstrap4)
+                .AddEntityFrameworkStores<EF.DataAccess.ApplicationDbContext>(); */
+
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<IdentityDbContext>();
+
+            services.AddSingleton<EntitiesMapper>();
+            services.AddSingleton<IPersistenceContext, EFPersistenceContext>();
+            var persistContext = services.BuildServiceProvider().GetService<IPersistenceContext>();
+            persistContext.Initialize(services, Configuration.GetConnectionString("DefaultConnection"));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
