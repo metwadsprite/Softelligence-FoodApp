@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StoreDO>
+﻿@model IEnumerable<Store>
 
 @{
     ViewData["Title"] = "StoreManagement";
@@ -15,14 +15,8 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Menu)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OpeningTime)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ClosingTime)
-            </th>
+                @Html.DisplayNameFor(model => model.Link)
+            </th>            
         </tr>
         @foreach (var item in Model)
         {
@@ -31,13 +25,7 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Menu)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OpeningTime)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ClosingTime)
+                    @Html.DisplayFor(modelItem => item.Link)
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
