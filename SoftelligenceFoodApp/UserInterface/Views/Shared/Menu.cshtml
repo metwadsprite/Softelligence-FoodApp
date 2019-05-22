@@ -3,13 +3,15 @@
     ViewData["Title"] = "Menu";
 }
 
-<html>
-<body>
-
-    <button type="button" class="btn btn-primary btn-lg btn-block"> Session </button>
-    <button type="button" class="btn btn-primary btn-lg btn-block" asp-area="" asp-controller="StoreManageController" asp-action="Index"> Stores Management </button>
-    <button type="button" class="btn btn-primary btn-lg btn-block"> Order </button>
-    <button type="button" class="btn btn-primary btn-lg btn-block"> Message </button>
-
-</body>
-</html>
+    <form asp-controller="StoreManagement" asp-action="Index" method="get">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Stores Management</button>
+    </form>
+    <form asp-controller="Session" asp-action="Index" method="get">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Session</button>
+    </form>
+    <form asp-controller="Order" asp-action="Index" method="get">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Order</button>
+    </form>
+    <form asp-controller="Message" asp-action="Index" method="get">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Message</button>
+    </form>    
