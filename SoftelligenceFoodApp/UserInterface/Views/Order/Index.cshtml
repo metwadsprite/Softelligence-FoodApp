@@ -1,0 +1,31 @@
+﻿@model Session
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+    <h1>Restaurants</h1>
+
+    <table class="table">
+
+        @foreach (var item in Model.Stores)
+        {
+            <tr>
+                <th>
+                    @if (item != null)
+                    {
+                        <form asp-controller="Order" asp-action="ChoseRestaurant" method="get">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                @Html.DisplayNameFor(modelItem => item);
+                            </button>
+                        </form>
+                    }
+                </th>
+            </tr>
+        }
+
+        <form asp-controller="Order" asp-action="PlaceOrder" method="get">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Place Order</button>
+        </form>
+
+    </table>
