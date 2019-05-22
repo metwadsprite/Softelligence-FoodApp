@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using BusinessLogic;
 
 namespace UserInterface.Data
 {
@@ -12,5 +13,6 @@ namespace UserInterface.Data
             : base(options)
         {
         }
+        public DbSet<BusinessLogic.Store> Store { get; set; }
     }
 }
