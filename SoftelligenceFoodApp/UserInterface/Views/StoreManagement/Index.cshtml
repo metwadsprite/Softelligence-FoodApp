@@ -4,18 +4,33 @@
     ViewData["Title"] = "Index";
 }
 
-    <h1>StoreManagement</h1>
+<h1>StoreManagement</h1>
 
-    <a class="nav-link text-dark" asp-area="" asp-controller="StoreManagement" asp-action="Add">Add Store</a>
-    <table class="table">
+<a class="nav-link text-dark" asp-area="" asp-controller="StoreManagement" asp-action="Add">Add Store</a>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Link)
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Link)
-            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Link)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
         </tr>
-        
-    </table>
+    }
+</table>
 
