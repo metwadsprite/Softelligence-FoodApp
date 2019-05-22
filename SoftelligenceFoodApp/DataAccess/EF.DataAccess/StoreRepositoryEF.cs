@@ -28,12 +28,16 @@ namespace EF.DataAccess
         public IEnumerable<Store> GetAll()
         {
             List<Store> StoresList = new List<Store>();
-            foreach(StoreDO var in dbContext.Stores)
+            var stores = dbContext.Stores.AsEnumerable();
+
+            foreach(var store in stores)
             {
-                StoresList.Add(mapper.MapData<Store, StoreDO>(var));
+                StoresList.Add(mapper.MapData<Store, StoreDO>(store));
             }
+
             return StoresList;
         }
+
         public void Add(Store storeToAdd)
         {
             if (storeToAdd != null)

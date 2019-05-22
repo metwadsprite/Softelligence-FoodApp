@@ -3,23 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BusinessLogic.Abstractions;
+using Logic.Implementations;
 using Microsoft.AspNetCore.Mvc;
 
 namespace UserInterface.Controllers
 {
-    public class StoreManageController : Controller
+    public class StoreManagementController : Controller
     {
-        private IStoresRepository storesRepository;
-        public StoreManageController(IPersistenceContext dataContext)
+        private AdminService adminService;
+        public StoreManagementController(AdminService adminService)
         {
-            storesRepository = dataContext.GetStoresRepository();
+            this.adminService = adminService;
 
         }
         public IActionResult Index()
         {
             ViewBag.ViewName = "StoreManagement";
-            var storesList = storesRepository.GetAll();
-            return View(storesRepository);
+            var storesList = adminService.GetAllStores();
+            return View(storesList);
+        }
+
+        [HttpGet]
+        public IActionResult Add()
+        {
+            return View();
         }
     }
 }
