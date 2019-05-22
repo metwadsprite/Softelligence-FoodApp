@@ -26,5 +26,9 @@ namespace UserInterface.Controllers
         {
             return View();
         }
+        public IActionResult Update()
+        {
+            return View();
+        }
     }
 }
