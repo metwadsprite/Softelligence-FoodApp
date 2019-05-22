@@ -10,7 +10,7 @@ namespace UserInterface.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Menu()
+        public IActionResult Index()
         {
             return View();
         }

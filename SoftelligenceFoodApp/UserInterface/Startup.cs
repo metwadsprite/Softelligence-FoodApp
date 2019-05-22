@@ -16,6 +16,8 @@ using Microsoft.Extensions.DependencyInjection;
 using BusinessLogic.Abstractions;
 using EF.DataAccess;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Logic.Implementations;
+
 
 namespace UserInterface
 {
@@ -38,22 +40,22 @@ namespace UserInterface
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<IdentityDbContext>(options =>
+            
+             services.AddDbContext<CustomIdentityDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection"))); 
-           /* services.AddDefaultIdentity<IdentityUser>()
-                .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<EF.DataAccess.ApplicationDbContext>(); */
+                    Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<IdentityDbContext>();
+                .AddEntityFrameworkStores<CustomIdentityDbContext>();
 
-            services.AddSingleton<EntitiesMapper>();
-            services.AddSingleton<IPersistenceContext, EFPersistenceContext>();
-            var persistContext = services.BuildServiceProvider().GetService<IPersistenceContext>();
-            persistContext.Initialize(services, Configuration.GetConnectionString("DefaultConnection"));
+            var entitiesMapper = new EntitiesMapper();
+            var persistContext = new EFPersistenceContext(entitiesMapper);
+            persistContext.Initialize(services, Configuration.GetConnectionString("AppConnection"));
 
+            services.AddSingleton<EntitiesMapper>(entitiesMapper);            
+            services.AddSingleton<IPersistenceContext>(persistContext);
+            services.AddSingleton<AdminService>();     
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -82,7 +84,7 @@ namespace UserInterface
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Menu}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

@@ -38,6 +38,7 @@ namespace EF.DataAccess
             services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(connectionString));
             var dbContext = services.BuildServiceProvider().GetService<ApplicationDbContext>();
+            dbContext.Database.EnsureCreated();
             storesRepository = new StoreRepositoryEF(dbContext, mapper);
             sessionsRepository = new SessionsRepositoryEF(dbContext, mapper);
             usersRepository = new UserRepositoryEF(dbContext, mapper);

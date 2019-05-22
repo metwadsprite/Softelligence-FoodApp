@@ -15,6 +15,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\AppLogic\App.Services\App.Services.csproj" />
     <ProjectReference Include="..\AppLogic\BusinessLogic\BusinessLogic.csproj" />
     <ProjectReference Include="..\DataAccess\EF.DataAccess\EF.DataAccess.csproj" />
   </ItemGroup>

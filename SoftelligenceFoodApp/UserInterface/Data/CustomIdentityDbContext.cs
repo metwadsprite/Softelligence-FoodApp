@@ -7,12 +7,12 @@ using BusinessLogic;
 
 namespace UserInterface.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class CustomIdentityDbContext : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public CustomIdentityDbContext(DbContextOptions<CustomIdentityDbContext> options)
             : base(options)
         {
         }
-        public DbSet<BusinessLogic.Store> Store { get; set; }
+       
     }
 }
