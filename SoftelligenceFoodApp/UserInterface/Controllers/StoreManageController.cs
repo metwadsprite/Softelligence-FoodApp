@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace UserInterface.Controllers
 {
-    public class StoreMangeController : Controller
+    public class StoreManageController : Controller
     {
         public IActionResult Index()
         {
+            ViewBag.ViewName = "StoreManagement";
             return View();
         }
     }
