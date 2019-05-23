@@ -17,17 +17,18 @@ namespace EF.DataAccess
         {
             mapperConfig = new MapperConfiguration(cfg =>
             {
+                cfg.CreateMap<MenuItem, MenuItemDO>().PreserveReferences();
+                cfg.CreateMap<MenuItemDO, MenuItem>().PreserveReferences();
+
+                cfg.CreateMap<Menu, MenuDO>().PreserveReferences();
+                cfg.CreateMap<MenuDO, Menu>().PreserveReferences();
+
                 cfg.CreateMap<User, UserDO>().PreserveReferences();
                 cfg.CreateMap<UserDO, User>().PreserveReferences();
 
 
-                cfg.CreateMap<StoreDO, Store>().PreserveReferences()
-                    .ForPath(dest => dest.MenuItems,
-                               opt => opt.MapFrom(source => source.Menu.MenuItems));
-                cfg.CreateMap<Store, StoreDO>().PreserveReferences()
-                    .ForPath(dest => dest.Menu.MenuItems,
-                               opt => opt.MapFrom(source => source.MenuItems));
-
+                cfg.CreateMap<StoreDO, Store>().PreserveReferences();
+                cfg.CreateMap<Store, StoreDO>().PreserveReferences();
 
                 cfg.CreateMap<Session, SessionDO>().PreserveReferences()
                     .ForPath(dest => dest.SessionStore,
@@ -43,9 +44,7 @@ namespace EF.DataAccess
         public DestinationClass MapData<DestinationClass, SourceClass>(SourceClass item) where DestinationClass : new()
         {
 
-            var destination = new DestinationClass();
-
-            destination = currentMapper.Map<SourceClass, DestinationClass>(item);
+            var destination = currentMapper.Map<SourceClass, DestinationClass>(item);
             
             return destination;
         }

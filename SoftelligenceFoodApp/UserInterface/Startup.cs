@@ -50,6 +50,7 @@ namespace UserInterface
                 .AddEntityFrameworkStores<CustomIdentityDbContext>();
 
             var entitiesMapper = new EntitiesMapper();
+            entitiesMapper.InitializeMapper();
             var persistContext = new EFPersistenceContext(entitiesMapper);
             persistContext.Initialize(services, Configuration.GetConnectionString("AppConnection"));
 

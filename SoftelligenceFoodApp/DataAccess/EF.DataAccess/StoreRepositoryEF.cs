@@ -42,7 +42,9 @@ namespace EF.DataAccess
         {
             if (storeToAdd != null)
             {
-                dbContext.Stores.Add(mapper.MapData<StoreDO, Store>(storeToAdd));
+                var store = mapper.MapData<StoreDO, Store>(storeToAdd);
+                dbContext.Stores.Add(store);
+                dbContext.SaveChanges();
             }
             else
             {
