@@ -26,7 +26,7 @@ namespace UserInterface.Controllers
             catch(Exception)
             {
             }
-            
+
             return View(activeSession);
         }
     }

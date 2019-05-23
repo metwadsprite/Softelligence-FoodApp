@@ -18,14 +18,11 @@ else
     {
         <tr>
             <th>
-                @if (item != null)
-                {
-                    <form asp-controller="Order" asp-action="ChoseRestaurant" method="get">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block">
-                            @Html.DisplayNameFor(modelItem => item);
-                        </button>
-                    </form>
-                }
+                 <form asp-controller="Order" asp-action="ChoseRestaurant" method="get">
+                     <button type="submit" class="btn btn-primary btn-lg btn-block">
+                        @Html.DisplayNameFor(modelItem => item);
+                     </button>
+                 </form>
             </th>
         </tr>
     }
