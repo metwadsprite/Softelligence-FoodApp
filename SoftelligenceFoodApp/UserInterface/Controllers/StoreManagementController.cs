@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLogic;
 using BusinessLogic.Abstractions;
 using Logic.Implementations;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,16 @@ namespace UserInterface.Controllers
             return View(storesList);
         }
 
+        [HttpPost]
+        public IActionResult Add([Bind("Id,Name,Link")] Store newStore)
+        {
+            if(ModelState.IsValid)
+            {
+                adminService.AddStore(newStore);
+
+            }
+            return RedirectToAction("Index");
+        }
         [HttpGet]
         public IActionResult Add()
         {
