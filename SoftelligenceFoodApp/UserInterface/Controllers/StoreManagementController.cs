@@ -26,10 +26,10 @@ namespace UserInterface.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([Bind("Id,Name,Link")] Store newStore)
+        public IActionResult Add([FromForm]Store newStore)
         {
             if(ModelState.IsValid)
-            {
+            {               
                 adminService.AddStore(newStore);
 
             }
@@ -38,7 +38,9 @@ namespace UserInterface.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            return View();
+            var store = new Store();
+            store.Menu = new Menu();
+            return View(store);
         }
         public IActionResult Update()
         {
