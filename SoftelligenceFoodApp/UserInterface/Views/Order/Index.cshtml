@@ -4,29 +4,35 @@
     ViewData["Title"] = "Index";
 }
 
+@if (Model == null)
+{
+    <h1>No session is currently active</h1>
+}
+else
+{
     <h1>Restaurants</h1>
 
-    <table class="table">
+    <table>
 
-        @foreach (var item in Model.Stores)
+        @foreach (var store in Model.Stores)
         {
             <tr>
                 <th>
-                    @if (item != null)
-                    {
-                        <form asp-controller="Order" asp-action="ChoseRestaurant" method="get">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block">
-                                @Html.DisplayNameFor(modelItem => item);
-                            </button>
-                        </form>
-                    }
+                    <form asp-controller="Order" asp-action="PlaceRestaurantOrder" asp-route-store="@store.Id" method="get">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block">
+                            @Html.DisplayNameFor(modelItem => store);
+                        </button>
+                    </form>
                 </th>
             </tr>
         }
 
-        <form asp-controller="Order" asp-action="PlaceOrder" method="get">
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Place Order</button>
-        </form>
-
     </table>
+}
+
+    <form asp-controller="Order" asp-action="PlaceOrder" method="get">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Place Order</button>
+    </form>
+
+
 

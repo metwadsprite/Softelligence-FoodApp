@@ -17,7 +17,7 @@ using BusinessLogic.Abstractions;
 using EF.DataAccess;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Logic.Implementations;
-
+using UserInterface.Controllers;
 
 namespace UserInterface
 {
@@ -50,6 +50,7 @@ namespace UserInterface
                 .AddEntityFrameworkStores<CustomIdentityDbContext>();
 
             var entitiesMapper = new EntitiesMapper();
+            entitiesMapper.InitializeMapper();
             var persistContext = new EFPersistenceContext(entitiesMapper);
             persistContext.Initialize(services, Configuration.GetConnectionString("AppConnection"));
 
@@ -57,6 +58,7 @@ namespace UserInterface
             services.AddSingleton<IPersistenceContext>(persistContext);
             services.AddSingleton<AdminService>();     
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

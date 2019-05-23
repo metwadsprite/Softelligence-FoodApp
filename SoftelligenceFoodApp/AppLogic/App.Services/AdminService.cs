@@ -14,6 +14,7 @@ namespace Logic.Implementations
         public AdminService(IPersistenceContext dataContext)
         {
             this.dataContext = dataContext;
+            this.administrator = new Administrator(dataContext);
         }
 
         public IEnumerable<Store> GetAllStores()

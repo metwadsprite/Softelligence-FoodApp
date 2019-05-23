@@ -25,15 +25,23 @@ namespace UserInterface.Controllers
             return View(storesList);
         }
 
+        [HttpPost]
+        public IActionResult Add([FromForm]Store newStore)
+        {
+            if(ModelState.IsValid)
+            {               
+                adminService.AddStore(newStore);
+
+            }
+            return RedirectToAction("Index");
+        }
+        [HttpGet]
         public IActionResult Add()
         {
-            return View();
+            var store = new Store();
+            store.Menu = new Menu();
+            return View(store);
         }
-        public IActionResult Add(Store store)
-        {
-            return View();
-        }
-
         public IActionResult Update()
         {
             return View();
