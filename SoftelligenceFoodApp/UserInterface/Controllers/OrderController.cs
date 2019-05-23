@@ -19,7 +19,14 @@ namespace UserInterface.Controllers
 
         public IActionResult Index()
         {
-            activeSession = sessionRepository.GetActiveSession();
+            try
+            {
+                activeSession = sessionRepository.GetActiveSession();
+            }
+            catch(Exception)
+            {
+            }
+            
             return View(activeSession);
         }
     }
