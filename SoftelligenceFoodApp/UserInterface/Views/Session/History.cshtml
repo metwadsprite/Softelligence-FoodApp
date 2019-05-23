@@ -3,13 +3,30 @@
     ViewData["Title"] = "SessionHistory";
 }
 
-<h1>Session History</h1>
+<h1>Sessions History</h1>
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Id)
+            Day
+        </th>
+        <th>
+            Start time
         </th>
     </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime.DayOfYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime.TimeOfDay)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) 
+            </td>
+        </tr>
+    }
 </table>
 

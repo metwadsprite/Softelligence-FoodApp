@@ -4,9 +4,9 @@
     ViewData["Title"] = "AddStore";
 }
 
-<h1>AddStore</h1>
+<h1>Add Restaurant</h1>
 
-<h4>Store</h4>
+<h4>Restaurant</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -24,6 +24,9 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+            <div class="col-md-offset-2 col-md-10" style="color:green">
+                @ViewBag.Message
             </div>
         </form>
     </div>

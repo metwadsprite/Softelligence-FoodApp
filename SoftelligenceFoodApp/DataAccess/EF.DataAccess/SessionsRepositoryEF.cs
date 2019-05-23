@@ -50,6 +50,16 @@ namespace EF.DataAccess
             dbContext.Sessions.Update(sessionDO);
 
         }
+        public IEnumerable<Session> GetAll()
+        {
+            List<Session> SessionsList = new List<Session>();
+            var sessions = dbContext.Sessions.AsEnumerable();
 
+            foreach (var session in sessions)
+            {
+                SessionsList.Add(mapper.MapData<Session, SessionDO>(session));
+            }
+            return SessionsList;
+        }
     }
 }

@@ -1,6 +1,24 @@
-﻿
+﻿@model IEnumerable<Store>
 @{
     ViewData["Title"] = "NewSession";
 }
 
-<h1>New Session</h1>
+<h1>Create New Session</h1>
+
+<h5>Choose Stores</h5>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+        </tr>
+    }
+</table>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLogic;
 using BusinessLogic.Abstractions;
 using Logic.Implementations;
 using Microsoft.AspNetCore.Mvc;
@@ -24,11 +25,15 @@ namespace UserInterface.Controllers
             return View(storesList);
         }
 
-        [HttpGet]
         public IActionResult Add()
         {
             return View();
         }
+        public IActionResult Add(Store store)
+        {
+            return View();
+        }
+
         public IActionResult Update()
         {
             return View();

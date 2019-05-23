@@ -46,5 +46,10 @@ namespace Logic.Implementations
         {
             return administrator.GetActiveSession();
         }
+        public IEnumerable<Session> GetAllSessions()
+        {
+            var storeRepo = dataContext.GetSessionsRepository();
+            return storeRepo.GetAll();
+        }
     }
 }
