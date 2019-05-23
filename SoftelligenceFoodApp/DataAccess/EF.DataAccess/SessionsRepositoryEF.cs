@@ -24,8 +24,11 @@ namespace EF.DataAccess
             if (sessionToCreate != null)
             {
                 SessionDO sessionDO = new SessionDO();
-                mapper.MapToSessionsDO(sessionToCreate, sessionDO);
+                //mapper.MapToSessionsDO(sessionToCreate, sessionDO);
+                sessionDO = mapper.MapData<SessionDO, Session>(sessionToCreate);
+                sessionDO.IsActive = true;
                 dbContext.Add(sessionDO);
+                dbContext.SaveChanges();
             }
             else
             {
@@ -35,11 +38,12 @@ namespace EF.DataAccess
 
         public Session GetActiveSession()
         {
-            SessionDO session = dbContext.Sessions.SingleOrDefault(s => s.IsActive == true);
+            SessionDO session = (SessionDO)dbContext.Sessions.FirstOrDefault(s => s.IsActive == true);
             if (session != null)
             {
                 Session activeSession = new Session();
-                mapper.MapToSession(session, activeSession);
+                //mapper.MapToSession(session, activeSession);
+                mapper.MapData<Session, SessionDO>(session);
                 return (activeSession);
             }
             else
