@@ -6,31 +6,62 @@ using BusinessLogic;
 using BusinessLogic.Abstractions;
 using Logic.Implementations;
 using Microsoft.AspNetCore.Mvc;
+using UserInterface.Models;
 
 namespace UserInterface.Controllers
 {
     public class StoreManagementController : Controller
     {
-
         private AdminService adminService;
         public StoreManagementController(AdminService adminService)
         {
             this.adminService = adminService;
-
         }
         public IActionResult Index()
         {
             ViewBag.ViewName = "StoreManagement";
-            var storesList = adminService.GetAllStores();
+            var storesList = new List<StoreVM>();
+
+            var storeList = adminService.GetAllStores();
+
+            foreach (var store in storeList)
+            {
+                var storeToDisplay = new StoreVM();
+                storeToDisplay.Id = store.Id;
+                storeToDisplay.Name = store.Name;
+                if (store.Menu != null)
+                {
+                    if (store.Menu.Hyperlink != null)
+                    {
+                        storeToDisplay.Hyperlink = store.Menu.Hyperlink;
+                    }
+                    if (store.Menu.Image != null)
+                    {
+                        storeToDisplay.Image = store.Menu.Image;
+                    }
+                }
+                
+                storesList.Add(storeToDisplay);
+            }
+
             return View(storesList);
         }
 
         [HttpPost]
-        public IActionResult Add([FromForm]Store newStore)
+        public IActionResult Add([FromForm]StoreVM newStore)
         {
             if(ModelState.IsValid)
-            {               
-                adminService.AddStore(newStore);
+            {
+                var storeToAdd = new Store
+                {
+                    Name = newStore.Name,
+                    Menu = new Menu
+                    {
+                        Hyperlink = newStore.Hyperlink,
+                        Image = newStore.Image
+                    }
+                };
+                adminService.AddStore(storeToAdd);
 
             }
             return RedirectToAction("Index");
@@ -38,8 +69,7 @@ namespace UserInterface.Controllers
         [HttpGet]
         public IActionResult Add()
         {
-            var store = new Store();
-            store.Menu = new Menu();
+            var store = new StoreVM();
             return View(store);
         }
         public IActionResult Update()

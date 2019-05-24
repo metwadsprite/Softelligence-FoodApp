@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace EF.DataAccess
 {
@@ -21,14 +22,18 @@ namespace EF.DataAccess
 
         public Store GetById(int id)
         {
-            var store = dbContext.Stores.FirstOrDefault(a => a.Id == id);
+            var store = dbContext.Stores
+                .Include(tempStore => tempStore.Menu)
+                .FirstOrDefault(a => a.Id == id);
             return mapper.MapData<Store, StoreDO>(store);
 
         }
         public ICollection<Store> GetAll()
         {
             List<Store> StoresList = new List<Store>();
-            var stores = dbContext.Stores.AsEnumerable();
+            var stores = dbContext.Stores
+                .Include(store => store.Menu)
+                .AsEnumerable();
 
             foreach(var store in stores)
             {
@@ -65,7 +70,6 @@ namespace EF.DataAccess
         public void Update(Store storeToUpdate)
         {
             StoreDO storeDO = dbContext.Stores.SingleOrDefault(store => storeToUpdate.Id == store.Id);
-            //mapper.MapStoresDO(storeToUpdate, storeDO);
             dbContext.Stores.Update(storeDO);
 
         }

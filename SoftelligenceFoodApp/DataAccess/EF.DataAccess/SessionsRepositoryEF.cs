@@ -6,6 +6,7 @@ using BusinessLogic;
 using BusinessLogic.Abstractions;
 using BusinessLogic.BusinessExceptions;
 using EF.DataAccess.DataModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace EF.DataAccess
 {
@@ -24,7 +25,6 @@ namespace EF.DataAccess
             if (sessionToCreate != null)
             {
                 SessionDO sessionDO = new SessionDO();
-                //mapper.MapToSessionsDO(sessionToCreate, sessionDO);
                 sessionDO = mapper.MapData<SessionDO, Session>(sessionToCreate);
                 sessionDO.IsActive = true;
                 dbContext.Add(sessionDO);
@@ -38,11 +38,13 @@ namespace EF.DataAccess
 
         public Session GetActiveSession()
         {
-            SessionDO session = (SessionDO)dbContext.Sessions.FirstOrDefault(s => s.IsActive == true);
+            SessionDO session = (SessionDO)dbContext.Sessions
+                .Include(tempSession => tempSession.Orders)
+                .Include(tempSession => tempSession.SessionStore)
+                .FirstOrDefault(s => s.IsActive == true);
             if (session != null)
             {
                 Session activeSession = new Session();
-                //mapper.MapToSession(session, activeSession);
                 mapper.MapData<Session, SessionDO>(session);
                 return (activeSession);
             }
@@ -56,7 +58,6 @@ namespace EF.DataAccess
         {
 
             SessionDO sessionDO = dbContext.Sessions.SingleOrDefault(session => sessionToUpdate.Id == session.Id);
-            mapper.MapToSessionsDO(sessionToUpdate, sessionDO);
             dbContext.Sessions.Update(sessionDO);
 
         }
