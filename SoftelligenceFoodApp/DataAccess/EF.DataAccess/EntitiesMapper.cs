@@ -32,6 +32,9 @@ namespace EF.DataAccess
 
                 cfg.CreateMap<Session, SessionDO>();
                 cfg.CreateMap<SessionDO, Session>();
+
+                cfg.CreateMap<SessionStoreDO, SessionStore>();
+                cfg.CreateMap<SessionStore, SessionStoreDO>();
             });
 
             currentMapper = mapperConfig.CreateMapper();

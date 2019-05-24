@@ -34,7 +34,7 @@ namespace UserInterface.Controllers
         public IActionResult PlaceRestaurantOrder(int id, [FromForm]String option, [FromForm]decimal price)
         {
 
-            Store storeWithId  = activeSession.Stores.ElementAt(id);
+            Store storeWithId  = activeSession.SessionStore.ElementAt(id);
             PlaceRestaurantOrderVM restaurant = new PlaceRestaurantOrderVM();
             restaurant.Option = option;
             restaurant.Price = price;
