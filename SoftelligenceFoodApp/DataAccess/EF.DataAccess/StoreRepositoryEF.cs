@@ -58,19 +58,25 @@ namespace EF.DataAccess
         }
         public void Remove(Store storeToRemove)
         {
+            StoreDO store = new StoreDO();
+            store = mapper.MapData<StoreDO, Store>(storeToRemove);
             if (storeToRemove != null)
             {
-                dbContext.Stores.Remove(mapper.MapData<StoreDO, Store>(storeToRemove));
+                dbContext.Stores.Remove(store);
             }
             else
             {
                 throw new EntryPointNotFoundException();
             }
+            dbContext.SaveChanges();
         }
         public void Update(Store storeToUpdate)
         {
             StoreDO storeDO = dbContext.Stores.SingleOrDefault(store => storeToUpdate.Id == store.Id);
+            storeDO.Name = storeToUpdate.Name;
+            storeDO.Menu.Hyperlink = storeToUpdate.Menu.Hyperlink;
             dbContext.Stores.Update(storeDO);
+            dbContext.SaveChanges();
 
         }
     }

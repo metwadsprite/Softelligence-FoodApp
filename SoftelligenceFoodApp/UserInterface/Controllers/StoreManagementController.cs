@@ -40,7 +40,7 @@ namespace UserInterface.Controllers
                         storeToDisplay.Image = store.Menu.Image;
                     }
                 }
-                
+
                 storesList.Add(storeToDisplay);
             }
 
@@ -50,7 +50,7 @@ namespace UserInterface.Controllers
         [HttpPost]
         public IActionResult Add([FromForm]StoreVM newStore)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var storeToAdd = new Store
                 {
@@ -77,9 +77,9 @@ namespace UserInterface.Controllers
         {
             Store store = new Store();
             var storeRepo = adminService.GetAllStores();
-            foreach(var item in storeRepo)
+            foreach (var item in storeRepo)
             {
-                if(item.Id == id)
+                if (item.Id == id)
                 {
                     store = item;
                 }
@@ -100,6 +100,35 @@ namespace UserInterface.Controllers
             }
             return View(store);
         }
+        [HttpPost]
+        public IActionResult Update([FromForm]Store newStore)
+        {
+            if (ModelState.IsValid)
+            {
+                adminService.UpdateStore(newStore);
+            }
+            return RedirectToAction("Index");
 
+        }
+        [HttpGet]
+        public IActionResult Delete(int? id)
+        {
+            Store store = new Store();
+            var storeRepo = adminService.GetAllStores();
+            store = storeRepo.SingleOrDefault(user => user.Id == id);
+            return View(store);
+        }
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var store = new Store();
+            if (ModelState.IsValid)
+            {
+                var storeRepo = adminService.GetAllStores();
+                store = storeRepo.SingleOrDefault(user => user.Id == id);
+                adminService.RemoveStore(store);
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
