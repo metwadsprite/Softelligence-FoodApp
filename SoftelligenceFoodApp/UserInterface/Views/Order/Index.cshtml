@@ -13,14 +13,13 @@ else
     <h1>Restaurants</h1>
 
     <table>
-
         @foreach (var store in Model.Stores)
         {
             <tr>
                 <th>
                     <form asp-controller="Order" asp-action="PlaceRestaurantOrder" asp-route-store="@store.Id" method="get">
                         <button type="submit" class="btn btn-primary btn-lg btn-block">
-                            @Html.DisplayNameFor(modelItem => store);
+                            @Html.DisplayFor(modelItem => store.Name)
                         </button>
                     </form>
                 </th>
@@ -29,10 +28,6 @@ else
 
     </table>
 }
-
-    <form asp-controller="Order" asp-action="PlaceOrder" method="get">
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Place Order</button>
-    </form>
 
 
 

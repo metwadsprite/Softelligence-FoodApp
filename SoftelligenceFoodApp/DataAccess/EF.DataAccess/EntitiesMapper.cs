@@ -32,10 +32,10 @@ namespace EF.DataAccess
 
                 cfg.CreateMap<Session, SessionDO>().PreserveReferences()
                     .ForPath(dest => dest.SessionStore,
-                                source => source.Ignore());
+                                opt => opt.MapFrom(source => source.Stores));
                 cfg.CreateMap<SessionDO, Session>().PreserveReferences()
                     .ForPath(dest => dest.Stores,
-                                source => source.Ignore());
+                                opt => opt.MapFrom(source => source.SessionStore));
             });
 
             currentMapper = mapperConfig.CreateMapper();
@@ -49,6 +49,7 @@ namespace EF.DataAccess
             return destination;
         }
 
+        
         public void MapToSessionsDO(Session sessionSource, SessionDO sessionDODestination)
         {
             currentMapper.Map(sessionSource, sessionDODestination);
@@ -63,14 +64,16 @@ namespace EF.DataAccess
 
         public void MapToSession(SessionDO sessionDOSource, Session sessionDestination)
         {
-            currentMapper.Map(sessionDOSource, sessionDestination);
-            currentMapper.Map(sessionDOSource.Orders, sessionDestination.Orders);
 
             for (int i = 0; i < sessionDestination.Orders.Count(); i++)
             {
                 currentMapper.Map(sessionDOSource.SessionStore.ElementAt(i).Store, sessionDestination.Stores.ElementAt(i));
             }
-        }
+
+            currentMapper.Map(sessionDOSource, sessionDestination);
+            currentMapper.Map(sessionDOSource.Orders, sessionDestination.Orders);
+
+        } 
 
     }
 }

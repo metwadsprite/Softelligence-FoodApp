@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using BusinessLogic.Abstractions;
 using BusinessLogic;
 using Logic.Implementations;
+using UserInterface.Models;
+using EF.DataAccess;
 
 namespace UserInterface.Controllers
 {
@@ -14,7 +16,7 @@ namespace UserInterface.Controllers
         private ISessionsRepository sessionRepository;
         Session activeSession;
         UserService user;
-        Store store;
+
         public OrderController(IPersistenceContext dataContext)
         {
             this.sessionRepository = dataContext.GetSessionsRepository();
@@ -23,28 +25,33 @@ namespace UserInterface.Controllers
 
         public IActionResult Index()
         {
-            try
-            {
-                activeSession = sessionRepository.GetActiveSession();
-            }
-            catch(Exception)
-            {
-            }
+            activeSession = sessionRepository.GetActiveSession();
 
             return View(activeSession);
         }
 
         [HttpGet]
-        public IActionResult PlaceRestaurantOrder(int id)
+        public IActionResult PlaceRestaurantOrder(int id, [FromForm]String option, [FromForm]decimal price)
         {
-            activeSession.Stores.ElementAt(id);
-            return View();
+
+            Store storeWithId  = activeSession.Stores.ElementAt(id);
+            PlaceRestaurantOrderVM restaurant = new PlaceRestaurantOrderVM();
+            restaurant.Option = option;
+            restaurant.Price = price;
+            restaurant.OrderStore = storeWithId;
+
+            return View(restaurant);
         }
 
-        public IActionResult PlaceOrder()
+        [HttpPost]
+        public IActionResult PlaceOrder(PlaceRestaurantOrderVM restaurant)
         {
+            return View(restaurant);
+        }
 
-            return View();
+        public IActionResult Back()
+        {
+            return RedirectToAction("Index");
         }
 
     }

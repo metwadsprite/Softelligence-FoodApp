@@ -25,7 +25,7 @@ namespace EF.DataAccess
             return mapper.MapData<Store, StoreDO>(store);
 
         }
-        public IEnumerable<Store> GetAll()
+        public ICollection<Store> GetAll()
         {
             List<Store> StoresList = new List<Store>();
             var stores = dbContext.Stores.AsEnumerable();
