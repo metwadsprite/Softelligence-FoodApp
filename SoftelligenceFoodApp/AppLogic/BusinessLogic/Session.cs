@@ -8,16 +8,16 @@ namespace BusinessLogic
 {
     public class Session
     {
-        private bool isActive;
 
         public int Id { get; set; }
         public ICollection<Store> Stores { get; set; }
         public ICollection<Order> Orders { get; set; }
         public DateTime StartTime { get; set; }
+        public bool IsActive { get; private set; }
 
         public Session()
         {
-            isActive = true;
+            IsActive = true;
         }
 
         public void AddStore(Store newStore)
@@ -43,7 +43,7 @@ namespace BusinessLogic
         }
         public void Finalize()
         {
-            isActive = false;
+            IsActive = false;
         }
     }
 }

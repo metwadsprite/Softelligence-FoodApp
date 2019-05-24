@@ -31,7 +31,6 @@ namespace UserInterface.Controllers
             if(ModelState.IsValid)
             {               
                 adminService.AddStore(newStore);
-
             }
             return RedirectToAction("Index");
         }
@@ -42,9 +41,34 @@ namespace UserInterface.Controllers
             store.Menu = new Menu();
             return View(store);
         }
-        public IActionResult Update()
+
+        public IActionResult Details(int? id)
         {
-            return View();
+            Store store = new Store();
+            var storeRepo = adminService.GetAllStores();
+            foreach(var item in storeRepo)
+            {
+                if(item.Id == id)
+                {
+                    store = item;
+                }
+            }
+            return View(store);
         }
+
+        public IActionResult Update(int? id)
+        {
+            Store store = new Store();
+            var storeRepo = adminService.GetAllStores();
+            foreach (var item in storeRepo)
+            {
+                if (item.Id == id)
+                {
+                    store = item;
+                }
+            }
+            return View(store);
+        }
+
     }
 }
