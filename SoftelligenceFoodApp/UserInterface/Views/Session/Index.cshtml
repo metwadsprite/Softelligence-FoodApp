@@ -1,12 +1,24 @@
-﻿
+﻿@model IEnumerable<Session>
 @{
 
     ViewData["Title"] = "Session";
 }
 
+@{string textButton = "New Session"; }
+
+@{ 
+    foreach(var item in Model)
+    {
+        if(item.IsActive == true)
+        {
+            textButton = "Active Session";
+        }
+    }
+}
+
 <div class="menu-container">
     <form asp-controller="Session" asp-action="NewSession" method="get">
-        <button type="submit" class="btn btn-primary btn-lg btn-block">New Session</button>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">@textButton</button>
     </form>
     <form asp-controller="Session" asp-action="History" method="get">
         <button type="submit" class="btn btn-primary btn-lg btn-block">Sessions History</button>

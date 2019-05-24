@@ -18,13 +18,15 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.StartTime.DayOfYear)
+               @Html.DisplayFor(modelItem => item.StartTime.Day)/
+               @Html.DisplayFor(modelItem => item.StartTime.Day)/
+               @Html.DisplayFor(modelItem => item.StartTime.Year)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartTime.TimeOfDay)
             </td>
             <td>
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) 
+                @Html.ActionLink("Details", "Details","Session",null, new { id = item.Id }) 
             </td>
         </tr>
     }

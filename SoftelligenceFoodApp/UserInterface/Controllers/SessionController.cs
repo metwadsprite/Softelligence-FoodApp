@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLogic;
 using Logic.Implementations;
 using Microsoft.AspNetCore.Mvc;
+using UserInterface.Models;
 
 namespace UserInterface.Controllers
 {
@@ -19,7 +21,8 @@ namespace UserInterface.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var sessionsList = adminService.GetAllSessions();
+            return View(sessionsList);
         }
 
         public IActionResult History()
@@ -31,9 +34,17 @@ namespace UserInterface.Controllers
         }
         public IActionResult NewSession()
         {
-            ViewBag.ViewName = "Session";
-            var storesList = adminService.GetAllStores();
-            return View(storesList);
+            SessionVM session = new SessionVM();
+            session.Sessions = adminService.GetAllSessions();
+            session.Stores = adminService.GetAllStores();
+            return View(session);
+           // var storesList = adminService.GetAllStores();
+           // return View(storesList);
+        }
+        public IActionResult Details(int? id)
+        {
+          
+            return View();
         }
 
     }
