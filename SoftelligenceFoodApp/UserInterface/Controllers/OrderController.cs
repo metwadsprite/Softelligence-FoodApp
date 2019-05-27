@@ -31,10 +31,11 @@ namespace UserInterface.Controllers
         }
 
         [HttpGet]
-        public IActionResult PlaceRestaurantOrder(int id, [FromForm]String option, [FromForm]decimal price)
+        public IActionResult PlaceRestaurantOrder(int id, [FromForm]string option, [FromForm]decimal price)
         {
+            activeSession = sessionRepository.GetActiveSession();
+            Store storeWithId = activeSession.Stores.SingleOrDefault(store => store.Id == id);
 
-            Store storeWithId  = activeSession.Stores.ElementAt(id);
             PlaceRestaurantOrderVM restaurant = new PlaceRestaurantOrderVM();
             restaurant.Option = option;
             restaurant.Price = price;
