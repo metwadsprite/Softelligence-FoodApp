@@ -38,14 +38,23 @@ namespace EF.DataAccess
 
         public Session GetActiveSession()
         {
-            SessionDO session = (SessionDO)dbContext.Sessions
+            SessionDO session = dbContext.Sessions
                 .Include(tempSession => tempSession.Orders)
                 .Include(tempSession => tempSession.SessionStore)
+                    .ThenInclude(sessstore => sessstore.Store)
+                        .ThenInclude(store => store.Menu)
                 .FirstOrDefault(s => s.IsActive == true);
             if (session != null)
             {
                 Session activeSession = new Session();
                 mapper.MapData<Session, SessionDO>(session);
+                activeSession.Stores = new List<Store>();
+
+                foreach (var sStore in session.SessionStore)
+                {
+                    activeSession.Stores.Add(mapper.MapData<Store, StoreDO>(sStore.Store));
+                }
+
                 return (activeSession);
             }
             else
@@ -56,19 +65,43 @@ namespace EF.DataAccess
 
         public void Update(Session sessionToUpdate)
         {
-
             SessionDO sessionDO = dbContext.Sessions.SingleOrDefault(session => sessionToUpdate.Id == session.Id);
-            dbContext.Sessions.Update(sessionDO);
 
+            sessionDO = mapper.MapData<SessionDO, Session>(sessionToUpdate);
+            sessionDO.SessionStore = new List<SessionStoreDO>();
+
+            foreach (var store in sessionToUpdate.Stores)
+            {
+                sessionDO.SessionStore.Add(new SessionStoreDO
+                {
+                    Store = mapper.MapData<StoreDO, Store>(store),
+                    Session = sessionDO
+                });
+            }
+
+            dbContext.Sessions.Update(sessionDO);
         }
         public IEnumerable<Session> GetAll()
         {
             List<Session> SessionsList = new List<Session>();
-            var sessions = dbContext.Sessions.AsEnumerable();
+            var sessions = dbContext.Sessions
+                .Include(tempSession => tempSession.Orders)
+                .Include(tempSession => tempSession.SessionStore)
+                    .ThenInclude(sStore => sStore.Store)
+                        .ThenInclude(store => store.Menu)
+                .AsEnumerable();
 
             foreach (var session in sessions)
             {
-                SessionsList.Add(mapper.MapData<Session, SessionDO>(session));
+                var sessionToAdd = mapper.MapData<Session, SessionDO>(session);
+                sessionToAdd.Stores = new List<Store>();
+
+                foreach (var sStore in session.SessionStore)
+                {
+                    sessionToAdd.Stores.Add(mapper.MapData<Store, StoreDO>(sStore.Store));
+                }
+
+                SessionsList.Add(sessionToAdd);
             }
             return SessionsList;
         }
