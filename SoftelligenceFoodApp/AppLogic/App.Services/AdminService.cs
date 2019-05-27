@@ -1,5 +1,4 @@
-﻿
-using BusinessLogic;
+﻿using BusinessLogic;
 using BusinessLogic.Abstractions;
 using System.Collections.Generic;
 
@@ -53,9 +52,9 @@ namespace Logic.Implementations
             return storeRepo.GetAll();
         }
 
-        public Store GetById(int id)
+        public Store GetStoreById(int id)
         {
-            return administrator.GetById(id);
+            return administrator.GetStoreById(id);
         }
     }
 }

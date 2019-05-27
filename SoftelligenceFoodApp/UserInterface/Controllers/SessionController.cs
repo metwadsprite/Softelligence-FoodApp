@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BusinessLogic;
-using EF.DataAccess;
-using Logic.Implementations;
+﻿using Logic.Implementations;
 using Microsoft.AspNetCore.Mvc;
 using UserInterface.Models;
 
@@ -30,8 +24,9 @@ namespace UserInterface.Controllers
             ViewBag.ViewName = "Session";
             var sessionList = adminService.GetAllSessions();
             return View(sessionList);
-           
+
         }
+
         public IActionResult NewSession()
         {
             SessionVM session = new SessionVM();
@@ -44,7 +39,5 @@ namespace UserInterface.Controllers
         {
             return View();
         }
-     
-
     }
 }

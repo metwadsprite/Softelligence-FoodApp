@@ -72,16 +72,17 @@ namespace UserInterface.Controllers
             return View(store);
         }
 
+        [HttpGet]
         public IActionResult Details(int? id)
         {
-            Store store = adminService.GetById(id.Value);
+            Store store = adminService.GetStoreById(id.Value);
             return View(store);
         }
 
         [HttpGet]
         public IActionResult Update(int? id)
         {
-            Store store = adminService.GetById(id.Value);
+            Store store = adminService.GetStoreById(id.Value);
             return View(store);
         }
 
@@ -99,7 +100,7 @@ namespace UserInterface.Controllers
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            Store store = adminService.GetById(id.Value);
+            Store store = adminService.GetStoreById(id.Value);
 
             return View(store);
         }
