@@ -38,19 +38,10 @@ namespace EF.DataAccess
 
         public Session GetActiveSession()
         {
-            // https://docs.microsoft.com/en-us/ef/core/querying/related-data#eager-loading
-            // https://stackoverflow.com/questions/38044451/entity-framework-core-eager-loading-then-include-on-a-collection
-
-            var session = dbContext.Sessions
-                .Include(s => s.SessionStore)
-                    .ThenInclude(ss => ss.Store)
-                        .ThenInclude(st => st.Menu)
-                .Include(s => s.Orders)
-                    .ThenInclude(ord => ord.User)
-                .Include(s => s.Orders)
-                    .ThenInclude(ord => ord.Store)
+            SessionDO session = (SessionDO)dbContext.Sessions
+                .Include(tempSession => tempSession.Orders)
+                .Include(tempSession => tempSession.SessionStore)
                 .FirstOrDefault(s => s.IsActive == true);
-
             if (session != null)
             {
                 Session activeSession = new Session();
