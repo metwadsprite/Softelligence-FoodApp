@@ -17,7 +17,7 @@ else
         {
             <tr>
                 <th>
-                    <form asp-controller="Order" asp-action="PlaceRestaurantOrder" asp-route-store="@store.Id" method="get">
+                    <form asp-controller="Order" asp-action="PlaceRestaurantOrder" asp-route-id="@store.Id" method="get">
                         <button type="submit" class="btn btn-primary btn-lg btn-block">
                             @Html.DisplayFor(modelItem => store.Name)
                         </button>

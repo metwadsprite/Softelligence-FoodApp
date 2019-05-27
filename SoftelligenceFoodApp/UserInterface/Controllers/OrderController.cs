@@ -15,6 +15,7 @@ namespace UserInterface.Controllers
     {
         private ISessionsRepository sessionRepository;
         Session activeSession;
+        PlaceRestaurantOrderVM curOrder;
         UserService user;
 
         public OrderController(IPersistenceContext dataContext)
@@ -22,32 +23,32 @@ namespace UserInterface.Controllers
             this.sessionRepository = dataContext.GetSessionsRepository();
             this.user = new UserService(dataContext);
         }
-
         public IActionResult Index()
         {
             activeSession = sessionRepository.GetActiveSession();
 
             return View(activeSession);
         }
-
         [HttpGet]
-        public IActionResult PlaceRestaurantOrder(int id, [FromForm]string option, [FromForm]decimal price)
+        public IActionResult PlaceRestaurantOrder(int? id)
         {
             activeSession = sessionRepository.GetActiveSession();
             Store storeWithId = activeSession.Stores.SingleOrDefault(store => store.Id == id);
 
-            PlaceRestaurantOrderVM restaurant = new PlaceRestaurantOrderVM();
-            restaurant.Option = option;
-            restaurant.Price = price;
-            restaurant.OrderStore = storeWithId;
+            var curOrder = new PlaceRestaurantOrderVM()
+            {
+                OrderStore = storeWithId,
+                Option = "",
+                Price = 0.0m
+            };
 
-            return View(restaurant);
+            return View(curOrder);
         }
 
         [HttpPost]
-        public IActionResult PlaceOrder(PlaceRestaurantOrderVM restaurant)
+        public IActionResult PlaceOrder([FromForm]PlaceRestaurantOrderVM orderVM)
         {
-            return View(restaurant);
+            return View(orderVM);
         }
 
         public IActionResult Back()
