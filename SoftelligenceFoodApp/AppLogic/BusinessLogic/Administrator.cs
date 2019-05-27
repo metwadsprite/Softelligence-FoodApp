@@ -59,6 +59,10 @@ namespace BusinessLogic
             sessionsRepo.Update(activeSession);
         }
 
-      
+        public Store GetById(int id)
+        {
+            var storeRepo = context.GetStoresRepository();
+            return storeRepo.GetById(id);
+        }
     }
 }
