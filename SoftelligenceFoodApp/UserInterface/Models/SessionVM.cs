@@ -9,7 +9,7 @@ namespace UserInterface.Models
     public class SessionVM
     {
         public IEnumerable<Store> Stores { get; set; }
-        public Session Session { get; set; }
+        public IEnumerable<Session> Sessions { get; set; }
 
     }
 }

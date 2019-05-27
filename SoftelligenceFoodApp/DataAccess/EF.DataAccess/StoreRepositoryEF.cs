@@ -3,17 +3,16 @@ using BusinessLogic;
 using EF.DataAccess.DataModel;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace EF.DataAccess
 {
-    public class StoreRepositoryEF: IStoresRepository
+    public class StoreRepositoryEF : IStoresRepository
     {
         private readonly ApplicationDbContext dbContext;
         private readonly EntitiesMapper mapper;
+
         public StoreRepositoryEF(ApplicationDbContext dbContext, EntitiesMapper mapper)
         {
             this.dbContext = dbContext;
@@ -28,6 +27,7 @@ namespace EF.DataAccess
             return mapper.MapData<Store, StoreDO>(store);
 
         }
+
         public ICollection<Store> GetAll()
         {
             List<Store> StoresList = new List<Store>();
@@ -35,7 +35,7 @@ namespace EF.DataAccess
                 .Include(store => store.Menu)
                 .AsEnumerable();
 
-            foreach(var store in stores)
+            foreach (var store in stores)
             {
                 StoresList.Add(mapper.MapData<Store, StoreDO>(store));
             }
@@ -56,13 +56,13 @@ namespace EF.DataAccess
                 throw new EntryPointNotFoundException();
             }
         }
+
         public void Remove(Store storeToRemove)
         {
-            StoreDO store = new StoreDO();
-            store = mapper.MapData<StoreDO, Store>(storeToRemove);
-            if (store != null)
+            StoreDO storeDO = dbContext.Stores.SingleOrDefault(store => storeToRemove.Id == store.Id);
+            if (storeDO != null)
             {
-                dbContext.Stores.Remove(store);
+                dbContext.Stores.Remove(storeDO);
             }
             else
             {
@@ -70,14 +70,21 @@ namespace EF.DataAccess
             }
             dbContext.SaveChanges();
         }
+
         public void Update(Store storeToUpdate)
         {
             StoreDO storeDO = dbContext.Stores.SingleOrDefault(store => storeToUpdate.Id == store.Id);
-            storeDO.Name = storeToUpdate.Name;
-            storeDO.Menu.Hyperlink = storeToUpdate.Menu.Hyperlink;
-            dbContext.Stores.Update(storeDO);
+            if (storeDO != null)
+            {
+                storeDO.Name = storeToUpdate.Name;
+                storeDO.Menu.Hyperlink = storeToUpdate.Menu.Hyperlink;
+                dbContext.Stores.Update(storeDO);
+            }
+            else
+            {
+                throw new EntryPointNotFoundException();
+            }
             dbContext.SaveChanges();
-
         }
     }
 }
