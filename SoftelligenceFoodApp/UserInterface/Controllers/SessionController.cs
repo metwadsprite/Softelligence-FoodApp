@@ -35,16 +35,18 @@ namespace UserInterface.Controllers
         public IActionResult NewSession()
         {
             SessionVM session = new SessionVM();
-            session.Sessions = adminService.GetAllSessions();
+            session.Session = adminService.GetActiveSession();
             session.Stores = adminService.GetAllStores();
             return View(session);
-           // var storesList = adminService.GetAllStores();
-           // return View(storesList);
         }
         public IActionResult Details(int? id)
         {
-          
             return View();
+        }
+        public IActionResult GetStoreOrders()
+        {
+            StoresOrders storeOrders = new StoresOrders();
+            return View(storeOrders);
         }
 
     }
