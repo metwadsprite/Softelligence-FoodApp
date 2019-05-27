@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using BusinessLogic;
-using BusinessLogic.Abstractions;
 using Logic.Implementations;
 using Microsoft.AspNetCore.Mvc;
 using UserInterface.Models;
@@ -13,18 +9,20 @@ namespace UserInterface.Controllers
     public class StoreManagementController : Controller
     {
         private AdminService adminService;
+
         public StoreManagementController(AdminService adminService)
         {
             this.adminService = adminService;
         }
+
         public IActionResult Index()
         {
             ViewBag.ViewName = "StoreManagement";
             var storesList = new List<StoreVM>();
 
-            var storeList = adminService.GetAllStores();
+            var storesToDisplay = adminService.GetAllStores();
 
-            foreach (var store in storeList)
+            foreach (var store in storesToDisplay)
             {
                 var storeToDisplay = new StoreVM();
                 storeToDisplay.Id = store.Id;
@@ -66,6 +64,7 @@ namespace UserInterface.Controllers
             }
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         public IActionResult Add()
         {
@@ -75,31 +74,17 @@ namespace UserInterface.Controllers
 
         public IActionResult Details(int? id)
         {
-            Store store = new Store();
-            var storeRepo = adminService.GetAllStores();
-            foreach (var item in storeRepo)
-            {
-                if (item.Id == id)
-                {
-                    store = item;
-                }
-            }
+            Store store = adminService.GetById(id.Value);
             return View(store);
         }
 
+        [HttpGet]
         public IActionResult Update(int? id)
         {
-            Store store = new Store();
-            var storeRepo = adminService.GetAllStores();
-            foreach (var item in storeRepo)
-            {
-                if (item.Id == id)
-                {
-                    store = item;
-                }
-            }
+            Store store = adminService.GetById(id.Value);
             return View(store);
         }
+
         [HttpPost]
         public IActionResult Update([FromForm]Store newStore)
         {
@@ -110,18 +95,20 @@ namespace UserInterface.Controllers
             return RedirectToAction("Index");
 
         }
+
         [HttpGet]
         public IActionResult Delete(int? id)
         {
             Store store = adminService.GetById(id.Value);
-            
+
             return View(store);
         }
+
         [HttpPost]
         public IActionResult Delete([FromForm]Store storeToRemove)
-        {            
+        {
             if (ModelState.IsValid)
-            {                
+            {
                 adminService.RemoveStore(storeToRemove);
             }
             return RedirectToAction("Index");
