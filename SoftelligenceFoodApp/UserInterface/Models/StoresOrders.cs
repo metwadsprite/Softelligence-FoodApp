@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace UserInterface.Models
 {
-    public class SessionVM
+    public class StoresOrders
     {
-        public IEnumerable<Store> Stores { get; set; }
-        public Session Session { get; set; }
+
+        public Session session { get; set; }
+        public IEnumerable<Order> orders { get; set; }
+
 
     }
 }

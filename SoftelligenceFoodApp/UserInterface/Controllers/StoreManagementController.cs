@@ -113,20 +113,16 @@ namespace UserInterface.Controllers
         [HttpGet]
         public IActionResult Delete(int? id)
         {
-            Store store = new Store();
-            var storeRepo = adminService.GetAllStores();
-            store = storeRepo.SingleOrDefault(user => user.Id == id);
+            Store store = adminService.GetById(id.Value);
+            
             return View(store);
         }
         [HttpPost]
-        public IActionResult Delete(int id)
-        {
-            var store = new Store();
+        public IActionResult Delete([FromForm]Store storeToRemove)
+        {            
             if (ModelState.IsValid)
-            {
-                var storeRepo = adminService.GetAllStores();
-                store = storeRepo.SingleOrDefault(user => user.Id == id);
-                adminService.RemoveStore(store);
+            {                
+                adminService.RemoveStore(storeToRemove);
             }
             return RedirectToAction("Index");
         }

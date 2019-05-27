@@ -60,7 +60,7 @@ namespace EF.DataAccess
         {
             StoreDO store = new StoreDO();
             store = mapper.MapData<StoreDO, Store>(storeToRemove);
-            if (storeToRemove != null)
+            if (store != null)
             {
                 dbContext.Stores.Remove(store);
             }

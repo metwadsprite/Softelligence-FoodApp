@@ -52,5 +52,10 @@ namespace Logic.Implementations
             var storeRepo = dataContext.GetSessionsRepository();
             return storeRepo.GetAll();
         }
+
+        public Store GetById(int id)
+        {
+            return administrator.GetById(id);
+        }
     }
 }
