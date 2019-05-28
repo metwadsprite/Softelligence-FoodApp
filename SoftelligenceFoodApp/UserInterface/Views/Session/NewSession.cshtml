@@ -8,7 +8,7 @@
 @{bool activeSesison = false;
     Session currentSession = new Session();
     decimal price = 0.00m;
-    }
+}
 @{
     foreach (var item in Model.Sessions)
     {
@@ -27,147 +27,147 @@
     <div class="row">
         @foreach (var item in currentSession.Stores)
         {
-         price = 0.00m;
+            price = 0.00m;
 
-          <div class="column" style="background-color:#ccdcff;">
+            <div class="column" style="background-color:#ccdcff;">
 
-            <h2>@item.Name</h2>
-            <hr />
+                <h2>@item.Name</h2>
+                <hr />
 
-             @foreach (var order in currentSession.Orders)
-              {   
+                @foreach (var order in currentSession.Orders)
+                {
                     if (order.Store.Id == item.Id)
                     {
                         price = price + order.Price;
                         <p>@order.Details</p>
                     }
-              }
-            <hr />
+                }
+                <hr />
 
-            <p>Total Price: @price</p>
-          </div>
-         }
+                <p>Total Price: @price</p>
+            </div>
+        }
     </div>
 
-        }
-        else
+}
+else
+{
+    <h1>Create New Session</h1>
+    <h5>Choose Restaurants</h5>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Stores)
+            </th>
+        </tr>
+        @foreach (var item in Model.Stores)
         {
-        <h1>Create New Session</h1>
-        <h5>Choose Restaurants</h5>
-        <table class="table">
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Stores)
-                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <label class="container">
+                        <input type="checkbox">
+                        <span class="checkmark"></span>
+                    </label>
+                </td>
             </tr>
-            @foreach (var item in Model.Stores)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        <label class="container">
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </td>
-                </tr>
-            }
-        </table>
-        <form asp-controller="Session" asp-action="NewSession" method="get">
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Create Session</button>
-        </form>
+        }
+    </table>
+    <form asp-controller="Session" asp-action="NewSession" method="get">
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Create Session</button>
+    </form>
+}
+
+
+
+
+<style>
+
+    .container {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 22px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+
+        .container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
         }
 
 
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+    }
 
 
-        <style>
-
-            .container {
-                display: block;
-                position: relative;
-                padding-left: 35px;
-                margin-bottom: 12px;
-                cursor: pointer;
-                font-size: 22px;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-            }
+    .container:hover input ~ .checkmark {
+        background-color: #ccc;
+    }
 
 
-                .container input {
-                    position: absolute;
-                    opacity: 0;
-                    cursor: pointer;
-                    height: 0;
-                    width: 0;
-                }
+    .container input:checked ~ .checkmark {
+        background-color: #2196F3;
+    }
 
 
-            .checkmark {
-                position: absolute;
-                top: 0;
-                left: 0;
-                height: 25px;
-                width: 25px;
-                background-color: #eee;
-            }
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
 
 
-            .container:hover input ~ .checkmark {
-                background-color: #ccc;
-            }
+    .container input:checked ~ .checkmark:after {
+        display: block;
+    }
 
 
-            .container input:checked ~ .checkmark {
-                background-color: #2196F3;
-            }
+    .container .checkmark:after {
+        left: 9px;
+        top: 5px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 3px 3px 0;
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
 
+    * {
+        box-sizing: border-box;
+    }
 
-            .checkmark:after {
-                content: "";
-                position: absolute;
-                display: none;
-            }
+    .column {
+        float: left;
+        width: 50%;
+        padding: 10px;
+        height: 300px;
+        border: 0.5px solid;
+    }
 
-
-            .container input:checked ~ .checkmark:after {
-                display: block;
-            }
-
-
-            .container .checkmark:after {
-                left: 9px;
-                top: 5px;
-                width: 5px;
-                height: 10px;
-                border: solid white;
-                border-width: 0 3px 3px 0;
-                -webkit-transform: rotate(45deg);
-                -ms-transform: rotate(45deg);
-                transform: rotate(45deg);
-            }
-
-            * {
-                box-sizing: border-box;
-            }
-
-            .column {
-                float: left;
-                width: 50%;
-                padding: 10px;
-                height: 300px;
-                border: 0.5px solid;
-            }
-
-            .row:after {
-                content: "";
-                display: table;
-                clear: both;
-            }
-        </style>
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+</style>
 
