@@ -1,5 +1,4 @@
-﻿
-using BusinessLogic;
+﻿using BusinessLogic;
 using BusinessLogic.Abstractions;
 using System.Collections.Generic;
 
@@ -51,6 +50,11 @@ namespace Logic.Implementations
         {
             var storeRepo = dataContext.GetSessionsRepository();
             return storeRepo.GetAll();
+        }
+
+        public Store GetStoreById(int id)
+        {
+            return administrator.GetStoreById(id);
         }
     }
 }

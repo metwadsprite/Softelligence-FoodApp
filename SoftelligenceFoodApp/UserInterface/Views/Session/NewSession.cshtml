@@ -62,14 +62,14 @@ else
     </table>
     <form asp-controller="Session" asp-action="NewSession" method="get">
         <button type="submit" class="btn btn-primary btn-lg btn-block">Create Session</button>
-    </form> 
+    </form>
 }
 
 
 
 
 <style>
-    
+
     .container {
         display: block;
         position: relative;
@@ -83,7 +83,7 @@ else
         user-select: none;
     }
 
-        
+
         .container input {
             position: absolute;
             opacity: 0;
@@ -92,7 +92,7 @@ else
             width: 0;
         }
 
-   
+
     .checkmark {
         position: absolute;
         top: 0;
@@ -102,29 +102,29 @@ else
         background-color: #eee;
     }
 
-   
+
     .container:hover input ~ .checkmark {
         background-color: #ccc;
     }
 
-    
+
     .container input:checked ~ .checkmark {
         background-color: #2196F3;
     }
 
-    
+
     .checkmark:after {
         content: "";
         position: absolute;
         display: none;
     }
 
-   
+
     .container input:checked ~ .checkmark:after {
         display: block;
     }
 
-    
+
     .container .checkmark:after {
         left: 9px;
         top: 5px;
@@ -136,5 +136,4 @@ else
         -ms-transform: rotate(45deg);
         transform: rotate(45deg);
     }
-  
 </style>
