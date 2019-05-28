@@ -3,7 +3,7 @@
     ViewData["Title"] = "Details";
 }
 
-
+@{ decimal price = 0.00m; }
 
 <h1>Details</h1>
 
@@ -14,5 +14,15 @@
         <th>Order</th>
         <th>Price</th>
     </tr>
-
+    
+    @foreach(var item in Model.Orders)
+    {
+        price = price + item.Price;
+        <tr>
+        <th></th>
+        <th style="font-weight:400;font-size:18px">@item.Details</th>
+        <th style="font-weight:400;font-size:18px">@item.Price lei</th>
+        </tr>
+    }
 </table>
+   <h1 style="font-size:22px;font-weight:500"> Total Order Price : @price </h1>

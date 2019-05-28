@@ -1,15 +1,16 @@
 ﻿@model SessionVM
 @{
-    ViewData["Title"] = "NewSession";
+ViewData["Title"] = "NewSession";
 }
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 @{bool activeSesison = false;
-    Session currentSession = new Session();
-    decimal price = 0.00m;
-    }
-@{
+Session currentSession = new Session();
+decimal price = 0.00m;
+}
+
+    @{
     foreach (var item in Model.Sessions)
     {
         if (item.IsActive == true)
@@ -18,158 +19,90 @@
             activeSesison = true;
         }
     }
-}
+    }   
 
-@if (activeSesison == true)
-{
-    <h1>Active Restaurants</h1>
+    @if (activeSesison == true)
+    {  
+        <h1>Active Restaurants</h1>
+        <br />
+        <div class="row">
+         
+       @foreach (var item in currentSession.Stores)
+        {
+            var rowCount = 1;
+            price = 0.00m;
 
-    <div class="row">
-         @foreach (var item in currentSession.Stores)
-          {
-         price = 0.00m;
-
-          <div class="column" style="background-color:#ccdcff;">
-
+            <div class="col-lg-6 col-md-6 col-sm-12" style="padding-left: 2em; background-color:#eff3f9">
             <h2>@item.Name</h2>
             <hr />
+            <div class="row order-table-header">
+            <div class="col-4">User Name</div>
+            <div class="col-4">Details</div>
+            <div class="col-4">Price</div>
+            </div>
 
-             @foreach (var order in currentSession.Orders)
-              {   
-                    if (order.Store.Id == item.Id)
-                    {   
-                        price = price + order.Price;
-                    <p style="font-size:19px">@order.Details ............... Price: @order.Price  lei  </p>
-                    }
-              }
-            <hr />
-
-            <p>Total Price: @price</p>
-          </div>
-          }
-    </div>
-
- }
-
-
-        else
-        {
-        <h1>Create New Session</h1>
-        <h5>Choose Restaurants</h5>
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Stores)
-                </th>
-            </tr>
-            @foreach (var item in Model.Stores)
+           @foreach (var order in currentSession.Orders)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        <label class="container">
-                            <input type="checkbox">
-                            <span class="checkmark"></span>
-                        </label>
-                    </td>
-                </tr>
-            }
-        </table>
-        <form asp-controller="Session" asp-action="NewSession" method="get">
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Create Session</button>
-        </form>
-        }
-
-
-
-
-        <style>
-
-            .container {
-                display: block;
-                position: relative;
-                padding-left: 35px;
-                margin-bottom: 12px;
-                cursor: pointer;
-                font-size: 22px;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-            }
-
-
-                .container input {
-                    position: absolute;
-                    opacity: 0;
-                    cursor: pointer;
-                    height: 0;
-                    width: 0;
+               @if (order.Store.Id == item.Id)
+                {
+                var className = "row";
+                price = price + order.Price;
+                if (rowCount % 2 == 0)
+                {
+                className += " alternate-primary";
+                }
+                else
+                {
+                className += " alternate-secondary";
                 }
 
+                <div class="@className">                           
+                <div class="col-4" style="font-size:80%">@order.RecipientName</div>
+                <div class="col-4" style="font-size:80%">@order.Details</div>
+                <div class="col-4" style="font-size:80%">@order.Price</div>
+                </div>
 
-            .checkmark {
-                position: absolute;
-                top: 0;
-                left: 0;
-                height: 25px;
-                width: 25px;
-                background-color: #eee;
-            }
-
-
-            .container:hover input ~ .checkmark {
-                background-color: #ccc;
-            }
-
-
-            .container input:checked ~ .checkmark {
-                background-color: #2196F3;
-            }
+                rowCount++;
+                }
+                        
+            }  
+            <hr />
+            <p>Total Price: @price</p>
+            </div>
+        }
+        </div>
+     }
 
 
-            .checkmark:after {
-                content: "";
-                position: absolute;
-                display: none;
-            }
+    else
+    {
+    <h1>Create New Session</h1>
+    <h5>Choose Restaurants</h5>
+    <table class="table">
+    <tr>
+    <th>
+    @Html.DisplayNameFor(model => model.Stores)
+    </th>
+    </tr>
+   @foreach (var item in Model.Stores)
+    {
+        <tr>
+        <td>
+         @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+        <label class="container">
+        <input type="checkbox">
+        <span class="checkmark"></span>
+        </label>
+        </td>
+        </tr>
+    }
+    </table>
+    <form asp-controller="Session" asp-action="NewSession" method="get">
+    <button type="submit" class="btn btn-primary btn-lg btn-block">Create Session</button>
+    </form>
+    }
 
 
-            .container input:checked ~ .checkmark:after {
-                display: block;
-            }
-
-
-            .container .checkmark:after {
-                left: 9px;
-                top: 5px;
-                width: 5px;
-                height: 10px;
-                border: solid white;
-                border-width: 0 3px 3px 0;
-                -webkit-transform: rotate(45deg);
-                -ms-transform: rotate(45deg);
-                transform: rotate(45deg);
-            }
-
-            * {
-                box-sizing: border-box;
-            }
-
-            .column {
-                float: left;
-                width: 50%;
-                padding: 10px;
-                height: 300px;
-                border: 0.5px solid;
-            }
-
-            .row:after {
-                content: "";
-                display: table;
-                clear: both;
-            }
-        </style>
 

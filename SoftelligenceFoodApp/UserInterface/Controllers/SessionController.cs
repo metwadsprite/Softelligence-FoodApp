@@ -33,19 +33,16 @@ namespace UserInterface.Controllers
         public IActionResult NewSession()
         {
             SessionVM session = new SessionVM();
-            Session sessionToStart = new Session();
             session.Sessions = adminService.GetAllSessions();
             session.Stores = adminService.GetAllStores();
-            sessionToStart.Stores = (ICollection<Store>)session.Stores;
-            adminService.StartSession(sessionToStart);
             return View(session);
 
         }
-      
-        public IActionResult Details()
+        [HttpGet]
+        public IActionResult Details(int? id)
         {
-            Session session = new Session();
-            return View();
+            Session session = adminService.GetSessionById(id.Value);
+            return View(session);
         }
     }
 }

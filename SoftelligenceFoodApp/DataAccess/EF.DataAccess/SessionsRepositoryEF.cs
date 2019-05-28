@@ -110,7 +110,9 @@ namespace EF.DataAccess
         {
             var session = dbContext.Sessions
                 .FirstOrDefault(a => a.Id == id);
-            return mapper.MapData<Session, SessionDO>(session);
+                 var sessionToReturn = mapper.MapData<Session, SessionDO>(session);
+            return sessionToReturn;
+           
         }
     }
 }
