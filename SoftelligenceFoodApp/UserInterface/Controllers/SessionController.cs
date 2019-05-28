@@ -1,4 +1,5 @@
-﻿using Logic.Implementations;
+﻿using BusinessLogic;
+using Logic.Implementations;
 using Microsoft.AspNetCore.Mvc;
 using UserInterface.Models;
 
@@ -35,8 +36,10 @@ namespace UserInterface.Controllers
             return View(session);
 
         }
-        public IActionResult Details(int? id)
+      
+        public IActionResult Details()
         {
+            Session session = new Session();
             return View();
         }
     }
