@@ -106,6 +106,11 @@ namespace EF.DataAccess
             return SessionsList;
         }
 
-
+        public Session GetById(int id)
+        {
+            var session = dbContext.Sessions
+                .FirstOrDefault(a => a.Id == id);
+            return mapper.MapData<Session, SessionDO>(session);
+        }
     }
 }
