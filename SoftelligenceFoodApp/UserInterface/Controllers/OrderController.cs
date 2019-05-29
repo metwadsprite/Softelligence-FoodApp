@@ -9,6 +9,7 @@ using Logic.Implementations;
 using UserInterface.Models;
 using EF.DataAccess;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace UserInterface.Controllers
 {
@@ -17,12 +18,12 @@ namespace UserInterface.Controllers
         private ISessionsRepository sessionRepository;
         Session activeSession;
         PlaceRestaurantOrderVM curOrder;
-        UserService user;
+        UserService userService;
 
         public OrderController(IPersistenceContext dataContext)
         {
             this.sessionRepository = dataContext.GetSessionsRepository();
-            this.user = new UserService(dataContext);
+            this.userService = new UserService(dataContext);
         }
 
         [Authorize]
@@ -30,7 +31,24 @@ namespace UserInterface.Controllers
         {
             activeSession = sessionRepository.GetActiveSession();
 
-            return View(activeSession);
+            var userName = HttpContext.User.Identity.Name;
+            userService.SelectCurrentUser(userName);
+
+
+
+            var userOrder = sessionRepository.GetActiveSession().Orders.FirstOrDefault(order => order.User.Email == userName);
+
+            if(userOrder == null)
+            {
+                return View(activeSession);
+
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+
+            //return RedirectToAction("Back");
         }
 
         [Authorize]
@@ -53,6 +71,9 @@ namespace UserInterface.Controllers
         [HttpPost]
         public IActionResult PlaceOrder([FromForm]PlaceRestaurantOrderVM orderVM)
         {
+            var userName = HttpContext.User.Identity.Name;
+            userService.SelectCurrentUser(userName);
+
             var curOrder = new PlaceRestaurantOrderVM
             {
                 StoreName = orderVM.StoreName,
@@ -60,22 +81,19 @@ namespace UserInterface.Controllers
                 Option = orderVM.Option,
                 Price = orderVM.Price,
                 Image = orderVM.Image,
-                Hyperlink = orderVM.Hyperlink
+                Hyperlink = orderVM.Hyperlink,
+                UserEmail = userService.user.Email
             };
 
-            var storeToPlace = new Store
-            {
-                Name = orderVM.StoreName,
-            };
+            var storeToPlace = sessionRepository.GetActiveSession().Stores.FirstOrDefault(store => store.Name == orderVM.StoreName);
 
             var menuItem = new MenuItem
             {
                 Details = orderVM.Option,
                 Price = orderVM.Price
             };
-            user.SelectCurrentUser(1);
 
-            user.PlaceOrder(storeToPlace, menuItem);
+            userService.PlaceOrder(storeToPlace, menuItem, userService.user.Email);
 
             return View(curOrder);
         }
@@ -83,7 +101,7 @@ namespace UserInterface.Controllers
 
         public IActionResult Back()
         {
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
 
     }
