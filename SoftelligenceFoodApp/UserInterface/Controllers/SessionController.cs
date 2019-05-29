@@ -36,7 +36,6 @@ namespace UserInterface.Controllers
             session.Sessions = adminService.GetAllSessions();
             session.Stores = adminService.GetAllStores();
             return View(session);
-
         }
         [HttpGet]
         public IActionResult Details(int? id)
@@ -44,5 +43,15 @@ namespace UserInterface.Controllers
             Session session = adminService.GetSessionById(id.Value);
             return View(session);
         }
+        [HttpPost]
+        public IActionResult Create([FromForm]Session newSession)
+        {
+            if (ModelState.IsValid)
+            {   
+                adminService.StartSession(newSession);
+            }
+            return RedirectToAction("Index");
+        }
+
     }
 }

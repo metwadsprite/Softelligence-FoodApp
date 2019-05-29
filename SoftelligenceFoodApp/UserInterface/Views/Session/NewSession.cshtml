@@ -57,7 +57,7 @@ decimal price = 0.00m;
                 }
 
                 <div class="@className">                           
-                <div class="col-4" style="font-size:80%">@order.RecipientName</div>
+                <div class="col-4" style="font-size:80%"></div>
                 <div class="col-4" style="font-size:80%">@order.Details</div>
                 <div class="col-4" style="font-size:80%">@order.Price</div>
                 </div>
@@ -72,18 +72,14 @@ decimal price = 0.00m;
           }
         </div>
      }
-
+     
 
     else
     {
     <h1>Create New Session</h1>
-    <h5>Choose Restaurants</h5>
+    <br />
+    <h3>Choose Restaurants</h3>
     <table class="table">
-    <tr>
-    <th>
-    @Html.DisplayNameFor(model => model.Stores)
-    </th>
-    </tr>
    @foreach (var item in Model.Stores)
     {
         <tr>
@@ -92,16 +88,16 @@ decimal price = 0.00m;
         </td>
         <td>
         <label class="container">
-        <input type="checkbox">
+        <input type="checkbox" style="display:none">
         <span class="checkmark"></span>
         </label>
         </td>
         </tr>
     }
     </table>
-    <form asp-controller="Session" asp-action="NewSession" method="get">
-    <button type="submit" class="btn btn-primary btn-lg btn-block">Create Session</button>
-    </form>
+    
+        <input type="submit" value="Create Session" class="btn btn-primary btn-lg btn-block" />
+  
     }
 
 

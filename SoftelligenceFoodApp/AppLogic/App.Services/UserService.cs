@@ -29,7 +29,7 @@ namespace Logic.Implementations
 
             Order newOrder = new Order();
             newOrder.Store = store;
-            newOrder.RecipientName = user.Name;
+            newOrder.User = user;
             newOrder.Price = menuItem.Price;
             newOrder.Details = menuItem.Details;
 
@@ -44,7 +44,7 @@ namespace Logic.Implementations
         {
             Order newOrder = new Order();
             newOrder.Store = store;
-            newOrder.RecipientName = user.Name;
+            newOrder.User = user;
             newOrder.Price = menuItem.Price;
             newOrder.Details = menuItem.Details;
 

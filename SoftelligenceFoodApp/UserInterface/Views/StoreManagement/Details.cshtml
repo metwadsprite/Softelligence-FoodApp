@@ -5,7 +5,14 @@
 
 <h1>Details</h1>
 <hr />
-<hr width="1" size="500">
-<h4>Name: @Model.Name</h4>
-<p></p>
-<h4>Menu: @Model.Menu.Hyperlink</h4>
+<table class="table">
+
+    <tr>
+        <th>Name</th>
+        <th>Menu</th>
+    </tr>
+    <tr>
+        <th style="font-weight:400;font-size:18px">@Model.Name</th>
+        <th style="font-weight:400;font-size:18px">@Model.Menu.Hyperlink</th>
+    </tr>
+</table>
