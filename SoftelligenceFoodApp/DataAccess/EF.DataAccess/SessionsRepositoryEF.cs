@@ -80,6 +80,7 @@ namespace EF.DataAccess
             }
 
             dbContext.Sessions.Update(sessionDO);
+            dbContext.SaveChanges();
         }
         public IEnumerable<Session> GetAll()
         {

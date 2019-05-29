@@ -20,6 +20,7 @@ namespace BusinessLogic
                 throw new OrderAlreadyInProgressException();
             }
             currentOrder = newOrder;
+
         }
         public void ChangeOrder(Order newOrder)
         {

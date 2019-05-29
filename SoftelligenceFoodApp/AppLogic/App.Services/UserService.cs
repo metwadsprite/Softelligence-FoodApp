@@ -1,5 +1,6 @@
 ﻿using BusinessLogic;
 using BusinessLogic.Abstractions;
+using EF.DataAccess;
 
 namespace Logic.Implementations
 {
@@ -7,6 +8,7 @@ namespace Logic.Implementations
     {
         private User user;
         private readonly IPersistenceContext dataContext;
+        private ApplicationDbContext dbContext;
 
         public UserService(IPersistenceContext dataContext)
         {
@@ -22,7 +24,7 @@ namespace Logic.Implementations
         {
             return dataContext.GetSessionsRepository().GetActiveSession();
         }
-        //+inf order , store and menuitem
+
         public void PlaceOrder(Store store, MenuItem menuItem)
         {
             Session currentSession = GetActiveSession();
@@ -35,9 +37,11 @@ namespace Logic.Implementations
 
             currentSession.AddOrder(newOrder);
             dataContext.GetSessionsRepository().Update(currentSession);
-            //1.get current session
-            //2.session.addOrder
-            //3.save session, sessionRepo.Update(currentSession);
+            /*
+            dbContext.Add(newOrder);
+            dbContext.SaveChanges();
+            */
+
         }
         //order info to change
         public void ChangeOrder(Store store, MenuItem menuItem)

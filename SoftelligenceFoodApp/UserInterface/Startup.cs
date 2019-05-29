@@ -45,9 +45,10 @@ namespace UserInterface
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
+            
             services.AddDefaultIdentity<IdentityUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<CustomIdentityDbContext>();
+                .AddEntityFrameworkStores<CustomIdentityDbContext>(); 
 
             var entitiesMapper = new EntitiesMapper();
             entitiesMapper.InitializeMapper();
@@ -56,7 +57,7 @@ namespace UserInterface
 
             services.AddSingleton<EntitiesMapper>(entitiesMapper);            
             services.AddSingleton<IPersistenceContext>(persistContext);
-            services.AddSingleton<AdminService>();     
+            services.AddSingleton<AdminService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             OrderController controller = new OrderController(persistContext);
@@ -64,7 +65,7 @@ namespace UserInterface
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider provider)
         {
             if (env.IsDevelopment())
             {
@@ -90,6 +91,6 @@ namespace UserInterface
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-        }
+        }    
     }
 }
