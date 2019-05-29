@@ -10,6 +10,7 @@ namespace UserInterface.Models
     {
         public IEnumerable<Store> Stores { get; set; }
         public IEnumerable<Session> Sessions { get; set; }
+        public IEnumerable<User> Users { get; set; }
 
     }
 }

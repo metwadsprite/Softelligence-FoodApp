@@ -1,139 +1,108 @@
 ﻿@model SessionVM
 @{
-    ViewData["Title"] = "NewSession";
+ViewData["Title"] = "NewSession";
 }
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-@{bool activeSesison = false;}
-@{
+@{bool activeSesison = false;
+Session currentSession = new Session();
+decimal price = 0.00m;
+}
+
+    @{
     foreach (var item in Model.Sessions)
     {
         if (item.IsActive == true)
         {
+            currentSession = item;
             activeSesison = true;
         }
     }
-}
+    }   
 
-@if (activeSesison == true)
-{
-    <h1>Active Restaurantes</h1>
+    @if (activeSesison == true)
+    {  
+        <h1>Active Restaurants</h1>
+        <br />
+        <div class="row">
+         
+         @foreach (var item in currentSession.Stores)
+          {
+            var rowCount = 1;
+            price = 0.00m;
 
-    <table class="table">
-        <tr>
-            <th>
+            <div class="col-lg-6 col-md-6 col-sm-12" style="padding-left: 2em; background-color:#eff3f9">
+            <h2>@item.Name</h2>
+            <hr />
+            <div class="row order-table-header">
+            <div class="col-4">User Name</div>
+            <div class="col-4">Details</div>
+            <div class="col-4">Price</div>
+            </div>
 
-            </th>
-        </tr>
-        @foreach (var item in Model.Stores)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-            </tr>
-        }
-    </table>
-}
-else
-{
+           @foreach (var order in currentSession.Orders)
+            {
+               @if (order.Store.Id == item.Id)
+                {
+                var className = "row";
+                price = price + order.Price;
+                if (rowCount % 2 == 0)
+                {
+                className += " alternate-primary";
+                }
+                else
+                {
+                className += " alternate-secondary";
+                }
+
+                <div class="@className">                           
+                <div class="col-4" style="font-size:80%">@order.RecipientName</div>
+                <div class="col-4" style="font-size:80%">@order.Details</div>
+                <div class="col-4" style="font-size:80%">@order.Price</div>
+                </div>
+
+                rowCount++;
+                }
+                        
+            }  
+            <hr />
+            <p>Total Price: @price</p>
+            </div>
+          }
+        </div>
+     }
+
+
+    else
+    {
     <h1>Create New Session</h1>
     <h5>Choose Restaurants</h5>
     <table class="table">
+    <tr>
+    <th>
+    @Html.DisplayNameFor(model => model.Stores)
+    </th>
+    </tr>
+   @foreach (var item in Model.Stores)
+    {
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Stores)
-            </th>
+        <td>
+         @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+        <label class="container">
+        <input type="checkbox">
+        <span class="checkmark"></span>
+        </label>
+        </td>
         </tr>
-        @foreach (var item in Model.Stores)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    <label class="container">
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                </td>
-            </tr>
-        }
+    }
     </table>
     <form asp-controller="Session" asp-action="NewSession" method="get">
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Create Session</button>
+    <button type="submit" class="btn btn-primary btn-lg btn-block">Create Session</button>
     </form>
-}
-
-
-
-
-<style>
-
-    .container {
-        display: block;
-        position: relative;
-        padding-left: 35px;
-        margin-bottom: 12px;
-        cursor: pointer;
-        font-size: 22px;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
     }
 
 
-        .container input {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-            height: 0;
-            width: 0;
-        }
 
-
-    .checkmark {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 25px;
-        width: 25px;
-        background-color: #eee;
-    }
-
-
-    .container:hover input ~ .checkmark {
-        background-color: #ccc;
-    }
-
-
-    .container input:checked ~ .checkmark {
-        background-color: #2196F3;
-    }
-
-
-    .checkmark:after {
-        content: "";
-        position: absolute;
-        display: none;
-    }
-
-
-    .container input:checked ~ .checkmark:after {
-        display: block;
-    }
-
-
-    .container .checkmark:after {
-        left: 9px;
-        top: 5px;
-        width: 5px;
-        height: 10px;
-        border: solid white;
-        border-width: 0 3px 3px 0;
-        -webkit-transform: rotate(45deg);
-        -ms-transform: rotate(45deg);
-        transform: rotate(45deg);
-    }
-</style>

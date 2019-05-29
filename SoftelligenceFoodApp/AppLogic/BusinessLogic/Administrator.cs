@@ -64,5 +64,17 @@ namespace BusinessLogic
             var storeRepo = context.GetStoresRepository();
             return storeRepo.GetById(id);
         }
+
+        public IEnumerable<Session> GetAllSessions()
+        {
+            var sessionRepo = context.GetSessionsRepository();
+            return sessionRepo.GetAll();
+        }
+
+        public Session GetSessionById(int id)
+        {
+            var sessionRepo = context.GetSessionsRepository();
+            return sessionRepo.GetById(id);
+        }
     }
 }
