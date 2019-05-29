@@ -49,7 +49,7 @@ namespace EF.DataAccess
             if (session != null)
             {
                 Session activeSession = new Session();
-                activeSession = mapper.MapData<Session, SessionDO>(session);
+                mapper.MapData<Session, SessionDO>(session);
                 activeSession.Stores = new List<Store>();
 
                 foreach (var sStore in session.SessionStore)
