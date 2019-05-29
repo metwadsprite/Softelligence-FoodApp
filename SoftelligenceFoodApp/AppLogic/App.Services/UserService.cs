@@ -1,12 +1,12 @@
 ﻿using BusinessLogic;
-using BusinessLogic.Abstractions;
 using EF.DataAccess;
+using BusinessLogic.Abstractions;
 
 namespace Logic.Implementations
 {
     public class UserService
     {
-        private User user;
+        public User user;
         private readonly IPersistenceContext dataContext;
         private ApplicationDbContext dbContext;
 
@@ -15,9 +15,9 @@ namespace Logic.Implementations
             this.dataContext = dataContext;
         }
 
-        public void SelectCurrentUser(int userId)
+        public void SelectCurrentUser(string email)
         {
-            this.user = dataContext.GetUsersRepository().GetById(userId);
+            this.user = dataContext.GetUsersRepository().GetByEmail(email);
         }
 
         private Session GetActiveSession()
@@ -25,7 +25,7 @@ namespace Logic.Implementations
             return dataContext.GetSessionsRepository().GetActiveSession();
         }
 
-        public void PlaceOrder(Store store, MenuItem menuItem)
+        public void PlaceOrder(Store store, MenuItem menuItem, string userEmail)
         {
             Session currentSession = GetActiveSession();
 
@@ -34,13 +34,11 @@ namespace Logic.Implementations
             newOrder.RecipientName = user.Name;
             newOrder.Price = menuItem.Price;
             newOrder.Details = menuItem.Details;
+            this.SelectCurrentUser(userEmail);
+            newOrder.User = this.user;
 
             currentSession.AddOrder(newOrder);
             dataContext.GetSessionsRepository().Update(currentSession);
-            /*
-            dbContext.Add(newOrder);
-            dbContext.SaveChanges();
-            */
 
         }
         //order info to change

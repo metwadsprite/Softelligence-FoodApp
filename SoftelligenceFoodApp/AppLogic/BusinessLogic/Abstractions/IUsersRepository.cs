@@ -8,8 +8,8 @@ namespace BusinessLogic.Abstractions
 {
     public interface IUsersRepository
     {
-        User GetById(int id);
-        String GetEmail(int id);
-        String GetName(int id);
+        User GetByName(string name);
+        User GetByEmail(string email);
+        int GetId(string name);
     }
 }
