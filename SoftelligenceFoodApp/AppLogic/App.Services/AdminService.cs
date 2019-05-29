@@ -48,13 +48,17 @@ namespace Logic.Implementations
         }
         public IEnumerable<Session> GetAllSessions()
         {
-            var storeRepo = dataContext.GetSessionsRepository();
-            return storeRepo.GetAll();
+            return administrator.GetAllSessions();
         }
 
         public Store GetStoreById(int id)
         {
             return administrator.GetStoreById(id);
+        }
+
+        public Session GetSessionById(int id)
+        {
+            return administrator.GetSessionById(id);
         }
     }
 }

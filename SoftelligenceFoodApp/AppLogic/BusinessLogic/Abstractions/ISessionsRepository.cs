@@ -11,5 +11,6 @@ namespace BusinessLogic.Abstractions
         IEnumerable<Session> GetAll();
         Session GetActiveSession();
         void Update(Session sessionToUpdate);
+        Session GetById(int id);
     }
 }

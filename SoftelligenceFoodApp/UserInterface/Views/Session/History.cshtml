@@ -13,21 +13,24 @@
         <th>
             Start time
         </th>
+        <th>
+            Details
+        </th>
     </tr>
     @foreach (var item in Model)
     {
         <tr>
-            <td>
+            <th style="font-weight:400;font-size:18px">
                @Html.DisplayFor(modelItem => item.StartTime.Day)/
                @Html.DisplayFor(modelItem => item.StartTime.Day)/
                @Html.DisplayFor(modelItem => item.StartTime.Year)
-            </td>
-            <td>
+            </th>
+            <th style="font-weight:400;font-size:18px">
                 @Html.DisplayFor(modelItem => item.StartTime.TimeOfDay)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details","Session",null, new { id = item.Id }) 
-            </td>
+            </th>
+            <th style="font-weight:400;font-size:18px">
+                @Html.ActionLink("Details", "Details","Session", new { id = item.Id }) 
+            </th>
         </tr>
     }
 </table>

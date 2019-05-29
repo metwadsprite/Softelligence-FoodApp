@@ -1,6 +1,9 @@
-﻿using Logic.Implementations;
+﻿using BusinessLogic;
+using Logic.Implementations;
 using Microsoft.AspNetCore.Mvc;
 using UserInterface.Models;
+using BusinessLogic;
+using System.Collections.Generic;
 
 namespace UserInterface.Controllers
 {
@@ -35,9 +38,11 @@ namespace UserInterface.Controllers
             return View(session);
 
         }
+        [HttpGet]
         public IActionResult Details(int? id)
         {
-            return View();
+            Session session = adminService.GetSessionById(id.Value);
+            return View(session);
         }
     }
 }
