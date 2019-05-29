@@ -48,16 +48,16 @@ namespace EF.DataAccess
 
             if (session != null)
             {
-                Session activeSession = new Session();
-                mapper.MapData<Session, SessionDO>(session);
-                activeSession.Stores = new List<Store>();
+                Session activeSession;
+                activeSession = mapper.MapData<Session, SessionDO>(session); 
 
                 foreach (var sStore in session.SessionStore)
                 {
                     activeSession.Stores.Add(mapper.MapData<Store, StoreDO>(sStore.Store));
                 }
-
-                return (activeSession);
+                
+                return activeSession;
+                
             }
             else
             {
@@ -67,7 +67,7 @@ namespace EF.DataAccess
 
         public void Update(Session sessionToUpdate)
         {
-            SessionDO sessionDO = dbContext.Sessions.SingleOrDefault(session => sessionToUpdate.Id == session.Id);
+            SessionDO sessionDO = dbContext.Sessions.FirstOrDefault(session => sessionToUpdate.Id == session.Id);
 
             sessionDO = mapper.MapData<SessionDO, Session>(sessionToUpdate);
             sessionDO.SessionStore = new List<SessionStoreDO>();
@@ -77,7 +77,7 @@ namespace EF.DataAccess
                 sessionDO.SessionStore.Add(new SessionStoreDO
                 {
                     Store = mapper.MapData<StoreDO, Store>(store),
-                    Session = sessionDO
+                    
                 });
             }
 

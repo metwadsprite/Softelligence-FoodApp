@@ -35,6 +35,7 @@ namespace Logic.Implementations
             newOrder.User = user;
             newOrder.Price = menuItem.Price;
             newOrder.Details = menuItem.Details;
+            newOrder.IsActive = true;
             this.SelectCurrentUser(userEmail);
             newOrder.User = this.user;
 

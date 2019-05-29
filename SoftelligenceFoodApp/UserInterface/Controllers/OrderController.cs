@@ -34,9 +34,7 @@ namespace UserInterface.Controllers
             var userName = HttpContext.User.Identity.Name;
             userService.SelectCurrentUser(userName);
 
-
-
-            var userOrder = sessionRepository.GetActiveSession().Orders.FirstOrDefault(order => order.User.Email == userName);
+            var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userName);
 
             if(userOrder == null)
             {

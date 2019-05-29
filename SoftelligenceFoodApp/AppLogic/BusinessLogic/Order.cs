@@ -11,5 +11,6 @@ namespace BusinessLogic
         public string Details { get; set; }
         public decimal Price { get; set; }
         public Store Store { get; set; }
+        public bool IsActive { get; set; }
     }
 }
