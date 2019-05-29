@@ -7,7 +7,7 @@ namespace BusinessLogic
     public class Order
     {
         public int Id { get; set; }
-        public string RecipientName { get; set; }
+        public User User { get; set; }
         public string Details { get; set; }
         public decimal Price { get; set; }
         public Store Store { get; set; }

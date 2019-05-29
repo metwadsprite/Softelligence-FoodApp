@@ -40,14 +40,16 @@ namespace EF.DataAccess
         {
             SessionDO session = dbContext.Sessions
                 .Include(tempSession => tempSession.Orders)
+                    .ThenInclude(order => order.User)
                 .Include(tempSession => tempSession.SessionStore)
                     .ThenInclude(sessstore => sessstore.Store)
                         .ThenInclude(store => store.Menu)
                 .FirstOrDefault(s => s.IsActive == true);
+
             if (session != null)
             {
                 Session activeSession = new Session();
-                mapper.MapData<Session, SessionDO>(session);
+                activeSession = mapper.MapData<Session, SessionDO>(session);
                 activeSession.Stores = new List<Store>();
 
                 foreach (var sStore in session.SessionStore)
@@ -87,6 +89,7 @@ namespace EF.DataAccess
             List<Session> SessionsList = new List<Session>();
             var sessions = dbContext.Sessions
                 .Include(tempSession => tempSession.Orders)
+                    .ThenInclude(order => order.User)
                 .Include(tempSession => tempSession.SessionStore)
                     .ThenInclude(sStore => sStore.Store)
                         .ThenInclude(store => store.Menu)

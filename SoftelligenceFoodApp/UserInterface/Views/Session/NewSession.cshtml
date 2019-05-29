@@ -5,32 +5,16 @@ ViewData["Title"] = "NewSession";
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@{bool activeSesison = false;
-Session currentSession = new Session();
-decimal price = 0.00m;
-}
-
-    @{
-    foreach (var item in Model.Sessions)
-    {
-        if (item.IsActive == true)
-        {
-            currentSession = item;
-            activeSesison = true;
-        }
-    }
-    }   
-
-    @if (activeSesison == true)
-    {  
-        <h1>Active Restaurants</h1>
-        <br />
-        <div class="row">
+@if (Model.hasActiveSession == true)
+{  
+    <h1>Active Restaurants</h1>
+    <br />
+    <div class="row">
          
-         @foreach (var item in currentSession.Stores)
-          {
+        @foreach (var item in Model.Stores)
+        {
             var rowCount = 1;
-            price = 0.00m;
+            Model.Price = 0.0m;
 
             <div class="col-lg-6 col-md-6 col-sm-12" style="padding-left: 2em; background-color:#eff3f9">
             <h2>@item.Name</h2>
@@ -41,41 +25,41 @@ decimal price = 0.00m;
             <div class="col-4">Price</div>
             </div>
 
-           @foreach (var order in currentSession.Orders)
+            @foreach (var order in Model.Session.Orders)
             {
-               @if (order.Store.Id == item.Id)
+                @if (order.Store.Id == item.Id)
                 {
-                var className = "row";
-                price = price + order.Price;
-                if (rowCount % 2 == 0)
-                {
-                className += " alternate-primary";
-                }
-                else
-                {
-                className += " alternate-secondary";
-                }
+                    var className = "row";
+                    Model.Price = Model.Price + order.Price;
+                    if (rowCount % 2 == 0)
+                    {
+                        className += " alternate-primary";
+                    }
+                    else
+                    {
+                        className += " alternate-secondary";
+                    }
 
-                <div class="@className">                           
-                <div class="col-4" style="font-size:80%">@order.RecipientName</div>
-                <div class="col-4" style="font-size:80%">@order.Details</div>
-                <div class="col-4" style="font-size:80%">@order.Price</div>
-                </div>
+                    <div class="@className">                           
+                    <div class="col-4" style="font-size:80%">@order.User.Name</div>
+                    <div class="col-4" style="font-size:80%">@order.Details</div>
+                    <div class="col-4" style="font-size:80%">@order.Price</div>
+                    </div>
 
-                rowCount++;
+                    rowCount++;
                 }
                         
             }  
             <hr />
-            <p>Total Price: @price</p>
+            <p>Total Price: @Model.Price </p>
             </div>
-          }
-        </div>
-     }
+        }
+    </div>
+    }
 
 
-    else
-    {
+else
+{
     <h1>Create New Session</h1>
     <h5>Choose Restaurants</h5>
     <table class="table">
@@ -84,25 +68,25 @@ decimal price = 0.00m;
     @Html.DisplayNameFor(model => model.Stores)
     </th>
     </tr>
-   @foreach (var item in Model.Stores)
+    @foreach (var item in Model.Stores)
     {
         <tr>
         <td>
-         @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-        <label class="container">
-        <input type="checkbox">
-        <span class="checkmark"></span>
-        </label>
+            <label class="container">
+            <input type="checkbox">
+            <span class="checkmark"></span>
+            </label>
         </td>
         </tr>
     }
     </table>
     <form asp-controller="Session" asp-action="NewSession" method="get">
-    <button type="submit" class="btn btn-primary btn-lg btn-block">Create Session</button>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">Create Session</button>
     </form>
-    }
+}
 
 
 
