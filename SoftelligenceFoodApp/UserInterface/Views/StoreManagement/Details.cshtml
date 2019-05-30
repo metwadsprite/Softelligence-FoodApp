@@ -5,9 +5,17 @@
 
 <h1>Restaurant Details:</h1>
 <hr />
-<hr width="1" size="500">
-<h4>Name: @Model.Name</h4>
-<p></p>
-<h4><a href="@Model.Menu.Hyperlink">@Model.Menu.Hyperlink</a></h4>
-<p></p>
-<h4><img class="img-thumbnail" src="@Model.Menu.Image" /></h4>
+
+<table class="table">
+
+    <tr>
+        <th>Name</th>
+        <th>Menu</th>
+    </tr>
+    <tr>
+        <th style="font-weight:400;font-size:18px">@Model.Name</th>
+        <th style="font-weight:400;font-size:18px">@Model.Menu.Hyperlink</th>
+        <th><img class="img-thumbnail" src="@Model.Menu.Image" /></th>
+    </tr>
+</table>
+
