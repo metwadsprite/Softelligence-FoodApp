@@ -5,6 +5,7 @@ using UserInterface.Models;
 using BusinessLogic;
 using System.Collections.Generic;
 using BusinessLogic.BusinessExceptions;
+using System;
 
 namespace UserInterface.Controllers
 {
@@ -34,18 +35,20 @@ namespace UserInterface.Controllers
         public IActionResult NewSession()
         {
             SessionVM session = new SessionVM();
+
             try
             {
                 session.Session = adminService.GetActiveSession();
                 session.hasActiveSession = true;
+                session.Stores = session.Session.Stores;
             }
             catch(SessionNotFoundException)
             {
                 session.hasActiveSession = false;
+                session.Stores = adminService.GetAllStores();
             }
-
-            session.Stores = session.Session.Stores;
             return View(session);
+
         }
         [HttpGet]
         public IActionResult Details(int? id)
@@ -57,15 +60,16 @@ namespace UserInterface.Controllers
         public IActionResult Create([FromForm]Session newSession)
         {
             if (ModelState.IsValid)
-            {   
+            {
+                newSession.StartTime = DateTime.Now;
+                var store1 = adminService.GetStoreById(19);
+                var store2 = adminService.GetStoreById(21);
+                newSession.AddStore(store1);
+                newSession.AddStore(store2);
                 adminService.StartSession(newSession);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("NewSession");
         }
-        [HttpGet]
-        public IActionResult Create()
-        {
-            return View();
-        }
+      
     }
 }

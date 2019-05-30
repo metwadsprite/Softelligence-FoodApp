@@ -25,6 +25,7 @@ ViewData["Title"] = "NewSession";
             <div class="col-4">Price</div>
             </div>
 
+
             @foreach (var order in Model.Session.Orders)
             {
                 @if (order.Store.Id == item.Id)
@@ -67,6 +68,7 @@ else
     <th>
     @Html.DisplayNameFor(model => model.Stores)
     </th>
+    <th></th>
     </tr>
     @foreach (var item in Model.Stores)
     {

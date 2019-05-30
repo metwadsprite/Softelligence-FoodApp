@@ -25,7 +25,28 @@ namespace EF.DataAccess
             if (sessionToCreate != null)
             {
                 SessionDO sessionDO = new SessionDO();
-                sessionDO = mapper.MapData<SessionDO, Session>(sessionToCreate);
+                //sessionDO = mapper.MapData<SessionDO, Session>(sessionToCreate);
+
+                sessionDO.StartTime = sessionToCreate.StartTime;
+                sessionDO.IsActive = sessionToCreate.IsActive;
+                sessionDO.SessionStore = new List<SessionStoreDO>();
+                foreach(var item in sessionToCreate.Orders)
+                {
+                    var sessionVar = mapper.MapData<OrderDO, Order>(item);
+                    sessionDO.Orders.Add(sessionVar);
+                }
+
+                foreach(var item in sessionToCreate.Stores)
+                {
+                    var storeDoVar = mapper.MapData<StoreDO,Store>(item);
+                    var sessionDoVar = mapper.MapData<SessionDO, Session>(sessionToCreate);
+                    SessionStoreDO sessionStoreDo = new SessionStoreDO();
+                    sessionStoreDo.Session = sessionDoVar;
+                    sessionStoreDo.Store = storeDoVar;
+                    sessionDO.SessionStore.Add(sessionStoreDo);
+
+                }
+
                 sessionDO.IsActive = true;
                 dbContext.Add(sessionDO);
                 dbContext.SaveChanges();
