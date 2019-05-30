@@ -53,15 +53,15 @@ ViewData["Title"] = "NewSession";
             <hr />
             <p>Total Price: @Model.Price </p>
             </div>
-        }
-    </div>
-    }
-
-
+          }
+        </div>
+     }
+     
 else
 {
     <h1>Create New Session</h1>
-    <h5>Choose Restaurants</h5>
+    <br />
+    <h3>Choose Restaurants</h3>
     <table class="table">
     <tr>
     <th>
@@ -75,18 +75,21 @@ else
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            <label class="container">
-            <input type="checkbox">
-            <span class="checkmark"></span>
-            </label>
+        <label class="container">
+        <input type="checkbox" style="display:none">
+        <span class="checkmark"></span>
+        </label>
         </td>
         </tr>
     }
     </table>
-    <form asp-controller="Session" asp-action="NewSession" method="get">
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Create Session</button>
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <button type="submit" style="width:100%" class="btn btn-primary btn-lg btn-block">Create Session</button>
     </form>
-}
+       
+    }
+
 
 
 
