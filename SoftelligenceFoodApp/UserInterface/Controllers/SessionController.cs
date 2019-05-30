@@ -39,12 +39,12 @@ namespace UserInterface.Controllers
             try
             {
                 session.Session = adminService.GetActiveSession();
-                session.hasActiveSession = true;
+                session.HasActiveSession = true;
                 session.Stores = session.Session.Stores;
             }
             catch(SessionNotFoundException)
             {
-                session.hasActiveSession = false;
+                session.HasActiveSession = false;
                 session.Stores = adminService.GetAllStores();
             }
             return View(session);
@@ -62,8 +62,8 @@ namespace UserInterface.Controllers
             if (ModelState.IsValid)
             {
                 newSession.StartTime = DateTime.Now;
-                var store1 = adminService.GetStoreById(19);
-                var store2 = adminService.GetStoreById(21);
+                var store1 = adminService.GetStoreById(1);
+                var store2 = adminService.GetStoreById(10);
                 newSession.AddStore(store1);
                 newSession.AddStore(store2);
                 adminService.StartSession(newSession);

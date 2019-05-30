@@ -24,28 +24,7 @@ namespace EF.DataAccess
         {
             if (sessionToCreate != null)
             {
-                SessionDO sessionDO = new SessionDO();
-                //sessionDO = mapper.MapData<SessionDO, Session>(sessionToCreate);
-
-                sessionDO.StartTime = sessionToCreate.StartTime;
-                sessionDO.IsActive = sessionToCreate.IsActive;
-                sessionDO.SessionStore = new List<SessionStoreDO>();
-                foreach(var item in sessionToCreate.Orders)
-                {
-                    var sessionVar = mapper.MapData<OrderDO, Order>(item);
-                    sessionDO.Orders.Add(sessionVar);
-                }
-
-                foreach(var item in sessionToCreate.Stores)
-                {
-                    var storeDoVar = mapper.MapData<StoreDO,Store>(item);
-                    var sessionDoVar = mapper.MapData<SessionDO, Session>(sessionToCreate);
-                    SessionStoreDO sessionStoreDo = new SessionStoreDO();
-                    sessionStoreDo.Session = sessionDoVar;
-                    sessionStoreDo.Store = storeDoVar;
-                    sessionDO.SessionStore.Add(sessionStoreDo);
-
-                }
+                var sessionDO = mapper.MapData<SessionDO, Session>(sessionToCreate);
 
                 sessionDO.IsActive = true;
                 dbContext.Add(sessionDO);
@@ -70,15 +49,15 @@ namespace EF.DataAccess
             if (session != null)
             {
                 Session activeSession;
-                activeSession = mapper.MapData<Session, SessionDO>(session); 
+                activeSession = mapper.MapData<Session, SessionDO>(session);
 
                 foreach (var sStore in session.SessionStore)
                 {
                     activeSession.Stores.Add(mapper.MapData<Store, StoreDO>(sStore.Store));
                 }
-                
+
                 return activeSession;
-                
+
             }
             else
             {
@@ -91,7 +70,7 @@ namespace EF.DataAccess
             var sessionDO = dbContext.Sessions.FirstOrDefault(session => sessionToUpdate.Id == session.Id);
 
             var sessionToUpdateDO = mapper.MapData<SessionDO, Session>(sessionToUpdate);
-            
+
             dbContext.Entry(sessionDO).CurrentValues.SetValues(sessionToUpdateDO);
 
             foreach (var orderToUpdate in sessionToUpdate.Orders)
@@ -142,9 +121,9 @@ namespace EF.DataAccess
         {
             var session = dbContext.Sessions
                 .FirstOrDefault(a => a.Id == id);
-                 var sessionToReturn = mapper.MapData<Session, SessionDO>(session);
+            var sessionToReturn = mapper.MapData<Session, SessionDO>(session);
             return sessionToReturn;
-           
+
         }
     }
 }
