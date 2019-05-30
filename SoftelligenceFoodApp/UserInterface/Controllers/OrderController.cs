@@ -31,19 +31,19 @@ namespace UserInterface.Controllers
         {
             activeSession = sessionRepository.GetActiveSession();
 
-            var userName = HttpContext.User.Identity.Name;
-            userService.SelectCurrentUser(userName);
+            var userEmail = HttpContext.User.Identity.Name;
+            userService.SelectCurrentUser(userEmail);
 
-            var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userName);
+            var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
 
-            if(userOrder == null)
+            if (userOrder == null)
             {
                 return View(activeSession);
 
             }
             else
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("ModifyOrderDisplay", "Order");
             }
 
             //return RedirectToAction("Back");
@@ -96,6 +96,40 @@ namespace UserInterface.Controllers
             return View(curOrder);
         }
 
+        public IActionResult ModifyOrderDisplay()
+        {
+            activeSession = sessionRepository.GetActiveSession();
+            var userEmail = HttpContext.User.Identity.Name;
+            userService.SelectCurrentUser(userEmail);
+
+            var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
+
+            return View(userOrder);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult ModifyOrder([FromForm]Order orderForm)
+        {
+            activeSession = sessionRepository.GetActiveSession();
+            var userEmail = HttpContext.User.Identity.Name;
+
+            userService.SelectCurrentUser(userEmail);
+            var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
+            userService.LoadOrder(userOrder);
+
+            var storeToPlace = userOrder.Store;
+
+            var menuItem = new MenuItem
+            {
+                Details = orderForm.Details,
+                Price = orderForm.Price
+            };
+
+            userService.ChangeOrder(storeToPlace, menuItem, userOrder.Id);
+
+            return View();
+        }
 
         public IActionResult Back()
         {

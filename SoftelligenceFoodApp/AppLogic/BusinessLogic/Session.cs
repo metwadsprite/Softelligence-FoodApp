@@ -37,7 +37,12 @@ namespace BusinessLogic
         public void UpdateOrder(int orderId, Order updatedOrder)
         {
             var orderToUpdate = Orders.Where(order => order.Id == orderId).SingleOrDefault();
-            orderToUpdate = updatedOrder;
+            orderToUpdate.Price = updatedOrder.Price;
+            orderToUpdate.Store = updatedOrder.Store;
+            orderToUpdate.User = updatedOrder.User;
+            orderToUpdate.IsActive = updatedOrder.IsActive;
+            orderToUpdate.Details = updatedOrder.Details;
+
         }
         public void CancelOrder(int orderId)
         {

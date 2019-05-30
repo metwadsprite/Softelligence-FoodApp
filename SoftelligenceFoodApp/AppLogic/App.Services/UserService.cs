@@ -31,7 +31,6 @@ namespace Logic.Implementations
 
             Order newOrder = new Order();
             newOrder.Store = store;
-            newOrder.User = user;
             newOrder.Price = menuItem.Price;
             newOrder.Details = menuItem.Details;
             newOrder.IsActive = true;
@@ -43,16 +42,27 @@ namespace Logic.Implementations
 
         }
         //order info to change
-        public void ChangeOrder(Store store, MenuItem menuItem)
+        public void ChangeOrder(Store store, MenuItem menuItem, int orderId)
         {
+            Session currentSession = GetActiveSession();
+
             Order newOrder = new Order();
             newOrder.Store = store;
-            newOrder.User = user;
             newOrder.Price = menuItem.Price;
             newOrder.Details = menuItem.Details;
+            newOrder.User = this.user;
 
-            user.ChangeOrder(newOrder);
+            //currentSession.ChangeOrder(newOrder);
+            currentSession.UpdateOrder(orderId, newOrder);
+            dataContext.GetSessionsRepository().Update(currentSession);
         }
+
+
+        public void LoadOrder(Order loadedOrder)
+        {
+            user.LoadOrder(loadedOrder);
+        }
+
         public void CancelOrder()
         {
             user.CancelOrder();
