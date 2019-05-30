@@ -5,13 +5,13 @@
 }
 
 
-<h1> @Html.DisplayFor(modelItem => Model.StoreName) </h1>
+<h1>@Html.DisplayFor(modelItem => Model.StoreName) </h1>
 
 
 
-<div class="row">
+<div class="row padding-top">
     <div class="col-md-4">
-        <div class="row"><br /><h4>Your Order Content :</h4></div>
+        <div class="row padding-text"><br /><h4>Your Order Content :</h4></div>
         <form asp-action="PlaceOrder" method="post" asp-controller="Order">
             <input type="hidden" asp-for="StoreName" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>

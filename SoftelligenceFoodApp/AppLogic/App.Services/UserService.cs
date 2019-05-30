@@ -63,9 +63,12 @@ namespace Logic.Implementations
             user.LoadOrder(loadedOrder);
         }
 
-        public void CancelOrder()
+        public void CancelOrder(Order orderToCancel)
         {
+            Session currentSession = GetActiveSession();
+
             user.CancelOrder();
+            dataContext.GetSessionsRepository().DeleteOrder(orderToCancel);
         }
         public Order GetCurrentOrder()
         {

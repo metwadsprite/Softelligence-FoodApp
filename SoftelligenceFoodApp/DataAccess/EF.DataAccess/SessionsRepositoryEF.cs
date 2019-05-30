@@ -91,6 +91,21 @@ namespace EF.DataAccess
             dbContext.Sessions.Update(sessionDO);
             dbContext.SaveChanges();
         }
+
+        public void DeleteOrder(Order orderToRemove)
+        {
+            OrderDO orderDO = dbContext.Orders.SingleOrDefault(order => orderToRemove.Id == order.Id);
+            if (orderDO != null)
+            {
+                dbContext.Orders.Remove(orderDO);
+            }
+            else
+            {
+                throw new EntryPointNotFoundException();
+            }
+            dbContext.SaveChanges();
+        }
+
         public IEnumerable<Session> GetAll()
         {
             List<Session> SessionsList = new List<Session>();
@@ -142,5 +157,6 @@ namespace EF.DataAccess
                 throw new SessionNotFoundException();
             }
         }
+
     }
 }

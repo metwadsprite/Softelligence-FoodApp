@@ -156,15 +156,19 @@ tbody tr:nth-child(even) {
     padding: 0 5px 0 5px;
 }
 
-.btn1 {
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    width: 250px;
-    height: 70px;
+/*------------------------------------------------------------------
+                    Order css
+*/
+
+.padding-top{
+    padding-top: 2%;
 }
 
-    .btn1:hover {
-        background-color: #5684ce;
-        color: white;
-    }
+.padding-text{
+    padding-left: 4%;
+}
+
+.btn-padding{
+    padding: 10px 10px 10px 10xp;
+}
+​

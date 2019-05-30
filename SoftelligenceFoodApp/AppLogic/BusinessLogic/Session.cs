@@ -46,7 +46,8 @@ namespace BusinessLogic
         }
         public void CancelOrder(int orderId)
         {
-            Orders.Remove(Orders.Where(order => order.Id == orderId).SingleOrDefault());
+            Orders.Remove(Orders.Where(order => order.Id == orderId).FirstOrDefault());
+
         }
         public void Finalize()
         {

@@ -105,6 +105,7 @@ namespace UserInterface.Controllers
             var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
 
             return View(userOrder);
+
         }
 
         [Authorize]
@@ -116,6 +117,7 @@ namespace UserInterface.Controllers
 
             userService.SelectCurrentUser(userEmail);
             var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
+
             userService.LoadOrder(userOrder);
 
             var storeToPlace = userOrder.Store;
@@ -127,6 +129,19 @@ namespace UserInterface.Controllers
             };
 
             userService.ChangeOrder(storeToPlace, menuItem, userOrder.Id);
+
+            return View(orderForm);
+        }
+
+        public IActionResult DeleteOrder()
+        {
+            activeSession = sessionRepository.GetActiveSession();
+            var userEmail = HttpContext.User.Identity.Name;
+
+            userService.SelectCurrentUser(userEmail);
+            var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
+
+            userService.CancelOrder(userOrder);
 
             return View();
         }

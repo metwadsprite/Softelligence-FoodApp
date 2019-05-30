@@ -4,11 +4,10 @@
     ViewData["Title"] = "ModifyOrder";
 }
 
-<h1>ModifyOrder</h1>
 
-<div class="row">
-    <div class="col-md-4">
-        <div class="row"><br /><h2>Your Order Content :</h2></div>
+<div class="row top-buffer">
+    <div class="col-md-4 top-buffer">
+        <div class="row padding-text"><br /><h2>Your Order Content :</h2></div>
         <form asp-action="ModifyOrder" method="post" asp-controller="Order">
             <input type="hidden" asp-for="Store.Name" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -25,5 +24,10 @@
             <button type="submit" class="btn btn-primary btn-lg btn-block">Change Order</button>
         </form>
     </div>
-
+    <div class="col-md-4 top-buffer">
+        <form asp-action="DeleteOrder" method="post" asp-controller="Order">
+            <div class="textRight"><br /><h4>Changed your mind?</h4></div>
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Delete Order</button>
+        </form>
+    </div>
 </div>
