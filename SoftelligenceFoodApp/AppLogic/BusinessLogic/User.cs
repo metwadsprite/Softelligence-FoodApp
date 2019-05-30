@@ -7,7 +7,7 @@ namespace BusinessLogic
 {
     public class User
     {
-        private Order currentOrder;
+        private Order currentOrder { get; set; }
 
         public int Id { get; set; }
         public string Email { get; set; }
@@ -20,6 +20,7 @@ namespace BusinessLogic
                 throw new OrderAlreadyInProgressException();
             }
             currentOrder = newOrder;
+
         }
         public void ChangeOrder(Order newOrder)
         {

@@ -18,6 +18,8 @@ namespace BusinessLogic
         public Session()
         {
             IsActive = true;
+            Stores = new List<Store>();
+            Orders = new List<Order>();
         }
 
         public void AddStore(Store newStore)

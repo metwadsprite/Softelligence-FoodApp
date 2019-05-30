@@ -40,22 +40,24 @@ namespace EF.DataAccess
         {
             SessionDO session = dbContext.Sessions
                 .Include(tempSession => tempSession.Orders)
+                    .ThenInclude(order => order.User)
                 .Include(tempSession => tempSession.SessionStore)
                     .ThenInclude(sessstore => sessstore.Store)
                         .ThenInclude(store => store.Menu)
                 .FirstOrDefault(s => s.IsActive == true);
+
             if (session != null)
             {
-                Session activeSession = new Session();
-                mapper.MapData<Session, SessionDO>(session);
-                activeSession.Stores = new List<Store>();
+                Session activeSession;
+                activeSession = mapper.MapData<Session, SessionDO>(session); 
 
                 foreach (var sStore in session.SessionStore)
                 {
                     activeSession.Stores.Add(mapper.MapData<Store, StoreDO>(sStore.Store));
                 }
-
-                return (activeSession);
+                
+                return activeSession;
+                
             }
             else
             {
@@ -65,27 +67,36 @@ namespace EF.DataAccess
 
         public void Update(Session sessionToUpdate)
         {
-            SessionDO sessionDO = dbContext.Sessions.SingleOrDefault(session => sessionToUpdate.Id == session.Id);
+            var sessionDO = dbContext.Sessions.FirstOrDefault(session => sessionToUpdate.Id == session.Id);
 
-            sessionDO = mapper.MapData<SessionDO, Session>(sessionToUpdate);
-            sessionDO.SessionStore = new List<SessionStoreDO>();
+            var sessionToUpdateDO = mapper.MapData<SessionDO, Session>(sessionToUpdate);
+            
+            dbContext.Entry(sessionDO).CurrentValues.SetValues(sessionToUpdateDO);
 
-            foreach (var store in sessionToUpdate.Stores)
+            foreach (var orderToUpdate in sessionToUpdate.Orders)
             {
-                sessionDO.SessionStore.Add(new SessionStoreDO
+                var orderToUpdateDO = mapper.MapData<OrderDO, Order>(orderToUpdate);
+                var orderDO = dbContext.Orders.FirstOrDefault(order => order.Id == orderToUpdateDO.Id);
+
+                if (orderDO == null)
                 {
-                    Store = mapper.MapData<StoreDO, Store>(store),
-                    Session = sessionDO
-                });
+                    sessionDO.Orders.Add(orderToUpdateDO);
+                }
+                else
+                {
+                    dbContext.Entry(orderDO).CurrentValues.SetValues(orderToUpdateDO);
+                }
             }
 
             dbContext.Sessions.Update(sessionDO);
+            dbContext.SaveChanges();
         }
         public IEnumerable<Session> GetAll()
         {
             List<Session> SessionsList = new List<Session>();
             var sessions = dbContext.Sessions
                 .Include(tempSession => tempSession.Orders)
+                    .ThenInclude(order => order.User)
                 .Include(tempSession => tempSession.SessionStore)
                     .ThenInclude(sStore => sStore.Store)
                         .ThenInclude(store => store.Menu)

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using UserInterface.Models;
 using BusinessLogic;
 using System.Collections.Generic;
+using BusinessLogic.BusinessExceptions;
 
 namespace UserInterface.Controllers
 {
@@ -33,8 +34,17 @@ namespace UserInterface.Controllers
         public IActionResult NewSession()
         {
             SessionVM session = new SessionVM();
-            session.Sessions = adminService.GetAllSessions();
-            session.Stores = adminService.GetAllStores();
+            try
+            {
+                session.Session = adminService.GetActiveSession();
+                session.hasActiveSession = true;
+            }
+            catch(SessionNotFoundException)
+            {
+                session.hasActiveSession = false;
+            }
+
+            session.Stores = session.Session.Stores;
             return View(session);
         }
         [HttpGet]

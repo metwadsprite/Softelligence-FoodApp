@@ -19,10 +19,10 @@ namespace EF.DataAccess
         private readonly ApplicationDbContext dbContext;
         private readonly EntitiesMapper mapper;
 
-        public User GetById(int id)
+        public User GetByName(string name)
         {
 
-            var userWithId = dbContext.Users.SingleOrDefault(user => user.Id == id);
+            var userWithId = dbContext.Users.SingleOrDefault(user => user.Name == name);
 
             if (userWithId == null)
             {
@@ -33,14 +33,21 @@ namespace EF.DataAccess
             //mapper.MapData<User, UserDO>();
         }
 
-        public String GetEmail(int id)
+        public User GetByEmail(string email)
         {
-            return GetById(id).Email;
+            var userWithEmail = dbContext.Users.SingleOrDefault(user => user.Email == email);
+
+            if (userWithEmail == null)
+            {
+                throw new UserNotFoundException("User not found");
+            }
+
+            return mapper.MapData<User, UserDO>(userWithEmail);
         }
 
-        public String GetName(int id)
+        public int GetId(string name)
         {
-            return GetById(id).Name;
+            return GetByName(name).Id;
         }
 
         public UserRepositoryEF(ApplicationDbContext dbContext, EntitiesMapper mapper)

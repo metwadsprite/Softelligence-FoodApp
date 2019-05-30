@@ -3,8 +3,9 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Restaurant Details:</h1>
 <hr />
+
 <table class="table">
 
     <tr>
@@ -14,5 +15,7 @@
     <tr>
         <th style="font-weight:400;font-size:18px">@Model.Name</th>
         <th style="font-weight:400;font-size:18px">@Model.Menu.Hyperlink</th>
+        <th><img class="img-thumbnail" src="@Model.Menu.Image" /></th>
     </tr>
 </table>
+

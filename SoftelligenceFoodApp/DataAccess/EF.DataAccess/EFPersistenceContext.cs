@@ -42,6 +42,7 @@ namespace EF.DataAccess
             storesRepository = new StoreRepositoryEF(dbContext, mapper);
             sessionsRepository = new SessionsRepositoryEF(dbContext, mapper);
             usersRepository = new UserRepositoryEF(dbContext, mapper);
+
         }
     }
 }
