@@ -67,18 +67,25 @@ namespace EF.DataAccess
 
         public void Update(Session sessionToUpdate)
         {
-            SessionDO sessionDO = dbContext.Sessions.FirstOrDefault(session => sessionToUpdate.Id == session.Id);
+            var sessionDO = dbContext.Sessions.FirstOrDefault(session => sessionToUpdate.Id == session.Id);
 
-            sessionDO = mapper.MapData<SessionDO, Session>(sessionToUpdate);
-            sessionDO.SessionStore = new List<SessionStoreDO>();
+            var sessionToUpdateDO = mapper.MapData<SessionDO, Session>(sessionToUpdate);
+            
+            dbContext.Entry(sessionDO).CurrentValues.SetValues(sessionToUpdateDO);
 
-            foreach (var store in sessionToUpdate.Stores)
+            foreach (var orderToUpdate in sessionToUpdate.Orders)
             {
-                sessionDO.SessionStore.Add(new SessionStoreDO
+                var orderToUpdateDO = mapper.MapData<OrderDO, Order>(orderToUpdate);
+                var orderDO = dbContext.Orders.FirstOrDefault(order => order.Id == orderToUpdateDO.Id);
+
+                if (orderDO == null)
                 {
-                    Store = mapper.MapData<StoreDO, Store>(store),
-                    
-                });
+                    sessionDO.Orders.Add(orderToUpdateDO);
+                }
+                else
+                {
+                    dbContext.Entry(orderDO).CurrentValues.SetValues(orderToUpdateDO);
+                }
             }
 
             dbContext.Sessions.Update(sessionDO);
