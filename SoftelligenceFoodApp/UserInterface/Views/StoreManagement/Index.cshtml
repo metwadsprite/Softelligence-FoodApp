@@ -31,7 +31,7 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Hyperlink)
+                <a href="@Html.DisplayFor(modelItem => item.Hyperlink)">@Html.DisplayFor(modelItem => item.Hyperlink)</a>
             </td>
             <td>
                 <img class="img-thumbnail" src="@Html.DisplayFor(modelItem => item.Image)"/>

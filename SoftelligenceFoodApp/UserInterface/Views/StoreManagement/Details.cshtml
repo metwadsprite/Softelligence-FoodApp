@@ -3,9 +3,11 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Restaurant Details:</h1>
 <hr />
 <hr width="1" size="500">
 <h4>Name: @Model.Name</h4>
 <p></p>
-<h4>Menu: @Model.Menu.Hyperlink</h4>
+<h4><a href="@Model.Menu.Hyperlink">@Model.Menu.Hyperlink</a></h4>
+<p></p>
+<h4><img class="img-thumbnail" src="@Model.Menu.Image" /></h4>

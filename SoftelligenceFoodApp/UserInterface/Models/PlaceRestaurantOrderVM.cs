@@ -14,5 +14,6 @@ namespace UserInterface.Models
         public String StoreName { get; set; }
         public String Image { get; set; }
         public String Hyperlink { get; set; }
+        public String UserEmail { get; set; }
     }
 }

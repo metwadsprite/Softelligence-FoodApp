@@ -11,7 +11,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <h4><div class="row"><br />Your Order Content :</div></h4>
+        <div class="row"><br /><h4>Your Order Content :</h4></div>
         <form asp-action="PlaceOrder" method="post" asp-controller="Order">
             <input type="hidden" asp-for="StoreName" />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -29,13 +29,13 @@
         </form>
     </div>
     <div class="col-md-4">
-        <h4><div class="row"><br />Menu Image:</div></h4>
+        <div class="row"><br /><h4>Menu Image:</h4></div>
         <div class="view overlay zoom">
             <img src="@Html.DisplayFor(modelItem => Model.Image)" class="img-fluid " alt="sample image">
         </div>
         <div>
-            <h4><div class="row"><br />Menu Hyperlink:</div></h4>
-            @Html.DisplayFor(modelItem => Model.Hyperlink)
+            <div class="row"><br /><h4>Menu Link:</h4></div>
+            <a href="@Html.DisplayFor(modelItem => Model.Hyperlink)">@Html.DisplayFor(modelItem => Model.Hyperlink)</a>
         </div>
     </div>
 
