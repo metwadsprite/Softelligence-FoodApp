@@ -63,29 +63,53 @@ else
     <h1>Create New Session</h1>
     <br />
     <h3>Choose Restaurants</h3>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Stores)
-            </th>
-            <th></th>
-        </tr>
-        @foreach (var item in Model.Stores)
-        {
+    @*<table class="table">
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    <label class="container">
-                        <input type="checkbox" style="display:none" value="@Model.SelectedStores">
-                        <span class="checkmark"></span>
-                    </label>
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Stores)
+                </th>
+                <th></th>
             </tr>
-        }
-    </table>
-    <form asp-action="Create">
+            @foreach (var item in Model.Stores)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <label class="container">
+                            <input type="checkbox" style="display:none" value="@item">
+                            <span class="checkmark"></span>
+                        </label>
+                    </td>
+                </tr>
+            }
+        </table>*@
+
+    <form asp-action="Create" method="post">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Stores)
+                </th>
+                <th></th>
+            </tr>
+            @for (int i = 0; i < Model.Stores.Count(); i++)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Stores.ElementAt(i).Name)
+                    </td>
+                    <td>
+                        <label class="container">
+                            <input asp-for="@Model.Stores[i].Id" type="hidden" />
+                            <input asp-for="@Model.SelectedStores[i]" type="checkbox" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </td>
+                </tr>
+            }
+        </table>
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <button type="submit" style="width:100%" class="btn btn-primary btn-lg btn-block">Create Session</button>
     </form>
