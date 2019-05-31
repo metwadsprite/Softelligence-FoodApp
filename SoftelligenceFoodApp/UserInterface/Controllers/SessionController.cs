@@ -64,11 +64,16 @@ namespace UserInterface.Controllers
                 newSession.StartTime = DateTime.Now;
                 var store1 = adminService.GetStoreById(1);
                 var store2 = adminService.GetStoreById(10);
+
                 newSession.AddStore(store1);
                 newSession.AddStore(store2);
                 adminService.StartSession(newSession);
             }
             return RedirectToAction("NewSession");
+        }
+        public IActionResult CloseRestaurant()
+        {
+            return View();
         }
       
     }
