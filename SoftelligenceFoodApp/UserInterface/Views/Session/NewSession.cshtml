@@ -20,9 +20,9 @@ ViewData["Title"] = "NewSession";
             <h2>@item.Name</h2>
             <hr />
             <div class="row order-table-header">
-            <div class="col-4">User Name</div>
-            <div class="col-4">Details</div>
-            <div class="col-4">Price</div>
+            <div class="col-3">Name</div>
+            <div class="col-6">Details</div>
+            <div class="col-2">Price</div>
             </div>
 
             @foreach (var order in Model.Session.Orders)
@@ -41,9 +41,9 @@ ViewData["Title"] = "NewSession";
                     }
 
                     <div class="@className">                           
-                    <div class="col-4" style="font-size:80%">@order.User.Name</div>
-                    <div class="col-4" style="font-size:80%">@order.Details</div>
-                    <div class="col-4" style="font-size:80%">@order.Price</div>
+                    <div class="col-3">@order.User.Name</div>
+                    <div class="col-6">@order.Details</div>
+                    <div class="col-2">@order.Price</div>
                     </div>
 
                     rowCount++;

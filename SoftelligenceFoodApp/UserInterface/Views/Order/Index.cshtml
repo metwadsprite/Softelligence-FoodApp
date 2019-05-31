@@ -13,7 +13,12 @@
 else
 {
 <div class="container">
-    <h2>Today's Restaurants</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Today's Restaurants</h2>
+        </div>
+    </div>
+    
     <div class="row">
         @foreach (var store in Model.Stores)
         {
@@ -28,10 +33,13 @@ else
             </div>
         }
     </div>
-    <div class="col-md-4 offset-md-4">
-        <form asp-action="GetHistory" method="post" asp-controller="Order">
-            <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">Get History</button>
-        </form>
+
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="GetHistory" method="post" asp-controller="Order">
+                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">Order History</button>
+            </form>
+        </div>
     </div>
 </div>
 }

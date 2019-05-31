@@ -9,11 +9,12 @@ namespace UserInterface.Models
     public class PlaceRestaurantOrderVM
     {
         public int OrderStoreId { get; set; }
-        public String Option { get; set; }
+        public string Option { get; set; }
         public decimal Price { get; set; }
-        public String StoreName { get; set; }
-        public String Image { get; set; }
-        public String Hyperlink { get; set; }
-        public String UserEmail { get; set; }
+        public string StoreName { get; set; }
+        public string Image { get; set; }
+        public string Hyperlink { get; set; }
+        public string UserEmail { get; set; }
+        public ICollection<Order> Suggestions { get; set; }
     }
 }

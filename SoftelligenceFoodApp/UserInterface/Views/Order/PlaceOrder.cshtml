@@ -9,14 +9,15 @@
         <h2>Your order was placed</h2>
     </div>
 
-
-    <div>
-        Details:
+    <div class="row">
+        <h5>Order details:</h5>
+    </div>
+    <div class="row">
         <pre>
-    Restaurant : @Html.DisplayFor(itemModel => Model.StoreName)
-    Option : @Html.DisplayFor(itemModel => Model.Option)
-    Price : @Html.DisplayFor(itemModel => Model.Price)
-    </pre>
+    Restaurant: @Html.DisplayFor(itemModel => Model.StoreName)
+    Option: @Html.DisplayFor(itemModel => Model.Option)
+    Price: @Html.DisplayFor(itemModel => Model.Price)
+        </pre>
     </div>
 
     <form asp-controller="Order" asp-action="Back" method="get">
