@@ -81,5 +81,11 @@ namespace UserInterface.Controllers
             }
             return RedirectToAction("NewSession");
         }
+
+        [HttpGet]
+        public IActionResult CloseRestaurant()
+        {
+            return View();
+        }
     }
 }
