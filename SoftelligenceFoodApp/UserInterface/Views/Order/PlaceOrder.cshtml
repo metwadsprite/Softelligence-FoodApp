@@ -1,23 +1,26 @@
 ﻿@model PlaceRestaurantOrderVM
 
-    @{
+@{
     ViewData["Title"] = "PlaceOrder";
-    }
+}
 
+<div class="container">
     <div style="text-align:center">
         <h2>Your order was placed</h2>
     </div>
-   
+
 
     <div>
         Details:
         <pre>
-            Restaurant : @Html.DisplayFor(itemModel => Model.StoreName)
-            Option : @Html.DisplayFor(itemModel => Model.Option)
-            Price : @Html.DisplayFor(itemModel => Model.Price)
-        </pre>
+    Restaurant : @Html.DisplayFor(itemModel => Model.StoreName)
+    Option : @Html.DisplayFor(itemModel => Model.Option)
+    Price : @Html.DisplayFor(itemModel => Model.Price)
+    </pre>
     </div>
 
     <form asp-controller="Order" asp-action="Back" method="get">
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Back to Homepage</button>
+        <input type="hidden" asp-for="StoreName" />
+        <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">Back to Homepage</button>
     </form>
+</div>

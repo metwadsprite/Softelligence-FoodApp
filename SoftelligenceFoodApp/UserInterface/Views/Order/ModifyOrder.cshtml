@@ -1,0 +1,40 @@
+﻿@model PlaceRestaurantOrderVM
+
+@{
+    ViewData["Title"] = "ModifyOrder";
+}
+
+<div class="container">
+    <h2>Your order has been modified</h2>
+
+    <div>
+        <pre>
+    Details:
+        Restaurant : @Html.DisplayNameFor(itemModel => Model.StoreName)
+        Option : @Html.DisplayNameFor(itemModel => Model.Option)
+        Price : @Html.DisplayNameFor(itemModel => Model.Price)
+        </pre>
+    </div>
+
+    <div class="row top-buffer">
+
+        <div class="col-md-4">
+            <form asp-action="Back" method="post" asp-controller="Order">
+                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">Homepage</button>
+            </form>
+        </div>
+
+        <div class="col-md-4">
+            <form asp-action="DeleteOrder" method="post" asp-controller="Order">
+                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">Cancel order </button>
+            </form>
+        </div>
+
+        <div class="col-md-4">
+            <form asp-action="Index" method="post" asp-controller="Order">
+                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">Change order </button>
+            </form>
+        </div>
+
+    </div>
+</div>

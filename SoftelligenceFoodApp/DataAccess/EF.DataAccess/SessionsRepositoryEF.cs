@@ -24,8 +24,7 @@ namespace EF.DataAccess
         {
             if (sessionToCreate != null)
             {
-                SessionDO sessionDO = new SessionDO();
-                sessionDO = mapper.MapData<SessionDO, Session>(sessionToCreate);
+                var sessionDO = mapper.MapData<SessionDO, Session>(sessionToCreate);
                 sessionDO.IsActive = true;
                 dbContext.Add(sessionDO);
                 dbContext.SaveChanges();
@@ -48,8 +47,7 @@ namespace EF.DataAccess
 
             if (session != null)
             {
-                Session activeSession;
-                activeSession = mapper.MapData<Session, SessionDO>(session); 
+                var activeSession = mapper.MapData<Session, SessionDO>(session); 
 
                 foreach (var sStore in session.SessionStore)
                 {
@@ -85,13 +83,30 @@ namespace EF.DataAccess
                 else
                 {
                     dbContext.Entry(orderDO).CurrentValues.SetValues(orderToUpdateDO);
+                    // might not work when updating order
+                    /// TODO: fix if that's the case
                 }
             }
 
             dbContext.Sessions.Update(sessionDO);
             dbContext.SaveChanges();
         }
-        public IEnumerable<Session> GetAll()
+
+        public void DeleteOrder(Order orderToRemove)
+        {
+            OrderDO orderDO = dbContext.Orders.SingleOrDefault(order => orderToRemove.Id == order.Id);
+            if (orderDO != null)
+            {
+                dbContext.Orders.Remove(orderDO);
+            }
+            else
+            {
+                throw new EntryPointNotFoundException();
+            }
+            dbContext.SaveChanges();
+        }
+
+        public ICollection<Session> GetAll()
         {
             List<Session> SessionsList = new List<Session>();
             var sessions = dbContext.Sessions
@@ -120,10 +135,28 @@ namespace EF.DataAccess
         public Session GetById(int id)
         {
             var session = dbContext.Sessions
+                .Include(tempSession => tempSession.Orders)
+                    .ThenInclude(order => order.User)
+                .Include(tempSession => tempSession.SessionStore)
+                    .ThenInclude(sessstore => sessstore.Store)
+                        .ThenInclude(store => store.Menu)
                 .FirstOrDefault(a => a.Id == id);
-                 var sessionToReturn = mapper.MapData<Session, SessionDO>(session);
-            return sessionToReturn;
-           
+
+            if (session != null)
+            {
+                var sessionToReturn = mapper.MapData<Session, SessionDO>(session);
+
+                foreach (var sStore in session.SessionStore)
+                {
+                    sessionToReturn.Stores.Add(mapper.MapData<Store, StoreDO>(sStore.Store));
+                }
+                return sessionToReturn;
+            }
+            else
+            {
+                throw new SessionNotFoundException();
+            }
         }
+
     }
 }
