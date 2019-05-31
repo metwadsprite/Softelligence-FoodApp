@@ -31,19 +31,19 @@ namespace UserInterface.Controllers
         {
             activeSession = sessionRepository.GetActiveSession();
 
-            var userName = HttpContext.User.Identity.Name;
-            userService.SelectCurrentUser(userName);
+            var userEmail = HttpContext.User.Identity.Name;
+            userService.SelectCurrentUser(userEmail);
 
-            var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userName);
+            var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
 
-            if(userOrder == null)
+            if (userOrder == null)
             {
                 return View(activeSession);
 
             }
             else
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("ModifyOrderDisplay", "Order");
             }
 
             //return RedirectToAction("Back");
@@ -96,6 +96,89 @@ namespace UserInterface.Controllers
             return View(curOrder);
         }
 
+        public IActionResult ModifyOrderDisplay()
+        {
+            activeSession = sessionRepository.GetActiveSession();
+            var userEmail = HttpContext.User.Identity.Name;
+            userService.SelectCurrentUser(userEmail);
+
+            var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
+
+            PlaceRestaurantOrderVM orderVM = new PlaceRestaurantOrderVM();
+            orderVM.Option = userOrder.Details;
+            orderVM.Image = userOrder.Store.Menu.Image;
+            orderVM.StoreName = userOrder.Store.Name;
+            orderVM.Price = userOrder.Price;
+
+            return View(orderVM);
+
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult ModifyOrder([FromForm]PlaceRestaurantOrderVM orderVM)
+        {
+            activeSession = sessionRepository.GetActiveSession();
+            var userEmail = HttpContext.User.Identity.Name;
+
+            userService.SelectCurrentUser(userEmail);
+            var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
+
+            userService.LoadOrder(userOrder);
+
+            var storeToPlace = userOrder.Store;
+
+            var menuItem = new MenuItem
+            {
+                Details = orderVM.Option,
+                Price = orderVM.Price
+            };
+
+            userService.ChangeOrder(storeToPlace, menuItem, userOrder.Id);
+
+            orderVM.StoreName = storeToPlace.Name;
+            return View(orderVM);
+        }
+
+        public IActionResult DeleteOrder()
+        {
+            activeSession = sessionRepository.GetActiveSession();
+            var userEmail = HttpContext.User.Identity.Name;
+
+            userService.SelectCurrentUser(userEmail);
+            var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
+
+            userService.CancelOrder(userOrder);
+
+            return View();
+        }
+
+        public IActionResult GetHistory()
+        {
+            ICollection<Session> sessionHistory = sessionRepository.GetAll();
+            var userEmail = HttpContext.User.Identity.Name;
+
+            userService.SelectCurrentUser(userEmail);
+            //var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
+
+            ICollection<Order> orderHistoy = new List<Order>();
+
+            foreach(var session in sessionHistory)
+            {
+                if(session.IsActive == false)
+                {
+                    foreach(var order in session.Orders)
+                    {
+                        if (order.IsActive == false)
+                        {
+                            orderHistoy.Add(order);
+                        }
+                    }
+                }
+            }
+
+            return View(orderHistoy);
+        }
 
         public IActionResult Back()
         {

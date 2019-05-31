@@ -24,12 +24,19 @@ namespace BusinessLogic
         }
         public void ChangeOrder(Order newOrder)
         {
-            if (currentOrder.Id != newOrder.Id)
+            if (currentOrder.Id == newOrder.Id)
             {
                 throw new OrderHistoryAccessException();
             }
             currentOrder = newOrder;
         }
+
+
+        public void LoadOrder(Order loadedOrder)
+        {
+            currentOrder = loadedOrder;
+        }
+
         public void CancelOrder()
         {
             currentOrder = null;

@@ -6,28 +6,29 @@
 
 @if (Model == null)
 {
-    <h1>No session is currently active</h1>
+    <div class="container">
+        <h1>No session is currently active</h1>
+    </div>
 }
 else
 {
-    <h1>Restaurants</h1>
+    <div class="container">
+        <h2>Today's Restaurants</h2>
+        <div class="row">
+            @foreach (var store in Model.Stores)
+            {
 
-    <table class="tb1">
-        @foreach (var store in Model.Stores)
-        {
-            <tr>
-                <th>
+                <div class="col-md-4 btn-padding">
                     <form asp-controller="Order" asp-action="PlaceRestaurantOrder" asp-route-id="@store.Id" method="get">
-                        <button type="submit" class="btn1 btn-primary btn-lg btn-block button">
+                        <button type="submit" class="btn1 btn-primary btn-lg btn-block">
                             @Html.DisplayFor(modelItem => store.Name)
                         </button>
                     </form>
-                </th>
-            </tr>
-        }
-
-    </table>
-
+                    <br />
+                </div>
+            }
+        </div>
+    </div>
 }
 
 
