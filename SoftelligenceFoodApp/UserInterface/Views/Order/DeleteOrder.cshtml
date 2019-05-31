@@ -3,20 +3,22 @@
     ViewData["Title"] = "DeleteOrder";
 }
 
-<h1>Your order has been deleted</h1>
+<h2>Your order has been canceled</h2>
 
-<div class="row top-buffer">
-    <div class="col-md-4 top-buffer">
-        <div class="textRight"><br /><h4>Start a new Order</h4></div>
-        <form asp-action="Index" method="post" asp-controller="Order">
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Start Order</button>
-        </form>
-    </div>
+<div class="container">
+    <div class="row top-buffer">
+        <div class="col-md-4">
+            <div class="textRight"><br /><h4>Start a new Order</h4></div>
+            <form asp-action="Index" method="post" asp-controller="Order">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Start Order</button>
+            </form>
+        </div>
 
-    <div class="col-md-4 top-buffer">
-        <div class="textRight"><br /><h4>Back to Homepage</h4></div>
-        <form asp-action="Back" method="post" asp-controller="Order">
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Homepage</button>
-        </form>
+        <div class="col-md-4">
+            <div class="textRight"><br /><h4>Back to Homepage</h4></div>
+            <form asp-action="Back" method="post" asp-controller="Order">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Homepage</button>
+            </form>
+        </div>
     </div>
 </div>

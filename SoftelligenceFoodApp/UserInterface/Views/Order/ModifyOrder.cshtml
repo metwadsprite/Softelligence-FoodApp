@@ -1,41 +1,41 @@
-﻿@model Order
+﻿@model PlaceRestaurantOrderVM
 
 @{
     ViewData["Title"] = "ModifyOrder";
 }
 
-<h1>Your order has been modified</h1>
+<div class="container">
+    <h2>Your order has been modified</h2>
 
-<div>
-    Details:
-    <pre>
-    Restaurant : @Html.DisplayFor(itemModel => Model.Store.Name)
-    Option : @Html.DisplayFor(itemModel => Model.Details)
-    Price : @Html.DisplayFor(itemModel => Model.Price)
-    </pre>
-</div>
+        <div class="wordwrap">
+            Details:
+                Restaurant : @Html.DisplayNameFor(itemModel => Model.StoreName)
+                Option : @Html.DisplayNameFor(itemModel => Model.Option)
+                Price : @Html.DisplayNameFor(itemModel => Model.Price)
+        </div>
 
-<div class="row top-buffer">
+    <div class="row top-buffer">
 
-    <div class="col-md-4 top-buffer">
-        <div class="textRight"><br /><h4>Back to Homepage</h4></div>
-        <form asp-action="Back" method="post" asp-controller="Order">
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Homepage</button>
-        </form>
+        <div class="col-md-4">
+            <div class="textRight"><br /><h4>Back to Homepage</h4></div>
+            <form asp-action="Back" method="post" asp-controller="Order">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Homepage</button>
+            </form>
+        </div>
+
+        <div class="col-md-4">
+            <div class="textRight"><br /><h4>Cancel your Order</h4></div>
+            <form asp-action="DeleteOrder" method="post" asp-controller="Order">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Cancel order </button>
+            </form>
+        </div>
+
+        <div class="col-md-4">
+            <div class="textRight"><br /><h4>Change your Order</h4></div>
+            <form asp-action="Index" method="post" asp-controller="Order">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Change order </button>
+            </form>
+        </div>
+
     </div>
-
-    <div class="col-md-4 top-buffer">
-        <div class="textRight"><br /><h4>Delete your Order</h4></div>
-        <form asp-action="DeleteOrder" method="post" asp-controller="Order">
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Delete order </button>
-        </form>
-    </div>
-
-    <div class="col-md-4 top-buffer">
-        <div class="textRight"><br /><h4>Change your Order</h4></div>
-        <form asp-action="Index" method="post" asp-controller="Order">
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Change order </button>
-        </form>
-    </div>
-
 </div>

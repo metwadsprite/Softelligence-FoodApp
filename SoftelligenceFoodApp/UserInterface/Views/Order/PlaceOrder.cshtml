@@ -1,17 +1,18 @@
 ﻿@model PlaceRestaurantOrderVM
 
-    @{
+@{
     ViewData["Title"] = "PlaceOrder";
-    }
+}
 
+<div class="container">
     <div style="text-align:center">
         <h2>Your order was placed</h2>
     </div>
-   
+
 
     <div>
         Details:
-    <pre>
+        <pre>
     Restaurant : @Html.DisplayFor(itemModel => Model.StoreName)
     Option : @Html.DisplayFor(itemModel => Model.Option)
     Price : @Html.DisplayFor(itemModel => Model.Price)
@@ -22,3 +23,4 @@
         <input type="hidden" asp-for="StoreName" />
         <button type="submit" class="btn btn-primary btn-lg btn-block">Back to Homepage</button>
     </form>
+</div>

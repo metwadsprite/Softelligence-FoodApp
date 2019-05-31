@@ -1,33 +1,43 @@
-﻿@model Order
+﻿@model PlaceRestaurantOrderVM
 
 @{
     ViewData["Title"] = "ModifyOrder";
 }
 
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="row padding-text"><br /><h4>Your Order Content :</h4></div>
+            <div>
+                <pre>
+    Restaurant : @Html.DisplayFor(itemModel => Model.StoreName)
+    Option : @Html.DisplayFor(itemModel => Model.Option)
+    Price : @Html.DisplayFor(itemModel => Model.Price)
+                </pre>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <input type="hidden" asp-for="StoreName" />
+            <h4>Change your order</h4>
+            <form asp-action="ModifyOrder" method="post" asp-controller="Order">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Option" class="control-label"></label>
+                    <input asp-for="Option" class="form-control" />
+                    <span asp-validation-for="Option" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Change Order</button>
+            </form>
 
-<div class="row top-buffer">
-    <div class="col-md-4 top-buffer">
-        <div class="row padding-text"><br /><h2>Your Order Content :</h2></div>
-        <form asp-action="ModifyOrder" method="post" asp-controller="Order">
-            <input type="hidden" asp-for="Store.Name" />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Details" class="control-label"></label>
-                <input asp-for="Details" class="form-control" />
-                <span asp-validation-for="Details" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Change Order</button>
-        </form>
-    </div>
-    <div class="col-md-4 top-buffer">
-        <form asp-action="DeleteOrder" method="post" asp-controller="Order">
-            <div class="textRight"><br /><h4>Changed your mind?</h4></div>
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Delete Order</button>
-        </form>
+            <form asp-action="DeleteOrder" method="post" asp-controller="Order">
+                <div class="textRight"><br /><h4>Cancel your order</h4></div>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Cancel Order</button>
+            </form>
+        </div>
     </div>
 </div>

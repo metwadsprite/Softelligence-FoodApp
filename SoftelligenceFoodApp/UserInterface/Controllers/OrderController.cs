@@ -104,13 +104,19 @@ namespace UserInterface.Controllers
 
             var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
 
-            return View(userOrder);
+            PlaceRestaurantOrderVM orderVM = new PlaceRestaurantOrderVM();
+            orderVM.Option = userOrder.Details;
+            orderVM.Image = userOrder.Store.Menu.Image;
+            orderVM.StoreName = userOrder.Store.Name;
+            orderVM.Price = userOrder.Price;
+
+            return View(orderVM);
 
         }
 
         [Authorize]
         [HttpPost]
-        public IActionResult ModifyOrder([FromForm]Order orderForm)
+        public IActionResult ModifyOrder([FromForm]PlaceRestaurantOrderVM orderVM)
         {
             activeSession = sessionRepository.GetActiveSession();
             var userEmail = HttpContext.User.Identity.Name;
@@ -124,13 +130,14 @@ namespace UserInterface.Controllers
 
             var menuItem = new MenuItem
             {
-                Details = orderForm.Details,
-                Price = orderForm.Price
+                Details = orderVM.Option,
+                Price = orderVM.Price
             };
 
             userService.ChangeOrder(storeToPlace, menuItem, userOrder.Id);
 
-            return View(orderForm);
+            orderVM.StoreName = storeToPlace.Name;
+            return View(orderVM);
         }
 
         public IActionResult DeleteOrder()

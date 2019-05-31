@@ -5,38 +5,39 @@
 }
 
 
-<h1>@Html.DisplayFor(modelItem => Model.StoreName) </h1>
+<h2>@Html.DisplayFor(modelItem => Model.StoreName) </h2>
 
 
-
-<div class="row padding-top">
-    <div class="col-md-4">
-        <div class="row padding-text"><br /><h4>Your Order Content :</h4></div>
-        <form asp-action="PlaceOrder" method="post" asp-controller="Order">
-            <input type="hidden" asp-for="StoreName" />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Option" class="control-label"></label>
-                <input asp-for="Option" class="form-control" />
-                <span asp-validation-for="Option" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <button type="submit" class="btn btn-primary btn-lg btn-block">Place Order</button>
-        </form>
-    </div>
-    <div class="col-md-4">
-        <div class="row"><br /><h4>Menu Image:</h4></div>
-        <div class="view overlay zoom">
-            <img src="@Html.DisplayFor(modelItem => Model.Image)" class="img-fluid " alt="sample image">
+<div class="container-fluid">
+    <div class="row padding-top">
+        <div class="col-md-4">
+            <div class="row"><br /><h4>Your Order Content :</h4></div>
+            <form asp-action="PlaceOrder" method="post" asp-controller="Order">
+                <input type="hidden" asp-for="StoreName" />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Option" class="control-label"></label>
+                    <input asp-for="Option" class="form-control" />
+                    <span asp-validation-for="Option" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Place Order</button>
+            </form>
         </div>
-        <div>
-            <div class="row"><br /><h4>Menu Link:</h4></div>
-            <a href="@Html.DisplayFor(modelItem => Model.Hyperlink)">@Html.DisplayFor(modelItem => Model.Hyperlink)</a>
+        <div class="col-md-4">
+            <div class="row"><br /><h4>Menu Image:</h4></div>
+            <div class="view overlay zoom">
+                <img src="@Html.DisplayFor(modelItem => Model.Image)" class="img-fluid " alt="sample image">
+            </div>
+            <div>
+                <div class="row"><br /><h4>Menu Link:</h4></div>
+                <a href="@Html.DisplayFor(modelItem => Model.Hyperlink)">@Html.DisplayFor(modelItem => Model.Hyperlink)</a>
+            </div>
         </div>
-    </div>
 
+    </div>
 </div>
