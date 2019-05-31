@@ -184,3 +184,12 @@ tbody tr:nth-child(even) {
     word-break: break-all;
     white-space: normal;
 }
+
+.size-history {
+    font-size: 16px;
+}
+
+.btn-order {
+    margin-top: 15px;
+}
+}

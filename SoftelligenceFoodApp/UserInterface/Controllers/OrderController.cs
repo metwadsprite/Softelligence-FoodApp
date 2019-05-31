@@ -153,6 +153,33 @@ namespace UserInterface.Controllers
             return View();
         }
 
+        public IActionResult GetHistory()
+        {
+            ICollection<Session> sessionHistory = sessionRepository.GetAll();
+            var userEmail = HttpContext.User.Identity.Name;
+
+            userService.SelectCurrentUser(userEmail);
+            //var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
+
+            ICollection<Order> orderHistoy = new List<Order>();
+
+            foreach(var session in sessionHistory)
+            {
+                if(session.IsActive == false)
+                {
+                    foreach(var order in session.Orders)
+                    {
+                        if (order.IsActive == false)
+                        {
+                            orderHistoy.Add(order);
+                        }
+                    }
+                }
+            }
+
+            return View(orderHistoy);
+        }
+
         public IActionResult Back()
         {
             return RedirectToAction("Index", "Home");

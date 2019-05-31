@@ -106,7 +106,7 @@ namespace EF.DataAccess
             dbContext.SaveChanges();
         }
 
-        public IEnumerable<Session> GetAll()
+        public ICollection<Session> GetAll()
         {
             List<Session> SessionsList = new List<Session>();
             var sessions = dbContext.Sessions

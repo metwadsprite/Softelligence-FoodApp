@@ -1,0 +1,46 @@
+﻿@model List<Order>
+@{
+    ViewData["Title"] = "GetHistory";
+}
+
+
+@if (Model.Capacity > 0)
+{
+    var rowCount = 1;
+
+    <div class="container">
+        <h2>Your Orders History</h2>
+        <br />
+        <div class="row">
+            <div class="col-lg-10" style="background-color:#eff3f9">
+
+                <div class="row order-table-header">
+                    <div class="col-3">Restaurant</div>
+                    <div class="col-6">Details</div>
+                    <div class="col-3">Price</div>
+                </div>
+                <hr />
+                    @foreach (var item in Model)
+                    {
+                        var className = "row";
+                        if (rowCount % 2 == 0)
+                        {
+                            className += " alternate-primary";
+                        }
+                        else
+                        {
+                            className += " alternate-secondary";
+                        }
+
+                        <div class="@className">
+                            <div class="col-3" style="font-size:16px">@item.Store.Name</div>
+                            <div class="col-6" style="font-size:16px">@item.Details</div>
+                            <div class="col-3" style="font-size:16px">@item.Price</div>
+                        </div>
+                        rowCount++;
+
+                    }
+            </div>
+        </div>
+    </div>
+}
