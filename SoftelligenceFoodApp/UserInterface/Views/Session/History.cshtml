@@ -26,7 +26,7 @@
                @Html.DisplayFor(modelItem => item.StartTime.Year)
             </th>
             <th style="font-weight:400;font-size:18px">
-                @Html.DisplayFor(modelItem => item.StartTime.TimeOfDay)
+                @Html.DisplayFor(modelItem => item.StartTime.Hour):@Html.DisplayFor(modelItem => item.StartTime.Minute)
             </th>
             <th style="font-weight:400;font-size:18px">
                 @Html.ActionLink("Details", "Details","Session", new { id = item.Id }) 
