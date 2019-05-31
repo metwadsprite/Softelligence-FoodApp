@@ -8,7 +8,7 @@ namespace UserInterface.Controllers
 {
     public class StoreManagementController : Controller
     {
-        private AdminService adminService;
+        private readonly AdminService adminService;
 
         public StoreManagementController(AdminService adminService)
         {

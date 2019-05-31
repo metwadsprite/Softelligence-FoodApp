@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewData["Title"] = "CloseRestaurant";
+}
+<br />
+<h1>Are you sure you want to close the Restaurant ?</h1>
+<br />
+<form asp-action="Delete">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden"/>
+    <button type="submit" style="width:50%;text-align:center" class="btn btn-primary btn-lg btn-block">Close</button>
+</form>
