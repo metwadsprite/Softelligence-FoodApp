@@ -4,14 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using UserInterface.Models;
 using BusinessLogic.BusinessExceptions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace UserInterface.Controllers
 {
     public class SessionController : Controller
     {
-        private AdminService adminService;
+        private readonly AdminService adminService;
         public SessionController(AdminService adminService)
         {
             this.adminService = adminService;
@@ -42,6 +41,12 @@ namespace UserInterface.Controllers
                 session.HasActiveSession = true;
                 session.Stores = session.Session.Stores
                                                 .ToList();
+                bool activeStore = false;
+                foreach(var item in session.Stores)
+                {
+                    if (item.IsActive == true) activeStore = true;
+                }
+                if (activeStore == false) { adminService.CloseSession(session.Session); return RedirectToAction("index"); }
             }
             catch (SessionNotFoundException)
             {
@@ -64,18 +69,20 @@ namespace UserInterface.Controllers
         public IActionResult Create([FromForm]SessionVM newSession)
         {
             if (ModelState.IsValid)
-            {                
+            {
                 Session sessionToCreate = new Session();
-                sessionToCreate.StartTime = DateTime.Now;                
-                
-                for(int i = 0; i < newSession.Stores.Count(); i++)
+                sessionToCreate.StartTime = DateTime.Now;
+
+                for (int i = 0; i < newSession.Stores.Count(); i++)
                 {
-                    if(newSession.SelectedStores[i])
+                    if (newSession.SelectedStores[i])
                     {
                         var currentStore = adminService.GetStoreById(newSession.Stores[i].Id);
+                        currentStore.IsActive = true;
+                        adminService.UpdateStore(currentStore);
                         sessionToCreate.AddStore(currentStore);
                     }
-                  
+
                 }
                 adminService.StartSession(sessionToCreate);
             }
@@ -83,9 +90,22 @@ namespace UserInterface.Controllers
         }
 
         [HttpGet]
-        public IActionResult CloseRestaurant()
+        public IActionResult CloseRestaurant(int? id)
         {
-            return View();
+            Store store = adminService.GetStoreById(id.Value);
+            return View(store);
         }
+
+        [HttpPost]
+        public IActionResult CloseRestaurant([FromForm]Store storeToRemoveFromSession)
+        {
+            if (ModelState.IsValid)
+            {
+                storeToRemoveFromSession = adminService.GetStoreById(storeToRemoveFromSession.Id);
+                storeToRemoveFromSession.IsActive = false;
+                adminService.UpdateStore(storeToRemoveFromSession);
+            }
+            return RedirectToAction("NewSession");
+        }        
     }
 }
