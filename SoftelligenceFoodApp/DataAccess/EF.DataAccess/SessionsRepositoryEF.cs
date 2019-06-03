@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using BusinessLogic;
 using BusinessLogic.Abstractions;
 using BusinessLogic.BusinessExceptions;
@@ -46,8 +48,7 @@ namespace EF.DataAccess
 
             if (session != null)
             {
-                Session activeSession;
-                activeSession = mapper.MapData<Session, SessionDO>(session);
+                var activeSession = mapper.MapData<Session, SessionDO>(session); 
 
                 foreach (var sStore in session.SessionStore)
                 {
@@ -83,6 +84,8 @@ namespace EF.DataAccess
                 else
                 {
                     dbContext.Entry(orderDO).CurrentValues.SetValues(orderToUpdateDO);
+                    // might not work when updating order
+                    /// TODO: fix if that's the case
                 }
             }
 
@@ -90,7 +93,21 @@ namespace EF.DataAccess
             dbContext.SaveChanges();
         }
 
-        public IEnumerable<Session> GetAll()
+        public void DeleteOrder(Order orderToRemove)
+        {
+            OrderDO orderDO = dbContext.Orders.SingleOrDefault(order => orderToRemove.Id == order.Id);
+            if (orderDO != null)
+            {
+                dbContext.Orders.Remove(orderDO);
+            }
+            else
+            {
+                throw new EntryPointNotFoundException();
+            }
+            dbContext.SaveChanges();
+        }
+
+        public ICollection<Session> GetAll()
         {
             List<Session> SessionsList = new List<Session>();
             var sessions = dbContext.Sessions
@@ -119,12 +136,12 @@ namespace EF.DataAccess
         public Session GetById(int id)
         {
             var session = dbContext.Sessions
-                            .Include(tempSession => tempSession.Orders)
-                                .ThenInclude(order => order.User)
-                            .Include(tempSession => tempSession.SessionStore)
-                                .ThenInclude(sessstore => sessstore.Store)
-                                    .ThenInclude(store => store.Menu)
-                            .FirstOrDefault(a => a.Id == id);
+                .Include(tempSession => tempSession.Orders)
+                    .ThenInclude(order => order.User)
+                .Include(tempSession => tempSession.SessionStore)
+                    .ThenInclude(sessstore => sessstore.Store)
+                        .ThenInclude(store => store.Menu)
+                .FirstOrDefault(a => a.Id == id);
 
             if (session != null)
             {
@@ -141,5 +158,6 @@ namespace EF.DataAccess
                 throw new SessionNotFoundException();
             }
         }
+
     }
 }
