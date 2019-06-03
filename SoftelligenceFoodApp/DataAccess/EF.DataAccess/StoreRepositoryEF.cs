@@ -84,6 +84,7 @@ namespace EF.DataAccess
                 storeDO.Name = storeToUpdate.Name;
                 storeDO.Menu.Hyperlink = storeToUpdate.Menu.Hyperlink;
                 storeDO.Menu.Image = storeToUpdate.Menu.Image;
+                storeDO.IsActive = storeToUpdate.IsActive;
                 dbContext.Stores.Update(storeDO);
             }
             else
@@ -92,5 +93,7 @@ namespace EF.DataAccess
             }
             dbContext.SaveChanges();
         }
+       
+        
     }
 }

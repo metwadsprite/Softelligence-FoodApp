@@ -76,5 +76,6 @@ namespace BusinessLogic
             var sessionRepo = context.GetSessionsRepository();
             return sessionRepo.GetById(id);
         }
+        
     }
 }

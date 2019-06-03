@@ -85,7 +85,6 @@ namespace UserInterface.Controllers
         public IActionResult CloseRestaurant(int? id)
         {
             Store store = adminService.GetStoreById(id.Value);
-
             return View(store);
         }
 
@@ -94,9 +93,11 @@ namespace UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
+                storeToRemoveFromSession = adminService.GetStoreById(storeToRemoveFromSession.Id);
                 storeToRemoveFromSession.IsActive = false;
+                adminService.UpdateStore(storeToRemoveFromSession);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("NewSession");
         }
 
         [HttpGet]

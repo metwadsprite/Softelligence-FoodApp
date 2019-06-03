@@ -30,7 +30,7 @@
 
                     @foreach (var order in Model.Session.Orders)
                     {
-                        @if (order.Store.Id == item.Id)
+                        @if (order.Store.Id == item.Id && item.IsActive == true)
                         {
                             var className = "row";
                             Model.Price = Model.Price + order.Price;
@@ -56,9 +56,9 @@
                     <hr />
                     <p>Total Price: @Model.Price </p>
                     <br />
-                    <form asp-controller="Session" asp-action="CloseRestaurant" method="get">
-                        <button type="submit" style="width:100%" class="btn btn-primary btn-lg btn-block">Close Restaurant</button>
-                    </form>
+                    <div class="d-flex justify-content-center align-items-stretch">
+                        <a asp-controller="Session" asp-action="CloseRestaurant" asp-route-id="@item.Id" class="btn btn-primary">Close Restaurant</a>
+                    </div>
                 </div>
                 <br />
             }
@@ -89,7 +89,7 @@ else
                     <td>
                         <label class="container">
                             <input asp-for="@Model.Stores[i].Id" type="hidden" />
-                            <input asp-for="@Model.SelectedStores[i]" type="checkbox" style="display:none" />
+                            <input asp-for="@Model.SelectedStores[i]" type="checkbox" />
                             <span class="checkmark"></span>
                         </label>
                     </td>
