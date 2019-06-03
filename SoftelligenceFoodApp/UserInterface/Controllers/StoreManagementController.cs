@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BusinessLogic;
+using BusinessLogic.BusinessExceptions;
 using Logic.Implementations;
 using Microsoft.AspNetCore.Mvc;
 using UserInterface.Models;
@@ -110,7 +111,14 @@ namespace UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                adminService.RemoveStore(storeToRemove);
+                try
+                {
+                    adminService.RemoveStore(storeToRemove);
+                }
+                catch(StoreIsActiveException)
+                {
+                    return RedirectToAction("Index");
+                }
             }
             return RedirectToAction("Index");
         }
