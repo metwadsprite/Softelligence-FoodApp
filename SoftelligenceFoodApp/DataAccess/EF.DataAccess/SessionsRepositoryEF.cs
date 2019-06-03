@@ -25,6 +25,7 @@ namespace EF.DataAccess
             if (sessionToCreate != null)
             {
                 var sessionDO = mapper.MapData<SessionDO, Session>(sessionToCreate);
+
                 sessionDO.IsActive = true;
                 dbContext.Add(sessionDO);
                 dbContext.SaveChanges();
@@ -53,9 +54,9 @@ namespace EF.DataAccess
                 {
                     activeSession.Stores.Add(mapper.MapData<Store, StoreDO>(sStore.Store));
                 }
-                
+
                 return activeSession;
-                
+
             }
             else
             {
@@ -68,7 +69,7 @@ namespace EF.DataAccess
             var sessionDO = dbContext.Sessions.FirstOrDefault(session => sessionToUpdate.Id == session.Id);
 
             var sessionToUpdateDO = mapper.MapData<SessionDO, Session>(sessionToUpdate);
-            
+
             dbContext.Entry(sessionDO).CurrentValues.SetValues(sessionToUpdateDO);
 
             foreach (var orderToUpdate in sessionToUpdate.Orders)

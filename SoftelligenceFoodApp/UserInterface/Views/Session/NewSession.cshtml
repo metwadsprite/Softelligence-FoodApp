@@ -1,95 +1,101 @@
 ﻿@model SessionVM
 @{
-ViewData["Title"] = "NewSession";
+    ViewData["Title"] = "NewSession";
 }
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@if (Model.hasActiveSession == true)
-{  
+@if (Model.HasActiveSession == true)
+{
     <h1>Active Restaurants</h1>
     <br />
     <div class="row">
-         
+
         @foreach (var item in Model.Stores)
         {
             var rowCount = 1;
             Model.Price = 0.0m;
 
             <div class="col-lg-6 col-md-6 col-sm-12" style="padding-left: 2em; background-color:#eff3f9">
-            <h2>@item.Name</h2>
-            <hr />
-            <div class="row order-table-header">
-            <div class="col-3">Name</div>
-            <div class="col-6">Details</div>
-            <div class="col-2">Price</div>
-            </div>
+                <h2>@item.Name</h2>
+                <hr />
+                <div class="row order-table-header">
+                    <div class="col-4">User Name</div>
+                    <div class="col-4">Details</div>
+                    <div class="col-4">Price</div>
+                </div>
 
-            @foreach (var order in Model.Session.Orders)
-            {
-                @if (order.Store.Id == item.Id)
+
+                @foreach (var order in Model.Session.Orders)
                 {
-                    var className = "row";
-                    Model.Price = Model.Price + order.Price;
-                    if (rowCount % 2 == 0)
+                    @if (order.Store.Id == item.Id)
                     {
-                        className += " alternate-primary";
-                    }
-                    else
-                    {
-                        className += " alternate-secondary";
+                        var className = "row";
+                        Model.Price = Model.Price + order.Price;
+                        if (rowCount % 2 == 0)
+                        {
+                            className += " alternate-primary";
+                        }
+                        else
+                        {
+                            className += " alternate-secondary";
+                        }
+
+                        <div class="@className">
+                            <div class="col-4" style="font-size:80%">@order.User.Name</div>
+                            <div class="col-4" style="font-size:80%">@order.Details</div>
+                            <div class="col-4" style="font-size:80%">@order.Price</div>
+                        </div>
+
+                        rowCount++;
                     }
 
-                    <div class="@className">                           
-                    <div class="col-3">@order.User.Name</div>
-                    <div class="col-6">@order.Details</div>
-                    <div class="col-2">@order.Price</div>
-                    </div>
-
-                    rowCount++;
                 }
-                        
-            }  
-            <hr />
-            <p>Total Price: @Model.Price </p>
+                <hr />
+                <p>Total Price: @Model.Price </p>
+                <br />
+                <form asp-controller="Session" asp-action="CloseRestaurant" method="get">
+                    <button type="submit" style="width:100%" class="btn btn-primary btn-lg btn-block">Close Restaurant</button>
+                </form>
             </div>
-          }
-        </div>
-     }
-     
+            <br />
+        }
+    </div>
+}
+
 else
 {
     <h1>Create New Session</h1>
     <br />
     <h3>Choose Restaurants</h3>
-    <table class="table">
-    <tr>
-    <th>
-    @Html.DisplayNameFor(model => model.Stores)
-    </th>
-    </tr>
-    @foreach (var item in Model.Stores)
-    {
-        <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-        <label class="container">
-        <input type="checkbox" style="display:none">
-        <span class="checkmark"></span>
-        </label>
-        </td>
-        </tr>
-    }
-    </table>
-    <form asp-action="Create">
+
+    <form asp-action="Create" method="post">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Stores)
+                </th>
+                <th></th>
+            </tr>
+            @for (int i = 0; i < Model.Stores.Count(); i++)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.Stores.ElementAt(i).Name)
+                    </td>
+                    <td>
+                        <label class="container">
+                            <input asp-for="@Model.Stores[i].Id" type="hidden" />
+                            <input asp-for="@Model.SelectedStores[i]" type="checkbox" style="display:none" />
+                            <span class="checkmark"></span>
+                        </label>
+                    </td>
+                </tr>
+            }
+        </table>
+
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <button type="submit" style="width:100%" class="btn btn-primary btn-lg btn-block">Create Session</button>
     </form>
-       
-    }
-
-
-
+}
 

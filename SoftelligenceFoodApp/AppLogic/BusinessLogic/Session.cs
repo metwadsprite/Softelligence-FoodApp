@@ -15,6 +15,7 @@ namespace BusinessLogic
         public DateTime StartTime { get; set; }
         public bool IsActive { get; private set; }
 
+
         public Session()
         {
             IsActive = true;

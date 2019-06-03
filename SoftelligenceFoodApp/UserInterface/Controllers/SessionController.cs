@@ -2,9 +2,10 @@
 using Logic.Implementations;
 using Microsoft.AspNetCore.Mvc;
 using UserInterface.Models;
-using BusinessLogic;
-using System.Collections.Generic;
 using BusinessLogic.BusinessExceptions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace UserInterface.Controllers
 {
@@ -34,36 +35,55 @@ namespace UserInterface.Controllers
         public IActionResult NewSession()
         {
             SessionVM session = new SessionVM();
+
             try
             {
                 session.Session = adminService.GetActiveSession();
-                session.hasActiveSession = true;
+                session.HasActiveSession = true;
+                session.Stores = session.Session.Stores
+                                                .ToList();
             }
-            catch(SessionNotFoundException)
+            catch (SessionNotFoundException)
             {
-                session.hasActiveSession = false;
+                session.HasActiveSession = false;
+                session.Stores = adminService.GetAllStores()
+                                            .ToList();
             }
-
-            session.Stores = session.Session.Stores;
             return View(session);
+
         }
+
         [HttpGet]
         public IActionResult Details(int? id)
         {
             Session session = adminService.GetSessionById(id.Value);
             return View(session);
         }
+
         [HttpPost]
-        public IActionResult Create([FromForm]Session newSession)
+        public IActionResult Create([FromForm]SessionVM newSession)
         {
             if (ModelState.IsValid)
-            {   
-                adminService.StartSession(newSession);
+            {                
+                Session sessionToCreate = new Session();
+                sessionToCreate.StartTime = DateTime.Now;                
+                
+                for(int i = 0; i < newSession.Stores.Count(); i++)
+                {
+                    if(newSession.SelectedStores[i])
+                    {
+                        var currentStore = adminService.GetStoreById(newSession.Stores[i].Id);
+                        sessionToCreate.AddStore(currentStore);
+                    }
+                  
+                }
+                adminService.StartSession(sessionToCreate);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("NewSession");
         }
+
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult CloseRestaurant()
         {
             return View();
         }

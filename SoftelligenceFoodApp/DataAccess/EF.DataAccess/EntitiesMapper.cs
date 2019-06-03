@@ -12,9 +12,27 @@ namespace EF.DataAccess
     {
         private MapperConfiguration mapperConfig;
         private IMapper currentMapper;
+      
 
+        private SessionDO ConvertSessionToSessionDO(Session session, SessionDO result)
+        {
+            if (result == null)
+                result = new SessionDO();
+
+            result.Id = session.Id;
+            result.IsActive = session.IsActive;
+            result.Orders = currentMapper.Map<List<OrderDO>>(session.Orders);
+            result.StartTime = session.StartTime;
+            result.SessionStore = session.Stores.Select(store => new SessionStoreDO()
+            {
+                Session = result,
+                Store = currentMapper.Map<StoreDO>(store)
+            }).ToList();
+            return result;
+        }
         public void InitializeMapper()
         {
+           
             mapperConfig = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<MenuItem, MenuItemDO>();
@@ -29,15 +47,16 @@ namespace EF.DataAccess
 
                 cfg.CreateMap<StoreDO, Store>();
                 cfg.CreateMap<Store, StoreDO>();
-
-                cfg.CreateMap<Session, SessionDO>();
+                cfg.CreateMap<Order, OrderDO>();
+                cfg.CreateMap<OrderDO, Order>();                
+                cfg.CreateMap<Session, SessionDO>().ConvertUsing(ConvertSessionToSessionDO);                 
                 cfg.CreateMap<SessionDO, Session>();
 
-                cfg.CreateMap<Order, OrderDO>();
-                cfg.CreateMap<OrderDO, Order>();
+                
             });
-
+            
             currentMapper = mapperConfig.CreateMapper();
+           
         }
 
         public DestinationClass MapData<DestinationClass, SourceClass>(SourceClass item) where DestinationClass : new()
@@ -47,5 +66,7 @@ namespace EF.DataAccess
             
             return destination;
         }
+
+        
     }
 }
