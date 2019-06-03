@@ -56,11 +56,28 @@ namespace UserInterface.Controllers
             activeSession = sessionRepository.GetActiveSession();
             Store storeWithId = activeSession.Stores.SingleOrDefault(store => store.Id == id);
 
-            curOrder = new PlaceRestaurantOrderVM();
-            curOrder.OrderStoreId = storeWithId.Id;
-            curOrder.StoreName = storeWithId.Name;
-            curOrder.Image = storeWithId.Menu.Image;
-            curOrder.Hyperlink = storeWithId.Menu.Hyperlink;
+            var sessionHistory = sessionRepository.GetAll();
+            var suggestedOrders = new HashSet<Order>();
+
+            foreach (var session in sessionHistory)
+            {
+                foreach (var order in session.Orders)
+                {
+                    if (order.Store.Id == storeWithId.Id)
+                    {
+                        suggestedOrders.Add(order);
+                    }
+                }
+            }
+
+            curOrder = new PlaceRestaurantOrderVM
+            {
+                OrderStoreId = storeWithId.Id,
+                StoreName = storeWithId.Name,
+                Image = storeWithId.Menu.Image,
+                Hyperlink = storeWithId.Menu.Hyperlink,
+                Suggestions = suggestedOrders
+            };
 
             return View(curOrder);
         }
