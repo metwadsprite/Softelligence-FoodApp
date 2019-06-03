@@ -12,23 +12,36 @@
 }
 else
 {
-    <div class="container">
-        <h2>Today's Restaurants</h2>
-        <div class="row">
-            @foreach (var store in Model.Stores)
-            {
-
-                <div class="col-md-4 btn-padding">
-                    <form asp-controller="Order" asp-action="PlaceRestaurantOrder" asp-route-id="@store.Id" method="get">
-                        <button type="submit" class="btn1 btn-primary btn-lg btn-block">
-                            @Html.DisplayFor(modelItem => store.Name)
-                        </button>
-                    </form>
-                    <br />
-                </div>
-            }
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Today's Restaurants</h2>
         </div>
     </div>
+    
+    <div class="row">
+        @foreach (var store in Model.Stores)
+        {
+
+            <div class="col-md-4">
+                <form asp-controller="Order" asp-action="PlaceRestaurantOrder" asp-route-id="@store.Id" method="get">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">
+                        @Html.DisplayFor(modelItem => store.Name)
+                    </button>
+                </form>
+                <br />
+            </div>
+        }
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="GetHistory" method="post" asp-controller="Order">
+                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">Order History</button>
+            </form>
+        </div>
+    </div>
+</div>
 }
 
 

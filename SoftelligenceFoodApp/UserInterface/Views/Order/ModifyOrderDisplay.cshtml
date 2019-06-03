@@ -10,9 +10,9 @@
             <div class="row padding-text"><br /><h4>Your Order Content :</h4></div>
             <div>
                 <pre>
-    Restaurant : @Html.DisplayFor(itemModel => Model.StoreName)
-    Option : @Html.DisplayFor(itemModel => Model.Option)
-    Price : @Html.DisplayFor(itemModel => Model.Price)
+    Restaurant: @Html.DisplayFor(itemModel => Model.StoreName)
+    Option: @Html.DisplayFor(itemModel => Model.Option)
+    Price: @Html.DisplayFor(itemModel => Model.Price)
                 </pre>
             </div>
         </div>
@@ -39,7 +39,7 @@
             </form>
 
             <form asp-action="GetHistory" method="post" asp-controller="Order">
-                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">Get History</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">Order History</button>
             </form>
 
         </div>

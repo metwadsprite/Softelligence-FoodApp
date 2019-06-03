@@ -5,14 +5,17 @@
 }
 
 <div class="container">
-    <h2>Your order has been modified</h2>
-
-    <div>
+    <div class="row" style="text-align:center">
+        <h2>Your order has been modified</h2>
+    </div>
+    <div class="row" style="text-align:center">
+        <h5>Order details:</h5>
+    </div>
+    <div class="row">
         <pre>
-    Details:
-        Restaurant : @Html.DisplayNameFor(itemModel => Model.StoreName)
-        Option : @Html.DisplayNameFor(itemModel => Model.Option)
-        Price : @Html.DisplayNameFor(itemModel => Model.Price)
+    Restaurant: @Html.DisplayFor(itemModel => Model.StoreName)
+    Option: @Html.DisplayFor(itemModel => Model.Option)
+    Price: @Html.DisplayFor(itemModel => Model.Price)
         </pre>
     </div>
 
