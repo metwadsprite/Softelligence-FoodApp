@@ -31,15 +31,15 @@
                     <input asp-for="Order.Price" class="form-control" />
                     <span asp-validation-for="Order.Price" class="text-danger"></span>
                 </div>
-                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">Change Order</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order"><i class="fas fa-edit"></i>&nbsp;&nbsp;&nbsp;Change Order</button>
             </form>
 
             <form asp-action="DeleteOrder" method="post" asp-controller="Order">
-                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">Cancel Order</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order"><i class="fas fa-window-close"></i>&nbsp;&nbsp;&nbsp;Cancel Order</button>
             </form>
 
             <form asp-action="GetHistory" method="post" asp-controller="Order">
-                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">Order History</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order"><i class="fas fa-history"></i>&nbsp;&nbsp;&nbsp;Order History</button>
             </form>
 
         </div>

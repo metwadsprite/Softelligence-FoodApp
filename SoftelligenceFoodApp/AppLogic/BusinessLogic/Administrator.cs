@@ -34,15 +34,6 @@ namespace BusinessLogic
         public void Remove(Store storeToRemove)
         {
             var storeRepo = context.GetStoresRepository();
-            var activeSession = context.GetSessionsRepository()
-                .GetActiveSession();
-
-            var storeToRemoveFromSession = activeSession.Stores.SingleOrDefault(store => store.Id == storeToRemove.Id);
-
-            if (storeToRemoveFromSession != null)
-            {
-                activeSession.Stores.Remove(storeToRemoveFromSession);
-            }
 
             storeRepo.Remove(storeToRemove);
         }
