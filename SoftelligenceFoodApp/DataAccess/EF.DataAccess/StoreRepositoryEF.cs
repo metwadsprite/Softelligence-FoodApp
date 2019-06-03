@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using BusinessLogic.BusinessExceptions;
 
 namespace EF.DataAccess
 {
@@ -25,7 +26,6 @@ namespace EF.DataAccess
                 .Include(tempStore => tempStore.Menu)
                 .FirstOrDefault(a => a.Id == id);
             return mapper.MapData<Store, StoreDO>(store);
-
         }
 
         public ICollection<Store> GetAll()
@@ -60,13 +60,17 @@ namespace EF.DataAccess
         public void Remove(Store storeToRemove)
         {
             StoreDO storeDO = dbContext.Stores.SingleOrDefault(store => storeToRemove.Id == store.Id);
-            if (storeDO != null)
+            if (storeDO == null)
             {
-                dbContext.Stores.Remove(storeDO);
+                throw new EntryPointNotFoundException();
+            }
+            else if(storeDO.IsActive)
+            {
+                throw new StoreIsActiveException();
             }
             else
             {
-                throw new EntryPointNotFoundException();
+                dbContext.Stores.Remove(storeDO);
             }
             dbContext.SaveChanges();
         }
@@ -79,6 +83,7 @@ namespace EF.DataAccess
                 storeDO.Name = storeToUpdate.Name;
                 storeDO.Menu.Hyperlink = storeToUpdate.Menu.Hyperlink;
                 storeDO.Menu.Image = storeToUpdate.Menu.Image;
+                storeDO.IsActive = storeToUpdate.IsActive;
                 dbContext.Stores.Update(storeDO);
             }
             else
@@ -87,5 +92,7 @@ namespace EF.DataAccess
             }
             dbContext.SaveChanges();
         }
+       
+        
     }
 }
