@@ -40,7 +40,7 @@ namespace UserInterface.Controllers
                 session.Session = adminService.GetActiveSession();
                 session.HasActiveSession = true;
                 session.Stores = session.Session.Stores
-                                                .ToList();
+                                                .ToList();                
             }
             catch (SessionNotFoundException)
             {
@@ -72,6 +72,8 @@ namespace UserInterface.Controllers
                     if (newSession.SelectedStores[i])
                     {
                         var currentStore = adminService.GetStoreById(newSession.Stores[i].Id);
+                        currentStore.IsActive = true;
+                        adminService.UpdateStore(currentStore);
                         sessionToCreate.AddStore(currentStore);
                     }
 
