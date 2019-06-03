@@ -86,8 +86,7 @@ else
                     <td>
                         <label class="container">
                             <input asp-for="@Model.Stores[i].Id" type="hidden" />
-                            <input asp-for="@Model.SelectedStores[i]" type="checkbox" style="display:none" />
-                            <span class="checkmark"></span>
+                            <input class="form-check-input" asp-for="@Model.SelectedStores[i]" type="checkbox" />
                         </label>
                     </td>
                 </tr>

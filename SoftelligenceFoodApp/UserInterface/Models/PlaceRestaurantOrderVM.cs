@@ -9,8 +9,7 @@ namespace UserInterface.Models
     public class PlaceRestaurantOrderVM
     {
         public int OrderStoreId { get; set; }
-        public string Option { get; set; }
-        public decimal Price { get; set; }
+        public OrderVM Order { get; set; }
         public string StoreName { get; set; }
         public string Image { get; set; }
         public string Hyperlink { get; set; }
