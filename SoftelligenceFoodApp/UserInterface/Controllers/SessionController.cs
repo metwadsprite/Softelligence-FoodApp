@@ -53,12 +53,6 @@ namespace UserInterface.Controllers
                 session.HasActiveSession = false;
                 session.Stores = adminService.GetAllStores()
                                             .ToList();
-                foreach(var item in session.Stores)
-                {
-                    item.IsActive = true;
-                    adminService.UpdateStore(item);
-                }
-
             }
             return View(session);
 
@@ -84,6 +78,8 @@ namespace UserInterface.Controllers
                     if (newSession.SelectedStores[i])
                     {
                         var currentStore = adminService.GetStoreById(newSession.Stores[i].Id);
+                        currentStore.IsActive = true;
+                        adminService.UpdateStore(currentStore);
                         sessionToCreate.AddStore(currentStore);
                     }
 
@@ -110,25 +106,6 @@ namespace UserInterface.Controllers
                 adminService.UpdateStore(storeToRemoveFromSession);
             }
             return RedirectToAction("NewSession");
-        }
-
-        [HttpGet]
-        public IActionResult FinalizeSession(int? id)
-        {
-            Session session = adminService.GetSessionById(id.Value);
-
-            return View(session);
-        }
-
-        [HttpPost]
-        public IActionResult FinalizeSession([FromForm]SessionVM sessionToFinalize)
-        {
-            if (ModelState.IsValid)
-            {
-                sessionToFinalize.HasActiveSession = false;
-                
-            }
-            return RedirectToAction("Index");
-        }
+        }        
     }
 }
