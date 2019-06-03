@@ -10,6 +10,7 @@ using UserInterface.Models;
 using EF.DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using BusinessLogic.BusinessExceptions;
 
 namespace UserInterface.Controllers
 {
@@ -29,7 +30,9 @@ namespace UserInterface.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            activeSession = sessionRepository.GetActiveSession();
+
+                activeSession = sessionRepository.GetActiveSession();
+
 
             var userEmail = HttpContext.User.Identity.Name;
             userService.SelectCurrentUser(userEmail);
