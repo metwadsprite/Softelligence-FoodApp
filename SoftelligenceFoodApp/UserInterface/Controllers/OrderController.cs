@@ -124,11 +124,16 @@ namespace UserInterface.Controllers
 
             var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
 
-            PlaceRestaurantOrderVM orderVM = new PlaceRestaurantOrderVM();
-            orderVM.Order.Option = userOrder.Details;
-            orderVM.Image = userOrder.Store.Menu.Image;
-            orderVM.StoreName = userOrder.Store.Name;
-            orderVM.Order.Price = userOrder.Price;
+            PlaceRestaurantOrderVM orderVM = new PlaceRestaurantOrderVM()
+            {
+                Order = new OrderVM
+                {
+                    Option = userOrder.Details,
+                    Price = userOrder.Price
+                },
+                StoreName = userOrder.Store.Name,
+                Image = userOrder.Store.Menu.Image
+            };
 
             return View(orderVM);
 
