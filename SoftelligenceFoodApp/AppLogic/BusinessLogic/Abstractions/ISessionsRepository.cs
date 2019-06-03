@@ -13,5 +13,6 @@ namespace BusinessLogic.Abstractions
         void Update(Session sessionToUpdate);
         void DeleteOrder(Order orderToDelete);
         Session GetById(int id);
+        
     }
 }

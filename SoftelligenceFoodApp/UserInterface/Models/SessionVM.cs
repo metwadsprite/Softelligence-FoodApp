@@ -9,7 +9,7 @@ namespace UserInterface.Models
         public Session Session { get; set; }
         public List<User> Users { get; set; }
         public bool HasActiveSession { get; set; }
-        public decimal Price { get; set; }        
+        public decimal Price { get; set; }
         public List<bool> SelectedStores { get; set; }
     }
 }

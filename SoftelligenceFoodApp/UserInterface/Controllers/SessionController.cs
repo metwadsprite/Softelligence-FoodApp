@@ -40,13 +40,25 @@ namespace UserInterface.Controllers
                 session.Session = adminService.GetActiveSession();
                 session.HasActiveSession = true;
                 session.Stores = session.Session.Stores
-                                                .ToList();                
+                                                .ToList();
+                bool activeStore = false;
+                foreach(var item in session.Stores)
+                {
+                    if (item.IsActive == true) activeStore = true;
+                }
+                if (activeStore == false) { adminService.CloseSession(session.Session); return RedirectToAction("index"); }
             }
             catch (SessionNotFoundException)
             {
                 session.HasActiveSession = false;
                 session.Stores = adminService.GetAllStores()
                                             .ToList();
+                foreach(var item in session.Stores)
+                {
+                    item.IsActive = true;
+                    adminService.UpdateStore(item);
+                }
+
             }
             return View(session);
 
@@ -72,8 +84,6 @@ namespace UserInterface.Controllers
                     if (newSession.SelectedStores[i])
                     {
                         var currentStore = adminService.GetStoreById(newSession.Stores[i].Id);
-                        currentStore.IsActive = true;
-                        adminService.UpdateStore(currentStore);
                         sessionToCreate.AddStore(currentStore);
                     }
 

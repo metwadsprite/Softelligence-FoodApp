@@ -13,7 +13,7 @@ namespace BusinessLogic
         public ICollection<Store> Stores { get; set; }
         public ICollection<Order> Orders { get; set; }
         public DateTime StartTime { get; set; }
-        public bool IsActive { get; private set; }
+        public bool IsActive { get; set; }
 
 
         public Session()
