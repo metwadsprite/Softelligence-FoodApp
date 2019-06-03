@@ -41,12 +41,24 @@ namespace UserInterface.Controllers
                 session.HasActiveSession = true;
                 session.Stores = session.Session.Stores
                                                 .ToList();
+                bool activeStore = false;
+                foreach(var item in session.Stores)
+                {
+                    if (item.IsActive == true) activeStore = true;
+                }
+                if (activeStore == false) { adminService.CloseSession(session.Session); return RedirectToAction("index"); }
             }
             catch (SessionNotFoundException)
             {
                 session.HasActiveSession = false;
                 session.Stores = adminService.GetAllStores()
                                             .ToList();
+                foreach(var item in session.Stores)
+                {
+                    item.IsActive = true;
+                    adminService.UpdateStore(item);
+                }
+
             }
             return View(session);
 

@@ -26,7 +26,6 @@ namespace EF.DataAccess
                 .Include(tempStore => tempStore.Menu)
                 .FirstOrDefault(a => a.Id == id);
             return mapper.MapData<Store, StoreDO>(store);
-
         }
 
         public ICollection<Store> GetAll()

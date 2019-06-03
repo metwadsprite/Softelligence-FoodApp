@@ -60,5 +60,9 @@ namespace Logic.Implementations
         {
             return administrator.GetSessionById(id);
         }
+        public void CloseSession(Session sessionToClose)
+        {
+            administrator.CloseSession(sessionToClose);
+        }
     }
 }

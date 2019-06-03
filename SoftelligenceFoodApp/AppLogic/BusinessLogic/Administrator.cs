@@ -76,6 +76,11 @@ namespace BusinessLogic
             var sessionRepo = context.GetSessionsRepository();
             return sessionRepo.GetById(id);
         }
-        
+        public void CloseSession(Session SessionToClose)
+        {
+            var sessionRepo = context.GetSessionsRepository();
+            SessionToClose.IsActive = false;
+            sessionRepo.Update(SessionToClose);
+        }
     }
 }
