@@ -14,6 +14,6 @@ namespace UserInterface.Models
         public string Image { get; set; }
         public string Hyperlink { get; set; }
         public string UserEmail { get; set; }
-        public ICollection<Order> Suggestions { get; set; }
+        public ICollection<OrderVM> Suggestions { get; set; }
     }
 }

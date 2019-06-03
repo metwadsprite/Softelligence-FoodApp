@@ -11,6 +11,7 @@ using EF.DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using BusinessLogic.BusinessExceptions;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace UserInterface.Controllers
 {
@@ -30,9 +31,7 @@ namespace UserInterface.Controllers
         [Authorize]
         public IActionResult Index()
         {
-
-                activeSession = sessionRepository.GetActiveSession();
-
+            activeSession = sessionRepository.GetActiveSession();
 
             var userEmail = HttpContext.User.Identity.Name;
             userService.SelectCurrentUser(userEmail);
@@ -48,8 +47,6 @@ namespace UserInterface.Controllers
             {
                 return RedirectToAction("ModifyOrderDisplay", "Order");
             }
-
-            //return RedirectToAction("Back");
         }
 
         [Authorize]
@@ -60,16 +57,23 @@ namespace UserInterface.Controllers
             Store storeWithId = activeSession.Stores.SingleOrDefault(store => store.Id == id);
 
             var sessionHistory = sessionRepository.GetAll();
-            var suggestedOrders = new HashSet<Order>();
+            var suggestedOrders = new HashSet<OrderVM>();
 
             foreach (var session in sessionHistory)
             {
                 foreach (var order in session.Orders)
                 {
-                    if (order.Store.Id == storeWithId.Id)
+                    if (order.Store.Id != id)
                     {
-                        suggestedOrders.Add(order);
+                        continue;
                     }
+                    var orderToSuggest = new OrderVM
+                    {
+                        Option = order.Details,
+                        Price = order.Price
+                    };
+
+                    suggestedOrders.Add(orderToSuggest);
                 }
             }
 
@@ -187,7 +191,6 @@ namespace UserInterface.Controllers
             var userEmail = HttpContext.User.Identity.Name;
 
             userService.SelectCurrentUser(userEmail);
-            //var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
 
             ICollection<Order> orderHistoy = new List<Order>();
 
@@ -212,6 +215,5 @@ namespace UserInterface.Controllers
         {
             return RedirectToAction("Index", "Home");
         }
-
     }
 }
