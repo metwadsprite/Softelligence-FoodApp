@@ -96,8 +96,11 @@ namespace UserInterface.Controllers
             {
                 StoreName = orderVM.StoreName,
                 OrderStoreId = orderVM.OrderStoreId,
-                Option = orderVM.Option,
-                Price = orderVM.Price,
+                Order = new OrderVM
+                {
+                    Option = orderVM.Order.Option,
+                    Price = orderVM.Order.Price
+                },
                 Image = orderVM.Image,
                 Hyperlink = orderVM.Hyperlink,
                 UserEmail = userService.user.Email
@@ -107,8 +110,8 @@ namespace UserInterface.Controllers
 
             var menuItem = new MenuItem
             {
-                Details = orderVM.Option,
-                Price = orderVM.Price
+                Details = orderVM.Order.Option,
+                Price = orderVM.Order.Price
             };
 
             userService.PlaceOrder(storeToPlace, menuItem, userService.user.Email);
@@ -125,10 +128,10 @@ namespace UserInterface.Controllers
             var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
 
             PlaceRestaurantOrderVM orderVM = new PlaceRestaurantOrderVM();
-            orderVM.Option = userOrder.Details;
+            orderVM.Order.Option = userOrder.Details;
             orderVM.Image = userOrder.Store.Menu.Image;
             orderVM.StoreName = userOrder.Store.Name;
-            orderVM.Price = userOrder.Price;
+            orderVM.Order.Price = userOrder.Price;
 
             return View(orderVM);
 
@@ -150,8 +153,8 @@ namespace UserInterface.Controllers
 
             var menuItem = new MenuItem
             {
-                Details = orderVM.Option,
-                Price = orderVM.Price
+                Details = orderVM.Order.Option,
+                Price = orderVM.Order.Price
             };
 
             userService.ChangeOrder(storeToPlace, menuItem, userOrder.Id);

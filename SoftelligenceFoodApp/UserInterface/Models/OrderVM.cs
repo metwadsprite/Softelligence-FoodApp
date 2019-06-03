@@ -7,7 +7,7 @@ namespace UserInterface.Models
 {
     public class OrderVM
     {
-        public string Details { get; set; }
+        public string Option { get; set; }
         public decimal Price { get; set; }
     }
 }
