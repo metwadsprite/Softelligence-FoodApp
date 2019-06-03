@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace BusinessLogic
+﻿namespace BusinessLogic
 {
     public class Store
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public Menu Menu { get; set; }
+        public bool IsActive { get; set; }
 
         public void AddMenuItem(MenuItem newMenuItem)
         {

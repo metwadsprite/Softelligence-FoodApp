@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using BusinessLogic;
 using BusinessLogic.Abstractions;
 using BusinessLogic.BusinessExceptions;
@@ -91,6 +89,7 @@ namespace EF.DataAccess
             dbContext.Sessions.Update(sessionDO);
             dbContext.SaveChanges();
         }
+
         public IEnumerable<Session> GetAll()
         {
             List<Session> SessionsList = new List<Session>();
@@ -120,10 +119,27 @@ namespace EF.DataAccess
         public Session GetById(int id)
         {
             var session = dbContext.Sessions
-                .FirstOrDefault(a => a.Id == id);
-            var sessionToReturn = mapper.MapData<Session, SessionDO>(session);
-            return sessionToReturn;
+                            .Include(tempSession => tempSession.Orders)
+                                .ThenInclude(order => order.User)
+                            .Include(tempSession => tempSession.SessionStore)
+                                .ThenInclude(sessstore => sessstore.Store)
+                                    .ThenInclude(store => store.Menu)
+                            .FirstOrDefault(a => a.Id == id);
 
+            if (session != null)
+            {
+                var sessionToReturn = mapper.MapData<Session, SessionDO>(session);
+
+                foreach (var sStore in session.SessionStore)
+                {
+                    sessionToReturn.Stores.Add(mapper.MapData<Store, StoreDO>(sStore.Store));
+                }
+                return sessionToReturn;
+            }
+            else
+            {
+                throw new SessionNotFoundException();
+            }
         }
     }
 }

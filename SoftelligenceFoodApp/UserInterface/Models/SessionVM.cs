@@ -1,14 +1,8 @@
 ﻿using BusinessLogic;
-using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
 namespace UserInterface.Models
 {
-    /*public class SelectedStoreEntry
-    {
-        public int StoreId { get; set; }
-        public bool Selected { get; set; }
-    }*/
     public class SessionVM
     {
         public List<Store> Stores { get; set; }

@@ -4,14 +4,13 @@ using Microsoft.AspNetCore.Mvc;
 using UserInterface.Models;
 using BusinessLogic.BusinessExceptions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace UserInterface.Controllers
 {
     public class SessionController : Controller
     {
-        private AdminService adminService;
+        private readonly AdminService adminService;
         public SessionController(AdminService adminService)
         {
             this.adminService = adminService;
@@ -64,18 +63,18 @@ namespace UserInterface.Controllers
         public IActionResult Create([FromForm]SessionVM newSession)
         {
             if (ModelState.IsValid)
-            {                
+            {
                 Session sessionToCreate = new Session();
-                sessionToCreate.StartTime = DateTime.Now;                
-                
-                for(int i = 0; i < newSession.Stores.Count(); i++)
+                sessionToCreate.StartTime = DateTime.Now;
+
+                for (int i = 0; i < newSession.Stores.Count(); i++)
                 {
-                    if(newSession.SelectedStores[i])
+                    if (newSession.SelectedStores[i])
                     {
                         var currentStore = adminService.GetStoreById(newSession.Stores[i].Id);
                         sessionToCreate.AddStore(currentStore);
                     }
-                  
+
                 }
                 adminService.StartSession(sessionToCreate);
             }
@@ -83,9 +82,40 @@ namespace UserInterface.Controllers
         }
 
         [HttpGet]
-        public IActionResult CloseRestaurant()
+        public IActionResult CloseRestaurant(int? id)
         {
-            return View();
+            Store store = adminService.GetStoreById(id.Value);
+
+            return View(store);
+        }
+
+        [HttpPost]
+        public IActionResult CloseRestaurant([FromForm]Store storeToRemoveFromSession)
+        {
+            if (ModelState.IsValid)
+            {
+                storeToRemoveFromSession.IsActive = false;
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult FinalizeSession(int? id)
+        {
+            Session session = adminService.GetSessionById(id.Value);
+
+            return View(session);
+        }
+
+        [HttpPost]
+        public IActionResult FinalizeSession([FromForm]SessionVM sessionToFinalize)
+        {
+            if (ModelState.IsValid)
+            {
+                sessionToFinalize.HasActiveSession = false;
+                
+            }
+            return RedirectToAction("Index");
         }
     }
 }

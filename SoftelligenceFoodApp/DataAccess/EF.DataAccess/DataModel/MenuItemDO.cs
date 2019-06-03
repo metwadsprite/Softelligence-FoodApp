@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EF.DataAccess.DataModel
 {
@@ -8,6 +6,7 @@ namespace EF.DataAccess.DataModel
     {
         public int Id { get; set; }
         public string Details { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
     }
 }

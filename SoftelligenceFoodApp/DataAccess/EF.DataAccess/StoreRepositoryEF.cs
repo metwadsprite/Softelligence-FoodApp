@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using BusinessLogic.BusinessExceptions;
 
 namespace EF.DataAccess
 {
@@ -60,13 +61,17 @@ namespace EF.DataAccess
         public void Remove(Store storeToRemove)
         {
             StoreDO storeDO = dbContext.Stores.SingleOrDefault(store => storeToRemove.Id == store.Id);
-            if (storeDO != null)
+            if (storeDO == null)
             {
-                dbContext.Stores.Remove(storeDO);
+                throw new EntryPointNotFoundException();
+            }
+            else if(storeDO.IsActive)
+            {
+                throw new StoreIsActiveException();
             }
             else
             {
-                throw new EntryPointNotFoundException();
+                dbContext.Stores.Remove(storeDO);
             }
             dbContext.SaveChanges();
         }
