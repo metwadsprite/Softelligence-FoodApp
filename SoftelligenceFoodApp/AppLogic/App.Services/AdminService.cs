@@ -60,9 +60,15 @@ namespace Logic.Implementations
         {
             return administrator.GetSessionById(id);
         }
+
         public void CloseSession(Session sessionToClose)
         {
             administrator.CloseSession(sessionToClose);
+        }
+
+        public void UpdateOrder(Session currentSession, Order orderToUpdate)
+        {
+            currentSession.UpdateOrder(orderToUpdate.Id, orderToUpdate);   
         }
     }
 }
