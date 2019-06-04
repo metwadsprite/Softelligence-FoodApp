@@ -8,7 +8,6 @@ namespace BusinessLogic
 {
     public class Session
     {
-
         public int Id { get; set; }
         public ICollection<Store> Stores { get; set; }
         public ICollection<Order> Orders { get; set; }
@@ -27,14 +26,17 @@ namespace BusinessLogic
         {
             Stores.Add(newStore);
         }
+
         public void RemoveStore(int storeId)
         {
             Stores.Remove(Stores.Where(store => store.Id == storeId).SingleOrDefault());
         }
+
         public void AddOrder(Order orderToAdd)
         {
             Orders.Add(orderToAdd);
         }
+
         public void UpdateOrder(int orderId, Order updatedOrder)
         {
             var orderToUpdate = Orders.Where(order => order.Id == orderId).SingleOrDefault();
@@ -43,16 +45,11 @@ namespace BusinessLogic
             orderToUpdate.User = updatedOrder.User;
             orderToUpdate.IsActive = updatedOrder.IsActive;
             orderToUpdate.Details = updatedOrder.Details;
-
         }
+
         public void CancelOrder(int orderId)
         {
             Orders.Remove(Orders.Where(order => order.Id == orderId).FirstOrDefault());
-
-        }
-        public void Finalize()
-        {
-            IsActive = false;
         }
     }
 }

@@ -10,6 +10,8 @@ using UserInterface.Models;
 using EF.DataAccess;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using BusinessLogic.BusinessExceptions;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace UserInterface.Controllers
 {
@@ -45,8 +47,6 @@ namespace UserInterface.Controllers
             {
                 return RedirectToAction("ModifyOrderDisplay", "Order");
             }
-
-            //return RedirectToAction("Back");
         }
 
         [Authorize]
@@ -56,11 +56,35 @@ namespace UserInterface.Controllers
             activeSession = sessionRepository.GetActiveSession();
             Store storeWithId = activeSession.Stores.SingleOrDefault(store => store.Id == id);
 
-            curOrder = new PlaceRestaurantOrderVM();
-            curOrder.OrderStoreId = storeWithId.Id;
-            curOrder.StoreName = storeWithId.Name;
-            curOrder.Image = storeWithId.Menu.Image;
-            curOrder.Hyperlink = storeWithId.Menu.Hyperlink;
+            var sessionHistory = sessionRepository.GetAll();
+            var suggestedOrders = new HashSet<OrderVM>();
+
+            foreach (var session in sessionHistory)
+            {
+                foreach (var order in session.Orders)
+                {
+                    if (order.Store.Id != id)
+                    {
+                        continue;
+                    }
+                    var orderToSuggest = new OrderVM
+                    {
+                        Option = order.Details,
+                        Price = order.Price
+                    };
+
+                    suggestedOrders.Add(orderToSuggest);
+                }
+            }
+
+            curOrder = new PlaceRestaurantOrderVM
+            {
+                OrderStoreId = storeWithId.Id,
+                StoreName = storeWithId.Name,
+                Image = storeWithId.Menu.Image,
+                Hyperlink = storeWithId.Menu.Hyperlink,
+                Suggestions = suggestedOrders
+            };
 
             return View(curOrder);
         }
@@ -76,8 +100,11 @@ namespace UserInterface.Controllers
             {
                 StoreName = orderVM.StoreName,
                 OrderStoreId = orderVM.OrderStoreId,
-                Option = orderVM.Option,
-                Price = orderVM.Price,
+                Order = new OrderVM
+                {
+                    Option = orderVM.Order.Option,
+                    Price = orderVM.Order.Price
+                },
                 Image = orderVM.Image,
                 Hyperlink = orderVM.Hyperlink,
                 UserEmail = userService.user.Email
@@ -87,8 +114,8 @@ namespace UserInterface.Controllers
 
             var menuItem = new MenuItem
             {
-                Details = orderVM.Option,
-                Price = orderVM.Price
+                Details = orderVM.Order.Option,
+                Price = orderVM.Order.Price
             };
 
             userService.PlaceOrder(storeToPlace, menuItem, userService.user.Email);
@@ -104,11 +131,16 @@ namespace UserInterface.Controllers
 
             var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
 
-            PlaceRestaurantOrderVM orderVM = new PlaceRestaurantOrderVM();
-            orderVM.Option = userOrder.Details;
-            orderVM.Image = userOrder.Store.Menu.Image;
-            orderVM.StoreName = userOrder.Store.Name;
-            orderVM.Price = userOrder.Price;
+            PlaceRestaurantOrderVM orderVM = new PlaceRestaurantOrderVM()
+            {
+                Order = new OrderVM
+                {
+                    Option = userOrder.Details,
+                    Price = userOrder.Price
+                },
+                StoreName = userOrder.Store.Name,
+                Image = userOrder.Store.Menu.Image
+            };
 
             return View(orderVM);
 
@@ -130,8 +162,8 @@ namespace UserInterface.Controllers
 
             var menuItem = new MenuItem
             {
-                Details = orderVM.Option,
-                Price = orderVM.Price
+                Details = orderVM.Order.Option,
+                Price = orderVM.Order.Price
             };
 
             userService.ChangeOrder(storeToPlace, menuItem, userOrder.Id);
@@ -159,7 +191,6 @@ namespace UserInterface.Controllers
             var userEmail = HttpContext.User.Identity.Name;
 
             userService.SelectCurrentUser(userEmail);
-            //var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
 
             ICollection<Order> orderHistoy = new List<Order>();
 
@@ -184,6 +215,5 @@ namespace UserInterface.Controllers
         {
             return RedirectToAction("Index", "Home");
         }
-
     }
 }

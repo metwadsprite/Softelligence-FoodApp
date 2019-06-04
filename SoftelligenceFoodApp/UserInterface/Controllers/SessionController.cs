@@ -103,8 +103,17 @@ namespace UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
+                Session currentSession = adminService.GetActiveSession();
+
                 storeToRemoveFromSession = adminService.GetStoreById(storeToRemoveFromSession.Id);
                 storeToRemoveFromSession.IsActive = false;
+
+                foreach(var order in currentSession.Orders)
+                {
+                    order.IsActive = false;
+                    adminService.UpdateOrder(currentSession, order);
+                    
+                }
                 adminService.UpdateStore(storeToRemoveFromSession);
             }
             return RedirectToAction("NewSession");
