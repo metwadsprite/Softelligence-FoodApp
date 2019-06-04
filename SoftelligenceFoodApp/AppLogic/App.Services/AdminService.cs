@@ -64,11 +64,12 @@ namespace Logic.Implementations
         public void CloseSession(Session sessionToClose)
         {
             administrator.CloseSession(sessionToClose);
+            dataContext.GetSessionsRepository().Update(sessionToClose);
         }
 
-        public void UpdateOrder(Session currentSession, Order orderToUpdate)
+        public void CloseRestaurant(Store storeToClose, Session currentSession)
         {
-            currentSession.UpdateOrder(orderToUpdate.Id, orderToUpdate);
+            administrator.CloseRestaurant(storeToClose, currentSession);
             dataContext.GetSessionsRepository().Update(currentSession);
         }
     }
