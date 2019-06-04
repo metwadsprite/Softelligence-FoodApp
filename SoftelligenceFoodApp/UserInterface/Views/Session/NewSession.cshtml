@@ -18,13 +18,13 @@
                 var rowCount = 1;
                 Model.Price = 0.0m;
 
-                <div class="col-lg-6 col-md-6 col-sm-12" style="padding-left: 2em; background-color:#eff3f9">
+                <div class="col-lg-6 col-md-6 col-sm-12" style="padding-left: 2em">
                     <h2>@item.Name</h2>
                     <hr />
                     <div class="row order-table-header">
                         <div class="col-4">User Name</div>
-                        <div class="col-4">Details</div>
-                        <div class="col-4">Price</div>
+                        <div class="col-6">Details</div>
+                        <div class="col-2">Price</div>
                     </div>
 
 
@@ -44,9 +44,9 @@
                             }
 
                             <div class="@className">
-                                <div class="col-4" style="font-size:80%">@order.User.Name</div>
-                                <div class="col-4" style="font-size:80%">@order.Details</div>
-                                <div class="col-4" style="font-size:80%">@order.Price</div>
+                                <div class="col-4" >@order.User.Name</div>
+                                <div class="col-6" >@order.Details</div>
+                                <div class="col-2" >@order.Price</div>
                             </div>
 
                             rowCount++;
@@ -55,10 +55,11 @@
                     }
                     <hr />
                     <p>Total Price: @Model.Price </p>
-                    <br />
                     <div class="d-flex justify-content-center align-items-stretch">
-                        <a asp-controller="Session" asp-action="CloseRestaurant" asp-route-id="@item.Id" class="btn btn-primary">Close Restaurant</a>
+                        <a asp-controller="Session" asp-action="CloseRestaurant" asp-route-id="@item.Id" class="btn btn-primary"><i class="fas fa-window-close"></i>&nbsp;&nbsp;&nbsp;Close Restaurant</a>
                     </div>
+                    <br />
+                    <br />
                 </div>
                 <br />
             }

@@ -52,6 +52,7 @@ namespace Logic.Implementations
             newOrder.Price = menuItem.Price;
             newOrder.Details = menuItem.Details;
             newOrder.User = this.user;
+            newOrder.IsActive = true;
 
             //currentSession.ChangeOrder(newOrder);
             currentSession.UpdateOrder(orderId, newOrder);
