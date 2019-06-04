@@ -11,5 +11,6 @@ namespace UserInterface.Models
         public string Name { get; set; }
         public string Hyperlink { get; set; }
         public string Image { get; set; }
+        public bool isActive { get; set; }
     }
 }
