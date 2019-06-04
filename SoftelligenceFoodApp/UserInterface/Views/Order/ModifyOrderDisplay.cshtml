@@ -11,8 +11,8 @@
             <div>
                 <pre>
     Restaurant: @Html.DisplayFor(itemModel => Model.StoreName)
-    Option: @Html.DisplayFor(itemModel => Model.Option)
-    Price: @Html.DisplayFor(itemModel => Model.Price)
+    Option: @Html.DisplayFor(itemModel => Model.Order.Option)
+    Price: @Html.DisplayFor(itemModel => Model.Order.Price)
                 </pre>
             </div>
         </div>
@@ -22,24 +22,24 @@
             <form asp-action="ModifyOrder" method="post" asp-controller="Order">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Option" class="control-label"></label>
-                    <input asp-for="Option" class="form-control" />
-                    <span asp-validation-for="Option" class="text-danger"></span>
+                    <label asp-for="Order.Option" class="control-label"></label>
+                    <input asp-for="Order.Option" class="form-control" />
+                    <span asp-validation-for="Order.Option" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Price" class="control-label"></label>
-                    <input asp-for="Price" class="form-control" />
-                    <span asp-validation-for="Price" class="text-danger"></span>
+                    <label asp-for="Order.Price" class="control-label"></label>
+                    <input asp-for="Order.Price" class="form-control" />
+                    <span asp-validation-for="Order.Price" class="text-danger"></span>
                 </div>
-                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">Change Order</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order"><i class="fas fa-edit"></i>&nbsp;&nbsp;&nbsp;Change Order</button>
             </form>
 
             <form asp-action="DeleteOrder" method="post" asp-controller="Order">
-                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">Cancel Order</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order"><i class="fas fa-window-close"></i>&nbsp;&nbsp;&nbsp;Cancel Order</button>
             </form>
 
             <form asp-action="GetHistory" method="post" asp-controller="Order">
-                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">Order History</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order"><i class="fas fa-history"></i>&nbsp;&nbsp;&nbsp;Order History</button>
             </form>
 
         </div>

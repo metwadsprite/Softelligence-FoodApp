@@ -26,7 +26,9 @@ else
             <div class="col-md-4">
                 <form asp-controller="Order" asp-action="PlaceRestaurantOrder" asp-route-id="@store.Id" method="get">
                     <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">
+                        <i class="fas fa-utensils"></i>&nbsp;&nbsp;&nbsp;
                         @Html.DisplayFor(modelItem => store.Name)
+                        &nbsp;&nbsp;&nbsp;<i class="fas fa-utensils"></i>
                     </button>
                 </form>
                 <br />
@@ -37,7 +39,7 @@ else
     <div class="row">
         <div class="col-md-4">
             <form asp-action="GetHistory" method="post" asp-controller="Order">
-                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">Order History</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order"><i class="fas fa-history"></i>&nbsp;&nbsp;&nbsp;Order History</button>
             </form>
         </div>
     </div>
