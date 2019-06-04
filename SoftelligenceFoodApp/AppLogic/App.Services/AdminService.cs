@@ -68,7 +68,8 @@ namespace Logic.Implementations
 
         public void UpdateOrder(Session currentSession, Order orderToUpdate)
         {
-            currentSession.UpdateOrder(orderToUpdate.Id, orderToUpdate);   
+            currentSession.UpdateOrder(orderToUpdate.Id, orderToUpdate);
+            dataContext.GetSessionsRepository().Update(currentSession);
         }
     }
 }
