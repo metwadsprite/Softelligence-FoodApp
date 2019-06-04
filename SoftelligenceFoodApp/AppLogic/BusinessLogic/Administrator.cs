@@ -1,5 +1,4 @@
 ﻿using BusinessLogic.Abstractions;
-using BusinessLogic.BusinessExceptions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -11,7 +10,7 @@ namespace BusinessLogic
         public string FullName { get; set; }
         public string Email { get; set; }
 
-        private IPersistenceContext context;
+        private readonly IPersistenceContext context;
 
         public Administrator(IPersistenceContext context )
         {
@@ -34,7 +33,6 @@ namespace BusinessLogic
         public void Remove(Store storeToRemove)
         {
             var storeRepo = context.GetStoresRepository();
-
             storeRepo.Remove(storeToRemove);
         }
 
@@ -77,6 +75,12 @@ namespace BusinessLogic
         {
             var sessionRepo = context.GetSessionsRepository();
             return sessionRepo.GetById(id);
+        }
+        public void CloseSession(Session SessionToClose)
+        {
+            var sessionRepo = context.GetSessionsRepository();
+            SessionToClose.IsActive = false;
+            sessionRepo.Update(SessionToClose);
         }
     }
 }
