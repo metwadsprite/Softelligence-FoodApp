@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EF.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190603101534_Update")]
-    partial class Update
+    [Migration("20190604093611_UpdateDatase")]
+    partial class UpdateDatase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
