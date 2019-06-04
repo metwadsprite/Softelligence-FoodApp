@@ -1,0 +1,15 @@
+﻿@model Session
+@{
+    ViewData["Title"] = "CloseSession";
+}
+
+<br />
+<h1>Are you sure you want to close this Session?</h1>
+<br />
+<div class="form-actions no-color">
+    <form asp-action="CloseSession">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" style="width:100%" class="btn btn-primary btn-lg btn-block">Close</button>
+    </form>
+</div>
