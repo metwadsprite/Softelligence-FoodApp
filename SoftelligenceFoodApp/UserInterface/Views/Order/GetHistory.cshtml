@@ -20,27 +20,31 @@
                     <div class="col-3">Price</div>
                 </div>
                 <hr />
-                    @foreach (var item in Model)
+                @foreach (var item in Model)
+                {
+                    var className = "row";
+                    if (rowCount % 2 == 0)
                     {
-                        var className = "row";
-                        if (rowCount % 2 == 0)
-                        {
-                            className += " alternate-primary";
-                        }
-                        else
-                        {
-                            className += " alternate-secondary";
-                        }
-
-                        <div class="@className">
-                            <div class="col-3" style="font-size:16px">@item.Store.Name</div>
-                            <div class="col-6" style="font-size:16px">@item.Details</div>
-                            <div class="col-3" style="font-size:16px">@item.Price</div>
-                        </div>
-                        rowCount++;
-
+                        className += " alternate-primary";
                     }
+                    else
+                    {
+                        className += " alternate-secondary";
+                    }
+
+                    <div class="@className">
+                        <div class="col-3" style="font-size:16px; overflow:auto">@item.Store.Name</div>
+                        <div class="col-6" style="font-size:16px; overflow:auto">@item.Details</div>
+                        <div class="col-3" style="font-size:16px; overflow:auto">@item.Price</div>
+                    </div>
+                    rowCount++;
+
+                }
             </div>
         </div>
     </div>
+}
+else
+{
+    <h2>You have no archived orders</h2>
 }
