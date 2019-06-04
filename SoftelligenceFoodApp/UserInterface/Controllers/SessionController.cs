@@ -120,6 +120,12 @@ namespace UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
+                var storeRepo = adminService.GetAllStores();
+                foreach(var item in storeRepo)
+                {
+                    item.IsActive = false;
+                    adminService.UpdateStore(item);
+                }
                 Session session = new Session();
                 session = adminService.GetActiveSession();
                 adminService.CloseSession(session);
