@@ -22,12 +22,14 @@
                 <div><a target="_blank" href="@item.Hyperlink">View Menu</a></div>
             </div>
             <div class="col-sm-12 col-md-5">
+               @if (item.isActive == false)
+                {
                 <div class="d-flex justify-content-center align-items-stretch">
                     <a asp-controller="StoreManagement" asp-action="Update" asp-route-id="@item.Id" class="btn btn-primary"><i class="fas fa-edit"></i>Update</a>
                     &nbsp;
                     <a asp-controller="StoreManagement" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-primary"><i class="fas fa-trash"></i>Delete</a>
                 </div>
-
+                }
             </div>
         </div>
         <br />
