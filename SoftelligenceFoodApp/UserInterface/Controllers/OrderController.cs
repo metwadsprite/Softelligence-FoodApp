@@ -31,9 +31,16 @@ namespace UserInterface.Controllers
         [Authorize]
         public IActionResult Index()
         {
-            activeSession = sessionRepository.GetActiveSession();
-
+            activeSession = null;
             var userEmail = HttpContext.User.Identity.Name;
+            try
+            {
+                activeSession = sessionRepository.GetActiveSession();
+            }
+            catch(SessionNotFoundException ex)
+            {
+                return View(activeSession);
+            }
             userService.SelectCurrentUser(userEmail);
 
             var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
