@@ -28,6 +28,7 @@ namespace UserInterface.Controllers
                 var storeToDisplay = new StoreVM();
                 storeToDisplay.Id = store.Id;
                 storeToDisplay.Name = store.Name;
+                storeToDisplay.isActive = store.IsActive;
                 if (store.Menu != null)
                 {
                     if (store.Menu.Hyperlink != null)

@@ -60,9 +60,17 @@ namespace Logic.Implementations
         {
             return administrator.GetSessionById(id);
         }
+
         public void CloseSession(Session sessionToClose)
         {
             administrator.CloseSession(sessionToClose);
+            dataContext.GetSessionsRepository().Update(sessionToClose);
+        }
+
+        public void CloseRestaurant(Store storeToClose, Session currentSession)
+        {
+            administrator.CloseRestaurant(storeToClose, currentSession);
+            dataContext.GetSessionsRepository().Update(currentSession);
         }
     }
 }
