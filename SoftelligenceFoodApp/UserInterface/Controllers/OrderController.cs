@@ -41,6 +41,7 @@ namespace UserInterface.Controllers
             {
                 return View(activeSession);
             }
+     
             userService.SelectCurrentUser(userEmail);
 
             var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
@@ -52,6 +53,11 @@ namespace UserInterface.Controllers
             }
             else
             {
+                if (userOrder.IsActive == false)
+                {
+                    return RedirectToAction("Index", "Order");
+                }
+
                 return RedirectToAction("ModifyOrderDisplay", "Order");
             }
         }
@@ -133,10 +139,16 @@ namespace UserInterface.Controllers
         public IActionResult ModifyOrderDisplay()
         {
             activeSession = sessionRepository.GetActiveSession();
+
             var userEmail = HttpContext.User.Identity.Name;
             userService.SelectCurrentUser(userEmail);
 
             var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
+
+            if(userOrder.IsActive == false)
+            {
+                return RedirectToAction("Index", "Order");
+            }
 
             PlaceRestaurantOrderVM orderVM = new PlaceRestaurantOrderVM()
             {

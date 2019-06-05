@@ -61,6 +61,7 @@ namespace UserInterface
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             OrderController controller = new OrderController(persistContext);
+            HomeController homeController = new HomeController(persistContext);
 
         }
 
