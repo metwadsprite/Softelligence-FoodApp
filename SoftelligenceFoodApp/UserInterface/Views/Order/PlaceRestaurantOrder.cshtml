@@ -27,6 +27,9 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="fas fa-cart-plus"></i>&nbsp;&nbsp;&nbsp;Place Order</button>
             </form>
+            <form asp-action="Back" method="post" asp-controller="Order">
+                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order"><i class="fas fa-arrow-circle-left"></i>&nbsp;&nbsp;&nbsp;Back to Homepage</button>
+            </form>
         </div>
         <div class="col-md-4">
             <div class="row"><br /><h4>Menu Image:</h4></div>
@@ -38,5 +41,5 @@
                 <a href="@Html.DisplayFor(modelItem => Model.Hyperlink)">@Html.DisplayFor(modelItem => Model.Hyperlink)</a>
             </div>
         </div>
+
     </div>
-</div>

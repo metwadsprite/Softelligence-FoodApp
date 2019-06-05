@@ -1,49 +1,91 @@
-﻿@model Session
+﻿@model OrderActiveVM
 
 @{
     ViewData["Title"] = "Index";
 }
 
-@if (Model == null)
+@if (Model.Session == null)
 {
     <div class="container">
-        <h1>No session is currently active</h1>
+        <h3>No session is currently active</h3>
+
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="GetHistory" method="post" asp-controller="Order">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block btn-order"><i class="fas fa-history"></i>&nbsp;&nbsp;&nbsp;Order History</button>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <form asp-action="Back" method="post" asp-controller="Order">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block btn-order"><i class="fas fa-home"></i>&nbsp;&nbsp;&nbsp;Homepage</button>
+                </form>
+            </div>
+        </div>
+
     </div>
 }
-else
+else if (Model.OrderIsActive == false)
 {
-<div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <h2>Today's Restaurants</h2>
+    <div class="container">
+        <h3>Store Closed</h3>
+        <h5>Your order is being processed</h5>
+
+        <div class="row">
+            <pre>
+    Restaurant: @Html.DisplayFor(itemModel => Model.Order.Store.Name)
+    Option: @Html.DisplayFor(itemModel => Model.Order.Details)
+    Price: @Html.DisplayFor(itemModel => Model.Order.Price)
+        </pre>
         </div>
-    </div>
-    
-    <div class="row">
-        @foreach (var store in Model.Stores)
-        {
 
-            <div class="col-md-4">
-                <form asp-controller="Order" asp-action="PlaceRestaurantOrder" asp-route-id="@store.Id" method="get">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">
-                        <i class="fas fa-utensils"></i>&nbsp;&nbsp;&nbsp;
-                        @Html.DisplayFor(modelItem => store.Name)
-                        &nbsp;&nbsp;&nbsp;<i class="fas fa-utensils"></i>
-                    </button>
-                </form>
-                <br />
-            </div>
-        }
-    </div>
-
-    <div class="row">
         <div class="col-md-4">
-            <form asp-action="GetHistory" method="post" asp-controller="Order">
-                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order"><i class="fas fa-history"></i>&nbsp;&nbsp;&nbsp;Order History</button>
+            <form asp-action="Back" method="post" asp-controller="Order">
+                <button type="submit" class="btn btn-primary btn-lg btn-block btn-order"><i class="fas fa-home"></i>&nbsp;&nbsp;&nbsp;Homepage</button>
             </form>
         </div>
     </div>
-</div>
+
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Today's Restaurants</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            @foreach (var store in Model.Session.Stores)
+            {
+
+                <div class="col-md-4">
+                    <form asp-controller="Order" asp-action="PlaceRestaurantOrder" asp-route-id="@store.Id" method="get">
+                        <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">
+                            <i class="fas fa-utensils"></i>&nbsp;&nbsp;&nbsp;
+                            @Html.DisplayFor(modelItem => store.Name)
+                            &nbsp;&nbsp;&nbsp;<i class="fas fa-utensils"></i>
+                        </button>
+                    </form>
+                    <br />
+                </div>
+            }
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="GetHistory" method="post" asp-controller="Order">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block btn-order"><i class="fas fa-history"></i>&nbsp;&nbsp;&nbsp;Order History</button>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <form asp-action="Back" method="post" asp-controller="Order">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block btn-order"><i class="fas fa-arrow-circle-left"></i>&nbsp;&nbsp;&nbsp;Back to Homepage</button>
+                </form>
+                </div>
+            </div>
+
+        </div>
 }
 
 

@@ -33,13 +33,15 @@ namespace UserInterface.Controllers
         {
             activeSession = null;
             var userEmail = HttpContext.User.Identity.Name;
+            OrderActiveVM orderActiveVM = new OrderActiveVM() { Session = null, OrderIsActive = true };
             try
             {
                 activeSession = sessionRepository.GetActiveSession();
+                orderActiveVM.Session = activeSession;
             }
             catch(SessionNotFoundException)
             {
-                return View(activeSession);
+                return View(orderActiveVM);
             }
      
             userService.SelectCurrentUser(userEmail);
@@ -48,14 +50,22 @@ namespace UserInterface.Controllers
 
             if (userOrder == null)
             {
-                return View(activeSession);
+                return View(orderActiveVM);
 
             }
             else
             {
+                orderActiveVM.Order = new Order();
+                orderActiveVM.Order.Store = new Store();
+                orderActiveVM.Order.Store.Name = userOrder.Store.Name;
+                orderActiveVM.Order.Price = userOrder.Price;
+                orderActiveVM.Order.User = new User();
+                orderActiveVM.Order.User.Name = userOrder.User.Name;
+                orderActiveVM.Order.Details = userOrder.Details;
+                orderActiveVM.OrderIsActive = userOrder.IsActive;  
                 if (userOrder.IsActive == false)
                 {
-                    return RedirectToAction("Index", "Order");
+                    return View(orderActiveVM);
                 }
 
                 return RedirectToAction("ModifyOrderDisplay", "Order");
