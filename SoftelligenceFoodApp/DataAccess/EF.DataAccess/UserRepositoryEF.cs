@@ -44,6 +44,20 @@ namespace EF.DataAccess
             return mapper.MapData<User, UserDO>(userWithEmail);
         }
 
+        public bool FindUser(string email)
+        {
+            var userWithEmail = dbContext.Users.SingleOrDefault(user => user.Email == email);
+
+            if(userWithEmail == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         public int GetId(string name)
         {
             return GetByName(name).Id;
@@ -53,6 +67,22 @@ namespace EF.DataAccess
         {
             this.dbContext = dbContext;
             this.mapper = mapper;
+        }
+
+
+        public void Create(User user)
+        {
+            if (user != null)
+            {
+                var userDO = mapper.MapData<UserDO, User>(user);
+
+                dbContext.Add(userDO);
+                dbContext.SaveChanges();
+            }
+            else
+            {
+                throw new UserNotFoundException();
+            }
         }
 
     }

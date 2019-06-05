@@ -2,17 +2,50 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+using BusinessLogic;
+using BusinessLogic.Abstractions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using UserInterface.Models;
+
 
 namespace UserInterface.Controllers
 {
     public class HomeController : Controller
     {
-        [Authorize]
-        public IActionResult Index()
+
+        private IUsersRepository userRepository;
+        UserManager<ApplicationUser> usersManager;
+
+
+        public HomeController(IPersistenceContext dataContext, UserManager<ApplicationUser> usersManager)
+        {
+            this.userRepository = dataContext.GetUsersRepository();
+            this.usersManager = usersManager;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var userEmail = HttpContext.User.Identity.Name;
+            var isUser = userRepository.FindUser(userEmail);
+
+            if (isUser == false)
+            {
+
+
+                var identityUser = await usersManager.FindByEmailAsync(userEmail);
+                    
+                User user = new User() { Email = identityUser.Email, Name = identityUser.Name };
+                userRepository.Create(user);
+            }
+
+
+            return View();
+        }
+
+        public IActionResult Privacy()
         {
             return View();
         }

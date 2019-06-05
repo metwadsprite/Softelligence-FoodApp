@@ -33,30 +33,46 @@ namespace UserInterface.Controllers
         {
             activeSession = null;
             var userEmail = HttpContext.User.Identity.Name;
+            OrderActiveVM orderActiveVM = new OrderActiveVM() { Session = null, OrderIsActive = true };
             try
             {
                 activeSession = sessionRepository.GetActiveSession();
+                orderActiveVM.Session = activeSession;
             }
             catch(SessionNotFoundException)
             {
-                return View(activeSession);
+                return View(orderActiveVM);
             }
+     
             userService.SelectCurrentUser(userEmail);
 
             var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
 
             if (userOrder == null)
             {
-                return View(activeSession);
+                return View(orderActiveVM);
 
             }
             else
             {
+                orderActiveVM.Order = new Order();
+                orderActiveVM.Order.Store = new Store();
+                orderActiveVM.Order.Store.Name = userOrder.Store.Name;
+                orderActiveVM.Order.Price = userOrder.Price;
+                orderActiveVM.Order.User = new User();
+                orderActiveVM.Order.User.Name = userOrder.User.Name;
+                orderActiveVM.Order.Details = userOrder.Details;
+                orderActiveVM.OrderIsActive = userOrder.IsActive;  
+                if (userOrder.IsActive == false)
+                {
+                    return View(orderActiveVM);
+                }
+
                 return RedirectToAction("ModifyOrderDisplay", "Order");
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult PlaceRestaurantOrder(int? id)
         {
@@ -133,10 +149,16 @@ namespace UserInterface.Controllers
         public IActionResult ModifyOrderDisplay()
         {
             activeSession = sessionRepository.GetActiveSession();
+
             var userEmail = HttpContext.User.Identity.Name;
             userService.SelectCurrentUser(userEmail);
 
             var userOrder = activeSession.Orders.FirstOrDefault(order => order.User.Email == userEmail);
+
+            if(userOrder.IsActive == false)
+            {
+                return RedirectToAction("Index", "Order");
+            }
 
             PlaceRestaurantOrderVM orderVM = new PlaceRestaurantOrderVM()
             {
