@@ -58,17 +58,20 @@ else
         <div class="row">
             @foreach (var store in Model.Session.Stores)
             {
+                if (store.IsActive)
+                {
+                    <div class="col-md-4">
+                        <form asp-controller="Order" asp-action="PlaceRestaurantOrder" asp-route-id="@store.Id" method="get">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">
+                                <i class="fas fa-utensils"></i>&nbsp;&nbsp;&nbsp;
+                                @Html.DisplayFor(modelItem => store.Name)
+                                &nbsp;&nbsp;&nbsp;<i class="fas fa-utensils"></i>
+                            </button>
+                        </form>
+                        <br />
+                    </div>
 
-                <div class="col-md-4">
-                    <form asp-controller="Order" asp-action="PlaceRestaurantOrder" asp-route-id="@store.Id" method="get">
-                        <button type="submit" class="btn btn-primary btn-lg btn-block btn-order">
-                            <i class="fas fa-utensils"></i>&nbsp;&nbsp;&nbsp;
-                            @Html.DisplayFor(modelItem => store.Name)
-                            &nbsp;&nbsp;&nbsp;<i class="fas fa-utensils"></i>
-                        </button>
-                    </form>
-                    <br />
-                </div>
+                }
             }
         </div>
 
@@ -82,10 +85,10 @@ else
                 <form asp-action="Back" method="post" asp-controller="Order">
                     <button type="submit" class="btn btn-primary btn-lg btn-block btn-order"><i class="fas fa-arrow-circle-left"></i>&nbsp;&nbsp;&nbsp;Back to Homepage</button>
                 </form>
-                </div>
             </div>
-
         </div>
+
+    </div>
 }
 
 

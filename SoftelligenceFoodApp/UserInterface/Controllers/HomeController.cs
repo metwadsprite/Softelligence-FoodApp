@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using BusinessLogic;
 using BusinessLogic.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using UserInterface.Models;
+
 
 namespace UserInterface.Controllers
 {
@@ -26,9 +28,14 @@ namespace UserInterface.Controllers
             var userEmail = HttpContext.User.Identity.Name;
             var isUser = userRepository.FindUser(userEmail);
 
-            if(isUser == false)
+            if (isUser == false)
             {
-                User user = new User() { Email = userEmail, Name = HttpContext.User.Identity.Name };
+                var ass = HttpContext
+                userEmail = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's Emai
+                var ceva = HttpContext.User.FindFirstValue(ClaimTypes.Email);
+                var altceva = HttpContext.User.FindFirstValue(ClaimTypes.Name);
+                var userName = HttpContext.User.FindFirstValue(ClaimTypes.Name);
+                User user = new User() { Email = userEmail, Name = userName };
                 userRepository.Create(user);
             }
 
