@@ -17,6 +17,8 @@
     <Compile Remove="Migrations\20190516124837_UpdateStoreEntity.Designer.cs" />
     <Compile Remove="Migrations\20190516124951_UpdateStoreEntity.cs" />
     <Compile Remove="Migrations\20190516124951_UpdateStoreEntity.Designer.cs" />
+    <Compile Remove="Migrations\20190603101534_Update.cs" />
+    <Compile Remove="Migrations\20190603101534_Update.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

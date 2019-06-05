@@ -41,12 +41,6 @@ namespace UserInterface.Controllers
                 session.HasActiveSession = true;
                 session.Stores = session.Session.Stores
                                                 .ToList();
-                bool activeStore = false;
-                foreach(var item in session.Stores)
-                {
-                    if (item.IsActive == true) activeStore = true;
-                }
-                if (activeStore == false) { adminService.CloseSession(session.Session); return RedirectToAction("index"); }
             }
             catch (SessionNotFoundException)
             {
@@ -101,11 +95,32 @@ namespace UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                storeToRemoveFromSession = adminService.GetStoreById(storeToRemoveFromSession.Id);
-                storeToRemoveFromSession.IsActive = false;
-                adminService.UpdateStore(storeToRemoveFromSession);
+                Session currentSession = adminService.GetActiveSession();
+
+                storeToRemoveFromSession = adminService.GetStoreById(storeToRemoveFromSession.Id);                
+
+                adminService.CloseRestaurant(storeToRemoveFromSession, currentSession);
             }
             return RedirectToAction("NewSession");
-        }        
+        }
+
+        [HttpGet]
+        public IActionResult CloseSession()
+        {
+            Session session = adminService.GetActiveSession();
+            return View(session);
+        }
+
+        [HttpPost]
+        public IActionResult CloseSession([FromForm]Session sessionToRemove)
+        {
+            if (ModelState.IsValid)
+            {
+                sessionToRemove = adminService.GetActiveSession();
+
+                adminService.CloseSession(sessionToRemove);
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

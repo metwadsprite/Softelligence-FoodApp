@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EF.DataAccess.Migrations
 {
-    public partial class Update : Migration
+    public partial class UpdateDatase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

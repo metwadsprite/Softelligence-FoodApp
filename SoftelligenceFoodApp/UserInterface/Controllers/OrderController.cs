@@ -20,7 +20,7 @@ namespace UserInterface.Controllers
         private ISessionsRepository sessionRepository;
         Session activeSession;
         PlaceRestaurantOrderVM curOrder;
-        UserService userService;
+        private readonly UserService userService;
 
         public OrderController(IPersistenceContext dataContext)
         {
@@ -37,7 +37,7 @@ namespace UserInterface.Controllers
             {
                 activeSession = sessionRepository.GetActiveSession();
             }
-            catch(SessionNotFoundException ex)
+            catch(SessionNotFoundException)
             {
                 return View(activeSession);
             }

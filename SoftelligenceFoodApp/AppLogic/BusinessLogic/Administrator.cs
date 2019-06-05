@@ -76,11 +76,35 @@ namespace BusinessLogic
             var sessionRepo = context.GetSessionsRepository();
             return sessionRepo.GetById(id);
         }
-        public void CloseSession(Session SessionToClose)
+
+        public void CloseSession(Session sessionToClose)
         {
             var sessionRepo = context.GetSessionsRepository();
-            SessionToClose.IsActive = false;
-            sessionRepo.Update(SessionToClose);
+            sessionToClose.IsActive = false;
+            foreach (var order in sessionToClose.Orders)
+            {
+                order.IsActive = false;
+                sessionToClose.UpdateOrder(order.Id, order);
+
+            }
+            foreach (var store in sessionToClose.Stores)
+            {
+                store.IsActive = false;
+                Update(store);
+            }
+            sessionRepo.Update(sessionToClose);
+        }
+
+        public void CloseRestaurant(Store storeToClose, Session currentSession)
+        {
+            foreach (var order in currentSession.Orders)
+            {
+                order.IsActive = false;
+                currentSession.UpdateOrder(order.Id, order);
+
+            }
+            storeToClose.IsActive = false;
+            Update(storeToClose);
         }
     }
 }
