@@ -18,6 +18,7 @@ using EF.DataAccess;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Logic.Implementations;
 using UserInterface.Controllers;
+using UserInterface.Models;
 
 namespace UserInterface
 {
@@ -46,7 +47,8 @@ namespace UserInterface
                     Configuration.GetConnectionString("DefaultConnection")));
 
             
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<ApplicationUser>()
+                .AddRoles<IdentityRole>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<CustomIdentityDbContext>(); 
 
@@ -55,18 +57,21 @@ namespace UserInterface
             var persistContext = new EFPersistenceContext(entitiesMapper);
             persistContext.Initialize(services, Configuration.GetConnectionString("AppConnection"));
 
+           
             services.AddSingleton<EntitiesMapper>(entitiesMapper);            
             services.AddSingleton<IPersistenceContext>(persistContext);
             services.AddSingleton<AdminService>();
+            services.AddSingleton<IdentityInitializer>();
+            var identityInitializer = services.BuildServiceProvider().GetService<IdentityInitializer>();
+            identityInitializer.InitializeDefaultRoles();
+            identityInitializer.InitializeDefaultUsers();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            OrderController controller = new OrderController(persistContext);
-            HomeController homeController = new HomeController(persistContext);
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider provider)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {

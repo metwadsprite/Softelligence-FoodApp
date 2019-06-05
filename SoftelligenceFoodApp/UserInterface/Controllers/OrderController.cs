@@ -72,7 +72,7 @@ namespace UserInterface.Controllers
             }
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult PlaceRestaurantOrder(int? id)
         {

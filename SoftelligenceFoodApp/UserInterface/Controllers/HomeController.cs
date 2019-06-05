@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using BusinessLogic;
 using BusinessLogic.Abstractions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using UserInterface.Models;
 
@@ -16,26 +17,27 @@ namespace UserInterface.Controllers
     {
 
         private IUsersRepository userRepository;
-        User user;
+        UserManager<ApplicationUser> usersManager;
 
-        public HomeController(IPersistenceContext dataContext)
+
+        public HomeController(IPersistenceContext dataContext, UserManager<ApplicationUser> usersManager)
         {
             this.userRepository = dataContext.GetUsersRepository();
+            this.usersManager = usersManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var userEmail = HttpContext.User.Identity.Name;
             var isUser = userRepository.FindUser(userEmail);
 
             if (isUser == false)
             {
-                var ass = HttpContext
-                userEmail = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's Emai
-                var ceva = HttpContext.User.FindFirstValue(ClaimTypes.Email);
-                var altceva = HttpContext.User.FindFirstValue(ClaimTypes.Name);
-                var userName = HttpContext.User.FindFirstValue(ClaimTypes.Name);
-                User user = new User() { Email = userEmail, Name = userName };
+
+
+                var identityUser = await usersManager.FindByEmailAsync(userEmail);
+                    
+                User user = new User() { Email = identityUser.Email, Name = identityUser.Name };
                 userRepository.Create(user);
             }
 
