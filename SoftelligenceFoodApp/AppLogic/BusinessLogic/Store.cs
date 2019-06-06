@@ -1,4 +1,7 @@
-﻿namespace BusinessLogic
+﻿using System;
+using System.Collections.Generic;
+
+namespace BusinessLogic
 {
     public class Store
     {
@@ -14,6 +17,11 @@
         public void AddMenuItem(string details, decimal price)
         {
             Menu.MenuItems.Add(new MenuItem { Details = details, Price = price });
+        }
+
+        public ICollection<MenuItem> GetProductSuggestions()
+        {
+            return new List<MenuItem>();
         }
     }
 }
