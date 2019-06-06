@@ -130,3 +130,11 @@ tbody tr:nth-child(even) {
     font-size: 16px;
     font-weight: bold;
 }
+
+.gl-on {
+    color: black;
+}
+
+.gl-off {
+    color: green;
+}

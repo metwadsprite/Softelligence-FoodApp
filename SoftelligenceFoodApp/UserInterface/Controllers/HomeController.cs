@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BusinessLogic;
 using BusinessLogic.Abstractions;
+using BusinessLogic.BusinessExceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,12 +15,14 @@ namespace UserInterface.Controllers
     {
 
         private readonly IUsersRepository userRepository;
+        private readonly ISessionsRepository sessionRepository;
         private readonly UserManager<ApplicationUser> usersManager;
 
 
         public HomeController(IPersistenceContext dataContext, UserManager<ApplicationUser> usersManager)
         {
             this.userRepository = dataContext.GetUsersRepository();
+            this.sessionRepository = dataContext.GetSessionsRepository();
             this.usersManager = usersManager;
         }
 
@@ -39,8 +42,17 @@ namespace UserInterface.Controllers
                 userRepository.Create(user);
             }
 
+            try
+            {
+                var currentSession = sessionRepository.GetActiveSession();
+            }
+            catch(SessionNotFoundException)
+            {
+                return View(true);
+            }
 
-            return View();
+            return View(false);
+
         }
 
         public IActionResult Privacy()
