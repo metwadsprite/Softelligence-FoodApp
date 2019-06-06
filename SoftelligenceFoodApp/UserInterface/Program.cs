@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace UserInterface
 {
@@ -7,7 +8,15 @@ namespace UserInterface
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            var webHost = CreateWebHostBuilder(args).Build();
+
+            using (var services = webHost.Services.CreateScope())
+            { 
+                var identityInitializer = services.ServiceProvider.GetRequiredService<IdentityInitializer>();
+                identityInitializer.InitializeDefaultRoles();
+                identityInitializer.InitializeDefaultUsers();
+            }
+            webHost.Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

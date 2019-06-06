@@ -3,17 +3,15 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UserInterface.Data;
 
-namespace UserInterface.Data.Migrations
+namespace UserInterface.Migrations
 {
     [DbContext(typeof(CustomIdentityDbContext))]
-    [Migration("20190605115622_CustomUser")]
-    partial class CustomUser
+    partial class CustomIdentityDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -52,10 +52,8 @@ namespace UserInterface
             services.AddSingleton<EntitiesMapper>(entitiesMapper);            
             services.AddSingleton<IPersistenceContext>(persistContext);
             services.AddSingleton<AdminService>();
-            services.AddSingleton<IdentityInitializer>();
-            var identityInitializer = services.BuildServiceProvider().GetService<IdentityInitializer>();
-            identityInitializer.InitializeDefaultRoles();
-            identityInitializer.InitializeDefaultUsers();
+            services.AddScoped<IdentityInitializer>();
+           
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
 
@@ -73,6 +71,9 @@ namespace UserInterface
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            
+            
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
