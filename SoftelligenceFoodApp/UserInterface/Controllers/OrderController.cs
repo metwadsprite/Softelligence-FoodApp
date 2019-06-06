@@ -74,25 +74,7 @@ namespace UserInterface.Controllers
             activeSession = sessionRepository.GetActiveSession();
             Store storeWithId = activeSession.Stores.SingleOrDefault(store => store.Id == id);
 
-            var sessionHistory = sessionRepository.GetAll();
-            var suggestedOrders = new HashSet<OrderVM>();
-
-
-                foreach (var order in activeSession.Orders)
-                {
-                    if (order.Store.Id != id)
-                    {
-                        continue;
-                    }
-                    var orderToSuggest = new OrderVM
-                    {
-                        Option = order.Details,
-                        Price = order.Price
-                    };
-
-                    suggestedOrders.Add(orderToSuggest);
-                }
-            
+            var suggestions = storeWithId.GetProductSuggestions();
 
             curOrder = new PlaceRestaurantOrderVM
             {
@@ -100,7 +82,8 @@ namespace UserInterface.Controllers
                 StoreName = storeWithId.Name,
                 Image = storeWithId.Menu.Image,
                 Hyperlink = storeWithId.Menu.Hyperlink,
-                Suggestions = suggestedOrders
+                Suggestions = suggestions.Select(menuItem => new OrderVM { Option = menuItem.Details, Price = menuItem.Price })
+                                         .ToList<OrderVM>()
             };
 
             return View(curOrder);

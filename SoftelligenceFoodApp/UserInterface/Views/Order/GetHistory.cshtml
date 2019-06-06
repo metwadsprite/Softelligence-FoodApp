@@ -32,11 +32,19 @@
                         className += " alternate-secondary";
                     }
 
-                    <div class="@className">bbbbbbbbbbbbbn 
-                        <div class="col-3" style="font-size:16px; overflow:auto">@item.Store.Name</div>
-                        <div class="col-6" style="font-size:16px; overflow:auto">@item.Details</div>
-                        <div class="col-3" style="font-size:16px; overflow:auto">@item.Price</div>
-                    </div>
+
+            <div class="@className">
+                @if (item.Store == null)
+                {
+                    <div class="col-3" style="font-size:16px; overflow:auto">Store no longer exists.</div>
+                }
+                else
+                {
+                    <div class="col-3" style="font-size:16px; overflow:auto">@item.Store.Name</div>
+                }
+                <div class="col-6" style="font-size:16px; overflow:auto">@item.Details</div>
+                <div class="col-3" style="font-size:16px; overflow:auto">@item.Price</div>
+            </div>
                     rowCount++;
 
                 }
