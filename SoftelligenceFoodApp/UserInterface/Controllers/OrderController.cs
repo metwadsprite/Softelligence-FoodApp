@@ -77,9 +77,8 @@ namespace UserInterface.Controllers
             var sessionHistory = sessionRepository.GetAll();
             var suggestedOrders = new HashSet<OrderVM>();
 
-            foreach (var session in sessionHistory)
-            {
-                foreach (var order in session.Orders)
+
+                foreach (var order in activeSession.Orders)
                 {
                     if (order.Store.Id != id)
                     {
@@ -93,7 +92,7 @@ namespace UserInterface.Controllers
 
                     suggestedOrders.Add(orderToSuggest);
                 }
-            }
+            
 
             curOrder = new PlaceRestaurantOrderVM
             {
