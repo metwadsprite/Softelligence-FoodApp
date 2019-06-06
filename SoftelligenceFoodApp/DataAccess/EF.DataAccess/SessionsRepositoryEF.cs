@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using BusinessLogic;
 using BusinessLogic.Abstractions;
 using BusinessLogic.BusinessExceptions;
@@ -84,8 +83,6 @@ namespace EF.DataAccess
                 else
                 {
                     dbContext.Entry(orderDO).CurrentValues.SetValues(orderToUpdateDO);
-                    // might not work when updating order
-                    /// TODO: fix if that's the case
                 }
             }
 

@@ -1,5 +1,4 @@
-﻿using BusinessLogic;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EF.DataAccess.DataModel

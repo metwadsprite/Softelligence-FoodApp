@@ -1,7 +1,5 @@
 ﻿using BusinessLogic;
-using EF.DataAccess;
 using BusinessLogic.Abstractions;
-using System.Collections.Generic;
 
 namespace Logic.Implementations
 {
@@ -9,7 +7,6 @@ namespace Logic.Implementations
     {
         public User user;
         private readonly IPersistenceContext dataContext;
-        private ApplicationDbContext dbContext;
 
         public UserService(IPersistenceContext dataContext)
         {
@@ -42,7 +39,7 @@ namespace Logic.Implementations
             dataContext.GetSessionsRepository().Update(currentSession);
 
         }
-        //order info to change
+
         public void ChangeOrder(Store store, MenuItem menuItem, int orderId)
         {
             Session currentSession = GetActiveSession();
@@ -55,7 +52,6 @@ namespace Logic.Implementations
             newOrder.User = this.user;
             newOrder.IsActive = true;
 
-            //currentSession.ChangeOrder(newOrder);
             currentSession.UpdateOrder(orderId, newOrder);
             dataContext.GetSessionsRepository().Update(currentSession);
         }
@@ -68,8 +64,6 @@ namespace Logic.Implementations
 
         public void CancelOrder(Order orderToCancel)
         {
-            Session currentSession = GetActiveSession();
-
             user.CancelOrder();
             dataContext.GetSessionsRepository().DeleteOrder(orderToCancel);
         }

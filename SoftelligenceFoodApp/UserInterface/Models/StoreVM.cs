@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace UserInterface.Models
 {
     public class StoreVM
@@ -11,6 +7,6 @@ namespace UserInterface.Models
         public string Name { get; set; }
         public string Hyperlink { get; set; }
         public string Image { get; set; }
-        public bool isActive { get; set; }
+        public bool IsActive { get; set; }
     }
 }

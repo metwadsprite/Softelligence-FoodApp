@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using BusinessLogic;
 using BusinessLogic.Abstractions;
@@ -17,8 +13,8 @@ namespace UserInterface.Controllers
     public class HomeController : Controller
     {
 
-        private IUsersRepository userRepository;
-        UserManager<ApplicationUser> usersManager;
+        private readonly IUsersRepository userRepository;
+        private readonly UserManager<ApplicationUser> usersManager;
 
 
         public HomeController(IPersistenceContext dataContext, UserManager<ApplicationUser> usersManager)

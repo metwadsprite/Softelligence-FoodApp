@@ -1,14 +1,7 @@
-
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using BusinessLogic.Abstractions;
 using BusinessLogic;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using EF.DataAccess.DataModel;
-using AutoMapper;
 using System.Linq;
-using System;
 using BusinessLogic.Business.Exceptions;
 
 namespace EF.DataAccess

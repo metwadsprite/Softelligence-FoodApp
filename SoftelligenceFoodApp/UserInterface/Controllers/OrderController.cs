@@ -1,25 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BusinessLogic.Abstractions;
 using BusinessLogic;
 using Logic.Implementations;
 using UserInterface.Models;
-using EF.DataAccess;
 using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 using BusinessLogic.BusinessExceptions;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace UserInterface.Controllers
 {
     public class OrderController : Controller
     {
-        private ISessionsRepository sessionRepository;
-        Session activeSession;
-        PlaceRestaurantOrderVM curOrder;
+        private readonly ISessionsRepository sessionRepository;
+        private Session activeSession;
+        private PlaceRestaurantOrderVM curOrder;
         private readonly UserService userService;
 
         public OrderController(IPersistenceContext dataContext)

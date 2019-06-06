@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using UserInterface.Models;
 
 namespace UserInterface
 {
     public class IdentityInitializer
     {
-        private UserManager<ApplicationUser> userManager;
-        private RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
         public IdentityInitializer(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
@@ -23,14 +19,12 @@ namespace UserInterface
             var role = roleManager.FindByNameAsync("Admin").GetAwaiter().GetResult();
             if (role == null)
             {
-                //Create Admin role
                 roleManager.CreateAsync(new IdentityRole("Admin")).GetAwaiter().GetResult();
             }
 
             role = roleManager.FindByNameAsync("User").GetAwaiter().GetResult();
             if (role == null)
             {
-                //Create user role
                 roleManager.CreateAsync(new IdentityRole("User")).GetAwaiter().GetResult();
             }
         }

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using BusinessLogic.BusinessExceptions;
+﻿using BusinessLogic.BusinessExceptions;
 
 namespace BusinessLogic
 {
     public class User
     {
-        private Order currentOrder { get; set; }
+        private Order CurrentOrder { get; set; }
 
         public int Id { get; set; }
         public string Email { get; set; }
@@ -15,35 +12,35 @@ namespace BusinessLogic
 
         public void PlaceOrder(Order newOrder)
         {
-            if (currentOrder != null)
+            if (CurrentOrder != null)
             {
                 throw new OrderAlreadyInProgressException();
             }
-            currentOrder = newOrder;
+            CurrentOrder = newOrder;
 
         }
         public void ChangeOrder(Order newOrder)
         {
-            if (currentOrder.Id == newOrder.Id)
+            if (CurrentOrder.Id == newOrder.Id)
             {
                 throw new OrderHistoryAccessException();
             }
-            currentOrder = newOrder;
+            CurrentOrder = newOrder;
         }
 
 
         public void LoadOrder(Order loadedOrder)
         {
-            currentOrder = loadedOrder;
+            CurrentOrder = loadedOrder;
         }
 
         public void CancelOrder()
         {
-            currentOrder = null;
+            CurrentOrder = null;
         }
         public Order GetCurrentOrder()
         {
-            var orderToReturn = currentOrder;
+            var orderToReturn = CurrentOrder;
             if (orderToReturn == null)
             {
                 throw new OrderInvalidIdException();
