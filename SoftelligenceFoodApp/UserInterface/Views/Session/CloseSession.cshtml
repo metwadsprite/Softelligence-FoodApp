@@ -6,10 +6,15 @@
 <br />
 <h1>Are you sure you want to close this Session?</h1>
 <br />
-<div class="form-actions no-color">
+
+<div class="row">
     <form asp-action="CloseSession">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="Id" />
-        <button type="submit" style="width:100%" class="btn btn-primary btn-lg btn-block">Close</button>
+        <button type="submit" style="width:100%" class="btn btn-primary btn-lg btn-block"><i class="fas fa-times"></i>&nbsp;&nbsp;Close</button>
+    </form>
+    &nbsp;
+    <form asp-controller="Session" asp-action="NewSession" method="get">
+        <button type="submit" class="btn btn-primary btn-lg btn-block"><i class="fas fa-arrow-circle-left"></i>&nbsp;Back</button>
     </form>
 </div>

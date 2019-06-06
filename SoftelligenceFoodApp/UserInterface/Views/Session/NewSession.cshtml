@@ -56,9 +56,9 @@
                 @if (item.IsActive)
                 {
 
-                <div class="d-flex justify-content-center align-items-stretch">
-                    <a asp-controller="Session" asp-action="CloseRestaurant" asp-route-id="@item.Id" class="btn btn-primary"><i class="fas fa-window-close"></i>&nbsp;&nbsp;&nbsp;Close Restaurant</a>
-                </div>
+                    <div class="d-flex justify-content-center align-items-stretch">
+                        <a asp-controller="Session" asp-action="CloseRestaurant" asp-route-id="@item.Id" class="btn btn-primary"><i class="fas fa-window-close"></i>&nbsp;&nbsp;Close Restaurant</a>
+                    </div>
                 }
                 <br />
                 <br />
@@ -69,9 +69,9 @@
     <br />
     <br />
     <div class="d-flex justify-content-center align-items-stretch">
-        <a asp-controller="Session" asp-action="CloseSession" asp-route-id="" class="btn btn-primary">Close Session</a>
+        <a asp-controller="Session" asp-action="CloseSession" asp-route-id="" class="btn btn-primary"><i class="fas fa-times"></i>&nbsp;&nbsp;Close Session</a>
         &nbsp;
-        <a asp-action="Index" class="btn btn-primary">Back</a>
+        <a asp-action="Index" class="btn btn-primary"><i class="fas fa-arrow-circle-left"></i>&nbsp;&nbsp;Back</a>
     </div>
 }
 
@@ -110,4 +110,3 @@ else
         <button type="submit" style="width:100%" class="btn btn-primary btn-lg btn-block">Create Session</button>
     </form>
 }
-
