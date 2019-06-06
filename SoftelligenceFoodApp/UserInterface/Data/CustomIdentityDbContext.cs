@@ -8,6 +8,9 @@ namespace UserInterface.Data
     {
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
+        public CustomIdentityDbContext()
+        {
+        }
         public CustomIdentityDbContext(DbContextOptions<CustomIdentityDbContext> options)
             : base(options)
         {

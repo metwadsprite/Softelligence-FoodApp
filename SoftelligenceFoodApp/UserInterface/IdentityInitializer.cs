@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using System;
+using UserInterface.Data;
 using UserInterface.Models;
 
 namespace UserInterface
@@ -13,19 +16,36 @@ namespace UserInterface
             this.userManager = userManager;
             this.roleManager = roleManager;
         }
+        public void EnsureIdentityDb(string connectionString)
+        {
+            DbContextOptionsBuilder<CustomIdentityDbContext> optionsBuilder = new DbContextOptionsBuilder<CustomIdentityDbContext>();
+            optionsBuilder.UseSqlServer(connectionString);
+            using (var dbContext = new CustomIdentityDbContext(optionsBuilder.Options))
+            {
+                dbContext.Database.EnsureCreated();
+            }
+        }
 
         public void InitializeDefaultRoles()
         {
-            var role = roleManager.FindByNameAsync("Admin").GetAwaiter().GetResult();
-            if (role == null)
-            {
-                roleManager.CreateAsync(new IdentityRole("Admin")).GetAwaiter().GetResult();
-            }
+            try
+            {                
 
-            role = roleManager.FindByNameAsync("User").GetAwaiter().GetResult();
-            if (role == null)
+                var role = roleManager.FindByNameAsync("Admin").GetAwaiter().GetResult();
+                if (role == null)
+                {
+                    roleManager.CreateAsync(new IdentityRole("Admin")).GetAwaiter().GetResult();
+                }
+
+                role = roleManager.FindByNameAsync("User").GetAwaiter().GetResult();
+                if (role == null)
+                {
+                    roleManager.CreateAsync(new IdentityRole("User")).GetAwaiter().GetResult();
+                }
+            }
+            catch (Exception e)
             {
-                roleManager.CreateAsync(new IdentityRole("User")).GetAwaiter().GetResult();
+                Console.WriteLine("Could not initialize " + e.Message);
             }
         }
 
