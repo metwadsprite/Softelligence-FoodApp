@@ -28,7 +28,7 @@ namespace UserInterface.Controllers
             this.userService = new UserService(dataContext);
         }
 
-        [Authorize]
+        [Authorize(Roles = "User, Admin")]
         public IActionResult Index()
         {
             activeSession = null;
@@ -72,7 +72,7 @@ namespace UserInterface.Controllers
             }
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "User, Admin")]
         [HttpGet]
         public IActionResult PlaceRestaurantOrder(int? id)
         {
@@ -112,7 +112,7 @@ namespace UserInterface.Controllers
             return View(curOrder);
         }
 
-        [Authorize]
+        [Authorize(Roles = "User, Admin")]
         [HttpPost]
         public IActionResult PlaceOrder([FromForm]PlaceRestaurantOrderVM orderVM)
         {
@@ -146,6 +146,7 @@ namespace UserInterface.Controllers
             return View(curOrder);
         }
 
+        [Authorize(Roles = "User, Admin")]
         public IActionResult ModifyOrderDisplay()
         {
             activeSession = sessionRepository.GetActiveSession();
@@ -175,7 +176,7 @@ namespace UserInterface.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Roles = "User, Admin")]
         [HttpPost]
         public IActionResult ModifyOrder([FromForm]PlaceRestaurantOrderVM orderVM)
         {
@@ -201,6 +202,7 @@ namespace UserInterface.Controllers
             return View(orderVM);
         }
 
+        [Authorize(Roles = "User, Admin")]
         public IActionResult DeleteOrder()
         {
             activeSession = sessionRepository.GetActiveSession();
@@ -214,6 +216,7 @@ namespace UserInterface.Controllers
             return View();
         }
 
+        [Authorize(Roles = "User, Admin")]
         public IActionResult GetHistory()
         {
             ICollection<Session> sessionHistory = sessionRepository.GetAll();
@@ -229,7 +232,7 @@ namespace UserInterface.Controllers
                 {
                     foreach(var order in session.Orders)
                     {
-                        if (order.IsActive == false)
+                        if (order.IsActive == false && order.User.Email == userEmail)
                         {
                             orderHistoy.Add(order);
                         }
@@ -239,6 +242,7 @@ namespace UserInterface.Controllers
 
             return View(orderHistoy);
         }
+
 
         public IActionResult Back()
         {

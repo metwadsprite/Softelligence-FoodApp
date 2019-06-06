@@ -42,7 +42,7 @@ namespace UserInterface
             if (foundUser == null)
             { 
                 userManager.CreateAsync(adminUser, "P@ssw0rd").GetAwaiter().GetResult();
-                userManager.AddToRoleAsync(adminUser, "Admin");
+                userManager.AddToRoleAsync(adminUser, "Admin").GetAwaiter().GetResult();
             }
 
         }

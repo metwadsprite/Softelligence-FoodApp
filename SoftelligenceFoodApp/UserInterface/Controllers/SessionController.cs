@@ -5,6 +5,7 @@ using UserInterface.Models;
 using BusinessLogic.BusinessExceptions;
 using System;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace UserInterface.Controllers
 {
@@ -17,12 +18,14 @@ namespace UserInterface.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             var sessionsList = adminService.GetAllSessions();
             return View(sessionsList);
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult History()
         {
             ViewBag.ViewName = "Session";
@@ -31,6 +34,7 @@ namespace UserInterface.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult NewSession()
         {
             SessionVM session = new SessionVM();
@@ -52,6 +56,7 @@ namespace UserInterface.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Details(int? id)
         {
@@ -59,6 +64,7 @@ namespace UserInterface.Controllers
             return View(session);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Create([FromForm]SessionVM newSession)
         {
@@ -83,6 +89,7 @@ namespace UserInterface.Controllers
             return RedirectToAction("NewSession");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult CloseRestaurant(int? id)
         {
@@ -90,6 +97,7 @@ namespace UserInterface.Controllers
             return View(store);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CloseRestaurant([FromForm]Store storeToRemoveFromSession)
         {
@@ -104,6 +112,7 @@ namespace UserInterface.Controllers
             return RedirectToAction("NewSession");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult CloseSession()
         {
@@ -111,6 +120,7 @@ namespace UserInterface.Controllers
             return View(session);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CloseSession([FromForm]Session sessionToRemove)
         {

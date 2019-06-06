@@ -2,6 +2,7 @@
 using BusinessLogic;
 using BusinessLogic.BusinessExceptions;
 using Logic.Implementations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserInterface.Models;
 
@@ -16,6 +17,7 @@ namespace UserInterface.Controllers
             this.adminService = adminService;
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             ViewBag.ViewName = "StoreManagement";
@@ -47,6 +49,7 @@ namespace UserInterface.Controllers
             return View(storesList);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Add([FromForm]StoreVM newStore)
         {
@@ -67,6 +70,7 @@ namespace UserInterface.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Add()
         {
@@ -74,6 +78,7 @@ namespace UserInterface.Controllers
             return View(store);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Details(int? id)
         {
@@ -81,6 +86,7 @@ namespace UserInterface.Controllers
             return View(store);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Update(int? id)
         {
@@ -88,6 +94,7 @@ namespace UserInterface.Controllers
             return View(store);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Update([FromForm]Store newStore)
         {
@@ -99,6 +106,7 @@ namespace UserInterface.Controllers
 
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Delete(int? id)
         {
@@ -107,6 +115,7 @@ namespace UserInterface.Controllers
             return View(store);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult Delete([FromForm]Store storeToRemove)
         {

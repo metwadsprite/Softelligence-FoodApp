@@ -5,6 +5,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
 @if (Model.HasActiveSession == true)
 {
     <h1>Active Restaurants</h1>
@@ -55,10 +56,12 @@
                 <p>Total Price: @Model.Price </p>
                 @if (item.IsActive)
                 {
-
-                <div class="d-flex justify-content-center align-items-stretch">
-                    <a asp-controller="Session" asp-action="CloseRestaurant" asp-route-id="@item.Id" class="btn btn-primary"><i class="fas fa-window-close"></i>&nbsp;&nbsp;&nbsp;Close Restaurant</a>
-                </div>
+                    @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+                    {
+                        <div class="d-flex justify-content-center align-items-stretch">
+                            <a asp-controller="Session" asp-action="CloseRestaurant" asp-route-id="@item.Id" class="btn btn-primary"><i class="fas fa-window-close"></i>&nbsp;&nbsp;&nbsp;Close Restaurant</a>
+                        </div>
+                    }
                 }
                 <br />
                 <br />
@@ -68,15 +71,18 @@
     </div>
     <br />
     <br />
+
     <div class="d-flex justify-content-center align-items-stretch">
         <a asp-controller="Session" asp-action="CloseSession" asp-route-id="" class="btn btn-primary">Close Session</a>
         &nbsp;
         <a asp-action="Index" class="btn btn-primary">Back</a>
     </div>
+
 }
 
 else
 {
+
     <h1>Create New Session</h1>
     <br />
     <h3>Choose Restaurants</h3>
@@ -110,4 +116,5 @@ else
         <button type="submit" style="width:100%" class="btn btn-primary btn-lg btn-block">Create Session</button>
     </form>
 }
+
 

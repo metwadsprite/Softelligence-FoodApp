@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using BusinessLogic;
 using BusinessLogic.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using UserInterface.Models;
@@ -26,6 +27,7 @@ namespace UserInterface.Controllers
             this.usersManager = usersManager;
         }
 
+        [Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> Index()
         {
             var userEmail = HttpContext.User.Identity.Name;

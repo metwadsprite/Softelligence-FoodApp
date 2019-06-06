@@ -73,6 +73,7 @@ namespace UserInterface.Areas.Identity.Pages.Account
             {
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, Name = Input.Name };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                _userManager.AddToRoleAsync(user, "User").GetAwaiter().GetResult();
                 if (result.Succeeded)
                 {
                     

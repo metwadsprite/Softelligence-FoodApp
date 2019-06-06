@@ -4,16 +4,22 @@
 }
 
 <div class="menu-container">
-    <form asp-controller="StoreManagement" asp-action="Index" method="get">
-        <button type="submit" style="width:100%" class="btn btn-primary btn-lg btn-block">Restaurants Management</button>
-    </form>
-    <form asp-controller="Session" asp-action="Index" method="get">
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Session</button>
-    </form>
+
+    <div align="center">
+        <img src="~/Logo.png" class="img-fluid" />
+    </div>
+
+    @if (ViewContext.HttpContext.User.IsInRole("Admin"))
+    {
+        <form asp-controller="StoreManagement" asp-action="Index" method="get">
+            <button type="submit" style="width:100%" class="btn btn-primary btn-lg btn-block">Restaurants Management</button>
+        </form>
+        <form asp-controller="Session" asp-action="Index" method="get">
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Session</button>
+        </form>
+    }
     <form asp-controller="Order" asp-action="Index" method="get">
         <button type="submit" class="btn btn-primary btn-lg btn-block">Order</button>
     </form>
-    <form asp-controller="Message" asp-action="Index" method="get">
-        <button type="submit" class="btn btn-primary btn-lg btn-block">Message</button>
-    </form>
+
 </div>
