@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using BusinessLogic;
 using BusinessLogic.Abstractions;
+using BusinessLogic.Business.Exceptions;
 using BusinessLogic.BusinessExceptions;
 using EF.DataAccess.DataModel;
 using Microsoft.EntityFrameworkCore;
@@ -21,17 +22,21 @@ namespace EF.DataAccess
 
         public void Create(Session sessionToCreate)
         {
-            if (sessionToCreate != null)
+            if (sessionToCreate == null)
+            {
+                throw new SessionNotFoundException();                
+            }
+            else if (sessionToCreate.Stores.Count().Equals(0))
+            {
+                throw new SessionIsEmptyException();
+            }
+            else
             {
                 var sessionDO = mapper.MapData<SessionDO, Session>(sessionToCreate);
 
                 sessionDO.IsActive = true;
                 dbContext.Add(sessionDO);
                 dbContext.SaveChanges();
-            }
-            else
-            {
-                throw new SessionNotFoundException();
             }
         }
 

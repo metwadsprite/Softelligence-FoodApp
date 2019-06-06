@@ -6,6 +6,7 @@ using BusinessLogic.BusinessExceptions;
 using System;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using BusinessLogic.Business.Exceptions;
 
 namespace UserInterface.Controllers
 {
@@ -70,21 +71,28 @@ namespace UserInterface.Controllers
         {
             if (ModelState.IsValid)
             {
-                Session sessionToCreate = new Session();
-                sessionToCreate.StartTime = DateTime.Now;
-
-                for (int i = 0; i < newSession.Stores.Count(); i++)
+                try
                 {
-                    if (newSession.SelectedStores[i])
-                    {
-                        var currentStore = adminService.GetStoreById(newSession.Stores[i].Id);
-                        currentStore.IsActive = true;
-                        adminService.UpdateStore(currentStore);
-                        sessionToCreate.AddStore(currentStore);
-                    }
+                    Session sessionToCreate = new Session();
+                    sessionToCreate.StartTime = DateTime.Now;
 
+                    for (int i = 0; i < newSession.Stores.Count(); i++)
+                    {
+                        if (newSession.SelectedStores[i])
+                        {
+                            var currentStore = adminService.GetStoreById(newSession.Stores[i].Id);
+                            currentStore.IsActive = true;
+                            adminService.UpdateStore(currentStore);
+                            sessionToCreate.AddStore(currentStore);
+                        }
+
+                    }
+                    adminService.StartSession(sessionToCreate);
                 }
-                adminService.StartSession(sessionToCreate);
+                catch(SessionIsEmptyException)
+                {
+                    return RedirectToAction("NewSession");
+                }
             }
             return RedirectToAction("NewSession");
         }
