@@ -138,3 +138,7 @@ tbody tr:nth-child(even) {
 .gl-off {
     color: green;
 }
+
+.btn-order {
+    margin-top: 15px;
+} 
